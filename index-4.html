@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BHUMISETU — National Land Governance Platform</title>
+<title>BHUSETU — National Land Governance Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
   try {
-    const theme = localStorage.getItem('bhumisetu_theme') || 'light';
+    const theme = localStorage.getItem('BHUSETU_theme') || 'light';
     document.documentElement.setAttribute('data-theme', theme);
   } catch(e) {}
 </script>
@@ -383,12 +383,12 @@ table.data-table th{background:var(--ivory-200)}
 
 <script>
 /* =========================================================
-   BHUMISETU — National Land Governance Platform (demo build)
+   BHUSETU — National Land Governance Platform (demo build)
    Single-file SPA. All data below is illustrative/demo data.
 ========================================================= */
 
 /* ---------- persistent state ---------- */
-const LS_KEY = 'bhumisetu_state_v1';
+const LS_KEY = 'BHUSETU_state_v1';
 function loadState(){
   try{
     const raw = localStorage.getItem(LS_KEY);
@@ -668,7 +668,7 @@ function headerHtml(activeTop){
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 42px; width: auto;">
         <div style="width:36px; height:36px; background:linear-gradient(135deg, #1b2a41, #2c4363); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:sans-serif; font-size:20px; font-weight:bold; margin-left: 12px; margin-right: 12px; line-height: 1; box-shadow: 0 2px 6px rgba(0,0,0,0.15); padding-bottom: 2px;">భూ</div>
         <div class="brand-text">
-          <div class="brand-name">BHUMISETU</div>
+          <div class="brand-name">BHUSETU</div>
           <div class="brand-sub">National Land Governance Platform</div>
         </div>
       </a>
@@ -707,7 +707,7 @@ function footerHtml(){
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="brand-name" style="color:var(--cream-text);margin-bottom:10px">BHUMISETU</div>
+          <div class="brand-name" style="color:var(--cream-text);margin-bottom:10px">BHUSETU</div>
           <p style="max-width:280px;color:#9aa6ba;font-size:13px;line-height:1.6">An integrated national platform for land research, geospatial intelligence, policy analysis and collaborative decision-making.</p>
         </div>
         <div><h5>Platform</h5>
@@ -724,7 +724,7 @@ function footerHtml(){
         </div>
       </div>
       <div class="footer-bottom">
-        <span>\u00A9 2026 BHUMISETU \u2014 National Land Governance Platform. Demo data shown throughout is illustrative.</span>
+        <span>\u00A9 2026 BHUSETU \u2014 National Land Governance Platform. Demo data shown throughout is illustrative.</span>
         <span>Version 2.4 \u00B7 Data as of 2026</span>
       </div>
     </div>
@@ -799,7 +799,7 @@ function pageHome(){
       <div class="section-head">
         <div class="section-label">PLATFORM OVERVIEW</div>
         <h2>One platform for land governance evidence</h2>
-        <p class="section-desc">BHUMISETU connects research, datasets, geospatial layers and policy analysis so decisions rest on evidence rather than anecdote.</p>
+        <p class="section-desc">BHUSETU connects research, datasets, geospatial layers and policy analysis so decisions rest on evidence rather than anecdote.</p>
       </div>
       <div class="grid grid-3">
         ${capCard('\u{1F4DA}','Research Hub','Search papers, government reports, laws and judgments across states and topics.','#/research')}
@@ -815,7 +815,7 @@ function pageHome(){
   <section class="section section-navy">
     <div class="container">
       <div class="section-head">
-        <div class="section-label">HOW BHUMISETU WORKS</div>
+        <div class="section-label">HOW BHUSETU WORKS</div>
         <h2>From a question to a decision, on one platform</h2>
       </div>
       <div class="flow">
@@ -871,7 +871,7 @@ function pageSignin(){
     <div class="container" style="position: relative; z-index: 1; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2); border-radius: 20px; padding: 48px;">
       <div class="signin-head" style="text-align: center; max-width: 600px; margin: 0 auto 36px auto;">
         <div class="section-label" style="color: var(--navy-900); text-shadow: 0 1px 4px rgba(255,255,255,0.6);">SIGN IN</div>
-        <h2 style="font-family:var(--font-display);font-size:clamp(24px,3vw,34px);margin:0 0 10px; color: var(--navy-900); text-shadow: 0 2px 8px rgba(255,255,255,0.7);">Sign in to BHUMISETU</h2>
+        <h2 style="font-family:var(--font-display);font-size:clamp(24px,3vw,34px);margin:0 0 10px; color: var(--navy-900); text-shadow: 0 2px 8px rgba(255,255,255,0.7);">Sign in to BHUSETU</h2>
         <p class="section-desc" style="color: var(--ink-900); font-weight: 500; text-shadow: 0 1px 4px rgba(255,255,255,0.6);">Choose your role to access tools relevant to your work.</p>
       </div>
       <div class="role-grid">${cards}</div>
@@ -1148,7 +1148,7 @@ function apisSection(){
     <div class="card">
       <h3>${a.name}</h3>
       <p>${a.desc}</p>
-      <code style="display:block;background:var(--ivory-200);padding:10px 12px;border-radius:4px;font-size:12.5px;margin-bottom:14px">GET https://api.bhumisetu.gov.in${a.path}</code>
+      <code style="display:block;background:var(--ivory-200);padding:10px 12px;border-radius:4px;font-size:12.5px;margin-bottom:14px">GET https://api.BHUSETU.gov.in${a.path}</code>
       <button class="btn btn-outline btn-sm" data-action="copy-api" data-path="${a.path}">Copy endpoint</button>
     </div>`).join('')}
   </div>`;
@@ -1687,20 +1687,20 @@ function pageAbout(){
         <svg viewBox="0 0 100 100" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform: rotate(-90deg);">
           <path id="curve" d="M 10,50 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent"/>
           <text width="500" style="font-size: 11px; font-weight: bold; letter-spacing: 2px; fill: var(--navy-900);">
-            <textPath href="#curve">★ BHUMISETU ★ NATIONAL LAND GOVERNANCE PLATFORM</textPath>
+            <textPath href="#curve">★ BHUSETU ★ NATIONAL LAND GOVERNANCE PLATFORM</textPath>
           </text>
         </svg>
       </div>
       <div style="flex: 1; min-width: 300px;">
-        <h1 style="font-family: var(--font-display); font-size: 32px; color: var(--navy-900); margin-bottom: 16px; margin-top: 10px;">BHUMISETU — National Land Governance Platform</h1>
-        <p style="font-size: 15px; line-height: 1.7; color: var(--ink-700); margin-bottom: 16px;">BHUMISETU plays a pivotal role in the governance and administration of land resources, overseeing land management, data collection, and a range of related geospatial services. Our mission is to ensure transparent, efficient, and citizen-friendly services, while upholding land laws and regulations for the welfare of the public. The platform aims to foster a secure, equitable, and sustainable land management system while promoting economic growth and social justice.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: var(--ink-700);">Through active engagement with the public and continuous improvements in its systems and services, BHUMISETU strives to fulfill its duty in contributing to the well-being and progress of the nation and its citizens.</p>
+        <h1 style="font-family: var(--font-display); font-size: 32px; color: var(--navy-900); margin-bottom: 16px; margin-top: 10px;">BHUSETU — National Land Governance Platform</h1>
+        <p style="font-size: 15px; line-height: 1.7; color: var(--ink-700); margin-bottom: 16px;">BHUSETU plays a pivotal role in the governance and administration of land resources, overseeing land management, data collection, and a range of related geospatial services. Our mission is to ensure transparent, efficient, and citizen-friendly services, while upholding land laws and regulations for the welfare of the public. The platform aims to foster a secure, equitable, and sustainable land management system while promoting economic growth and social justice.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: var(--ink-700);">Through active engagement with the public and continuous improvements in its systems and services, BHUSETU strives to fulfill its duty in contributing to the well-being and progress of the nation and its citizens.</p>
       </div>
     </div>
     
     <div style="margin-bottom: 32px;">
       <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--navy-900); margin-bottom: 12px;">Commitment to Technology and Transparency</h3>
-      <p style="font-size: 14.5px; line-height: 1.6; color: var(--ink-700);">With an emphasis on digital transformation, BHUMISETU has incorporated technology to streamline processes such as online land records, property registration, and geospatial analysis. These initiatives are designed to eliminate inefficiencies, curb corruption, and ensure that the public has easy access to vital land and policy-related services.</p>
+      <p style="font-size: 14.5px; line-height: 1.6; color: var(--ink-700);">With an emphasis on digital transformation, BHUSETU has incorporated technology to streamline processes such as online land records, property registration, and geospatial analysis. These initiatives are designed to eliminate inefficiencies, curb corruption, and ensure that the public has easy access to vital land and policy-related services.</p>
     </div>
 
     <div style="margin-bottom: 32px;">
@@ -1739,16 +1739,16 @@ function pageManuals(){
 }
 function pageFaq(){
   const faqs = [
-    { q: "What is BHUMISETU?", a: "BHUMISETU is a unified National Land Governance Platform designed to bridge the gap between researchers, policymakers, and the public by providing data-driven insights and geospatial intelligence." },
-    { q: "Who can access the data on BHUMISETU?", a: "Public datasets are available to everyone. Advanced analytical tools and specific state-level data require signing in with a designated role (e.g., Researcher, Policymaker)." },
+    { q: "What is BHUSETU?", a: "BHUSETU is a unified National Land Governance Platform designed to bridge the gap between researchers, policymakers, and the public by providing data-driven insights and geospatial intelligence." },
+    { q: "Who can access the data on BHUSETU?", a: "Public datasets are available to everyone. Advanced analytical tools and specific state-level data require signing in with a designated role (e.g., Researcher, Policymaker)." },
     { q: "How frequently is the GIS and satellite data updated?", a: "Base land use and forest cover layers are updated annually, while specific project monitoring data and climate vulnerability indices are updated quarterly." },
     { q: "How do I use the Policy Simulator?", a: "Policymakers can access the Policy Lab to design a policy (defining the problem, geography, and intervention) and simulate its expected outcomes against historical land data." },
     { q: "Can I request a new dataset or propose a research project?", a: "Yes, authenticated researchers and government departments can use the Collaboration module to request data, propose projects, or participate in Innovation Challenges." },
     { q: "Are the digital records legally binding?", a: "Land records, maps, and analytical information provided through this platform are for evidence-based planning and are subject to official verification by the respective state Revenue Departments." },
     { q: "What formats are the datasets available in?", a: "The datasets in the Data Hub can be downloaded in standard machine-readable formats including CSV, GeoJSON, Shapefiles, and directly accessed via REST APIs." },
-    { q: "How does BHUMISETU ensure data privacy?", a: "All personal identifiable information (PII) is anonymized before datasets are published. Access to sensitive land owner data is strictly restricted to authorized government departments." },
-    { q: "Is there a mobile application available?", a: "Currently, BHUMISETU is a fully responsive web platform that works seamlessly on mobile browsers. A dedicated native mobile app is under development." },
-    { q: "Who do I contact for technical support?", a: "You can reach out to our dedicated support team via the HelpDesk portal or email us directly at support@bhumisetu.gov.in." }
+    { q: "How does BHUSETU ensure data privacy?", a: "All personal identifiable information (PII) is anonymized before datasets are published. Access to sensitive land owner data is strictly restricted to authorized government departments." },
+    { q: "Is there a mobile application available?", a: "Currently, BHUSETU is a fully responsive web platform that works seamlessly on mobile browsers. A dedicated native mobile app is under development." },
+    { q: "Who do I contact for technical support?", a: "You can reach out to our dedicated support team via the HelpDesk portal or email us directly at support@BHUSETU.gov.in." }
   ];
   return `${headerHtml('')}
   <style>
@@ -2008,7 +2008,7 @@ document.addEventListener('click', function(e){
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
-      try { localStorage.setItem('bhumisetu_theme', newTheme); } catch(e){}
+      try { localStorage.setItem('BHUSETU_theme', newTheme); } catch(e){}
       toast('Theme switched to ' + newTheme + ' mode');
       break;
     }
@@ -2118,7 +2118,7 @@ document.addEventListener('click', function(e){
     case 'open-case': e.preventDefault(); openCaseModal(t.dataset.id); break;
     case 'copy-api': {
       const path = t.dataset.path;
-      const url = 'https://api.bhumisetu.gov.in'+path;
+      const url = 'https://api.BHUSETU.gov.in'+path;
       navigator.clipboard && navigator.clipboard.writeText(url).catch(()=>{});
       toast('Copied endpoint to clipboard');
       break;
@@ -2179,7 +2179,7 @@ document.addEventListener('click', function(e){
     }
     case 'dh-api': {
       const r = RESOURCES.find(x=>x.id===t.dataset.id);
-      openModal(`<h2>API access \u2014 ${r.title}</h2><code style="display:block;background:var(--ivory-200);padding:10px 12px;border-radius:4px;font-size:12.5px">GET https://api.bhumisetu.gov.in/v1/datasets/${r.id}</code><p class="field-hint">Demo endpoint for illustration.</p>`);
+      openModal(`<h2>API access \u2014 ${r.title}</h2><code style="display:block;background:var(--ivory-200);padding:10px 12px;border-radius:4px;font-size:12.5px">GET https://api.BHUSETU.gov.in/v1/datasets/${r.id}</code><p class="field-hint">Demo endpoint for illustration.</p>`);
       break;
     }
   }

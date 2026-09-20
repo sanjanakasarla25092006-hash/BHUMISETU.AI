@@ -14,7 +14,7 @@ if not os.path.exists("manuals"):
 class PDF(FPDF):
     def header(self):
         self.set_font("helvetica", "B", 15)
-        self.cell(0, 10, "BHUMISETU - National Land Governance Platform", border=False, align="C")
+        self.cell(0, 10, "BHUSETU - National Land Governance Platform", border=False, align="C")
         self.ln(20)
 
     def footer(self):
@@ -30,10 +30,10 @@ for m in manuals:
     pdf.ln(10)
     pdf.set_font("helvetica", "", 12)
     
-    content = f"""This is the official {m} for the BHUMISETU platform.
+    content = f"""This is the official {m} for the BHUSETU platform.
 
 1. Introduction
-Welcome to the {m}. This document provides comprehensive guidelines and procedural steps for utilizing this specific module within the BHUMISETU National Land Governance Platform.
+Welcome to the {m}. This document provides comprehensive guidelines and procedural steps for utilizing this specific module within the BHUSETU National Land Governance Platform.
 
 2. Scope
 This manual covers all features, workflows, and access requirements pertaining to {m}. Ensure you have the necessary role-based permissions (Researcher, Policymaker, or Department Admin) before attempting the steps outlined herein.

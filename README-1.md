@@ -1,4 +1,4 @@
-# BHUMISETU — Local Setup
+# BHUSETU — Local Setup
 
 This is a single self-contained HTML file (`index.html`). No build step, no dependencies to install — it just needs to be served by any local web server (opening it directly with `file://` also mostly works, but a local server avoids browser restrictions).
 
@@ -22,5 +22,5 @@ Right-click `index.html` → "Open with Live Server" (if you have the Live Serve
 ## Notes
 - All data in the app is demo/mock data, generated in-browser — there is no backend.
 - Saved research, submissions, and collaboration requests are stored in your browser's `localStorage`, so they'll persist across reloads on the same browser/device but won't sync anywhere else.
-- To merge this into your existing BHUMISETU codebase, treat `index.html` as reference markup/CSS/JS to port into your components — the whole app (routing, state, mock data) lives in the one file for easy portability.
+- To merge this into your existing BHUSETU codebase, treat `index.html` as reference markup/CSS/JS to port into your components — the whole app (routing, state, mock data) lives in the one file for easy portability.
 
