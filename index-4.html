@@ -9,20 +9,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy-900:#0c1626;
-  --navy-800:#101f36;
-  --navy-700:#182e4a;
-  --ivory-100:#f7f2e6;
-  --ivory-200:#efe7d3;
-  --ivory-300:#e4d9bd;
-  --saffron-500:#dd8a34;
-  --saffron-600:#c3721f;
-  --saffron-100:#f5e2c4;
-  --ink-900:#201c14;
-  --ink-700:#4a453a;
-  --ink-500:#7a7364;
-  --line:#d9cdb0;
-  --line-dark:#26364e;
+  --navy-900:#1b2a41;
+  --navy-800:#233550;
+  --navy-700:#2b4060;
+  --ivory-100:#f7f4ed;
+  --ivory-200:#eee9dc;
+  --ivory-300:#e3dbcc;
+  --saffron-500:#c06c4b;
+  --saffron-600:#a9593a;
+  --saffron-100:#f8eadf;
+  --ink-900:#252d3a;
+  --ink-700:#4f5b6e;
+  --ink-500:#7b889e;
+  --line:#e3dbcc;
+  --line-dark:#2c4363;
   --cream-text:#f2ede0;
   --good:#3f6b4a;
   --warn:#9c5a1e;
@@ -131,10 +131,10 @@ input,select,textarea{font-family:inherit;font-size:14px}
 @media (max-width:768px) { .slider-prev, .slider-next { display: none; } .hero-slide h1 { font-size: 28px; } }
 
 /* ---------- Ticker ---------- */
-.announcement-ticker-wrap { background: var(--good); color: #fff; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.1); }
+.announcement-ticker-wrap { background: var(--ivory-100); color: var(--ink-900); padding: 12px 0; border-bottom: 1px solid var(--line); }
 .ticker-container { display: flex; align-items: center; white-space: nowrap; width: 100%; overflow: hidden; position: relative; }
-.ticker-label { font-size: 14px; font-weight: 700; margin-right: 16px; flex-shrink: 0; z-index: 2; padding-right: 10px; display: flex; align-items: center; }
-.ticker-scroll { font-size: 14.5px; font-weight: 500; padding-top: 2px; }/* ---------- Sections ---------- */
+.ticker-label { font-size: 14px; font-weight: 700; margin-right: 16px; flex-shrink: 0; z-index: 2; padding-right: 16px; display: flex; align-items: center; background: var(--ivory-100); border-right: 1px solid var(--line); }
+.ticker-scroll { font-size: 14px; font-weight: 500; padding-top: 2px; color: var(--ink-700); }/* ---------- Sections ---------- */
 .section{padding:72px 0}
 .section-ivory{background:var(--ivory-100)}
 .section-ivory-alt{background:var(--ivory-200)}
@@ -153,12 +153,13 @@ input,select,textarea{font-family:inherit;font-size:14px}
 @media (max-width:920px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:620px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
 
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-m);padding:26px}
-.card-flat{background:var(--ivory-100);border:1px solid var(--line);border-radius:var(--radius-m);padding:24px}
-.cap-icon{width:38px;height:38px;border-radius:var(--radius-s);background:var(--navy-900);color:var(--saffron-500);display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:17px}
-.card h3{font-family:var(--font-display);font-size:19px;font-weight:600;margin:0 0 8px}
-.card p{font-size:14px;color:var(--ink-700);margin:0 0 16px;line-height:1.55}
-.card-link{font-size:13.5px;font-weight:600;color:var(--navy-900);border-bottom:1px solid var(--saffron-500);padding-bottom:1px}
+.card{background:#fff;border:1px solid #e8e3d6;border-radius:8px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.03);transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+.card-flat{background:var(--ivory-100);border:1px solid var(--line);border-radius:8px;padding:28px}
+.cap-icon{width:48px;height:48px;border-radius:50%;background:var(--ivory-200);color:var(--navy-900);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:22px}
+.card h3{font-family:var(--font-display);font-size:21px;font-weight:600;margin:0 0 10px;color:var(--navy-900)}
+.card p{font-size:14.5px;color:var(--ink-700);margin:0 0 20px;line-height:1.6}
+.card-link{font-size:14px;font-weight:600;color:var(--saffron-500);display:inline-flex;align-items:center;gap:6px}
 .card-link:hover{color:var(--saffron-600)}
 
 /* workflow */
@@ -613,7 +614,7 @@ function headerHtml(activeTop){
   const roleArea = state.role
     ? `<a href="#/dash/${state.role}/overview" class="role-pill"><span class="dot"></span>${escapeHtml(state.roleLabel)}</a>
        <button class="btn-ghost" data-action="signout">Sign out</button>`
-    : `<a href="#/signin" class="btn btn-navy">Sign In</a>`;
+    : `<a href="#/signin" class="btn btn-navy" style="border-radius:6px; padding:8px 16px;">👤 Sign In</a>`;
   return `
   <header class="site-header">
     <div class="container header-row">
@@ -632,17 +633,24 @@ function headerHtml(activeTop){
         ${roleArea}
       </div>
     </div>
-    <div class="secondary-nav" style="background: var(--good); color: #fff; padding: 0;">
-      <div class="container" style="display: flex; align-items: center; justify-content: space-between; overflow-x: auto;">
-        <nav style="display: flex; gap: 24px;">
-          <a href="#/" style="padding: 10px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">Home</a>
-          <a href="#/about" style="padding: 10px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">About us</a>
-          <a href="#/manuals" style="padding: 10px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">User Manuals</a>
-          <a href="#/faq" style="padding: 10px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">FAQ</a>
+    <div class="secondary-nav" style="background: var(--navy-900); color: #fff; padding: 0;">
+      <div class="container" style="display: flex; align-items: center; justify-content: space-between; overflow-x: auto; padding-top: 6px; padding-bottom: 6px;">
+        <nav style="display: flex; gap: 28px; align-items: center;">
+          <a href="#/" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.95; display: flex; align-items: center; gap: 6px;"><span style="color:var(--saffron-500)">🏠</span> Home</a>
+          <a href="#/about" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">👤 About Us</a>
+          <a href="#/manuals" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">📄 User Manuals</a>
+          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">❓ FAQ</a>
+          <a href="#/data-hub" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">📁 Resources</a>
+          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">✉️ Contact</a>
         </nav>
-        <div style="font-size: 13px; font-weight: 500; color: #f6e9d8; display: flex; align-items: center; white-space: nowrap;">
-          <span style="color: #ecd3ac; margin-right: 8px; font-weight: bold;">⚠️ Disclaimer:</span> All land records and maps provided on this platform are subject to official verification.
+        <div style="display: flex; align-items: center;">
+          <input type="text" placeholder="🔍 Search..." style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; color: #fff; font-size: 13px; width: 220px; outline: none;">
         </div>
+      </div>
+    </div>
+    <div class="disclaimer-bar" style="background: #fbf3e6; color: var(--ink-900); padding: 8px 0; border-bottom: 1px solid #ebdnc2;">
+      <div class="container" style="display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 500;">
+        <span style="color: var(--saffron-600); margin-right: 8px; font-weight: bold; font-size: 14px;">⚠️</span> <span style="font-weight: 600; margin-right: 4px;">Disclaimer:</span> Land records, maps and analytical information provided through this platform are subject to official verification.
       </div>
     </div>
   </header>`;
@@ -704,18 +712,14 @@ function pageHome(){
     { img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop', title: 'Sustainable Rural Planning', desc: 'Developing actionable strategies to balance rapid modernization with ecological preservation.' }
   ];
   const slideHtml = slides.map((s, i) => `
-    <div class="hero-slide ${i === 0 ? 'active-slide' : ''}" style="background-image: linear-gradient(rgba(10,25,47,0.7), rgba(10,25,47,0.85)), url('${s.img}');">
+    <div class="hero-slide ${i === 0 ? 'active-slide' : ''}" style="background-image: linear-gradient(rgba(10,25,47,0.4), rgba(10,25,47,0.75)), url('${s.img}');">
       <div class="container hero-slide-content">
-        <div class="eyebrow">RESEARCH \u00B7 EVIDENCE \u00B7 GEOSPATIAL \u00B7 POLICY</div>
-        <h1>${s.title}</h1>
-        <p>${s.desc}</p>
-        <div class="hero-actions">
-          <a href="#/signin" class="btn btn-saffron">Explore Platform</a>
-          <button class="btn btn-outline-cream" data-action="tour">Take a Guided Tour</button>
-        </div>
-        <div class="hero-links">
-          <a href="#/data-hub">Public Resources \u2192</a>
-          <a href="#/signin">Sign In \u2192</a>
+        <div class="eyebrow" style="background: rgba(255,255,255,0.85); color: var(--ink-900); display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 24px;">GEOSPATIAL INTELLIGENCE</div>
+        <h1 style="font-size: clamp(36px, 4.5vw, 56px); margin-bottom: 20px;">${s.title}</h1>
+        <p style="font-size: 18px; opacity: 0.95;">${s.desc}</p>
+        <div class="hero-actions" style="gap: 16px;">
+          <a href="#/signin" class="btn btn-saffron" style="padding: 12px 24px; font-size: 15px; border-radius: 6px;">Explore Platform \u2192</a>
+          <button class="btn btn-outline-cream" data-action="tour" style="padding: 12px 24px; font-size: 15px; border-radius: 6px;">\u25B7 Take a Guided Tour</button>
         </div>
       </div>
     </div>
@@ -735,9 +739,12 @@ function pageHome(){
   </section>
   <div class="announcement-ticker-wrap">
     <div class="container ticker-container">
-      <span class="ticker-label">Latest Announcements & Updates :</span>
-      <marquee behavior="scroll" direction="left" scrollamount="6" class="ticker-scroll">
-        New geospatial datasets available for state-level mapping &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; Policy Sandbox updated with Q3 rural indices &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; Contact our toll number at +91 40-29313999 (10 AM - 5 PM)
+      <span class="ticker-label"><span style="margin-right:8px">📢</span> Latest Announcements & Updates</span>
+      <marquee behavior="scroll" direction="left" scrollamount="5" class="ticker-scroll">
+        <span style="color:var(--saffron-500);margin:0 16px">•</span> New land datasets available 
+        <span style="color:var(--saffron-500);margin:0 16px">•</span> Geospatial resources updated 
+        <span style="color:var(--saffron-500);margin:0 16px">•</span> Research publications added 
+        <span style="color:var(--saffron-500);margin:0 16px">•</span> Platform resources updated
       </marquee>
     </div>
   </div>
