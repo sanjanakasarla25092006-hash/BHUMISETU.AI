@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
+window.addEventListener('error', function(e) { toast('Error: ' + e.message); console.error(e.error); });
+window.addEventListener('unhandledrejection', function(e) { toast('Promise Error: ' + e.reason); console.error(e.reason); });
   try {
     const theme = localStorage.getItem('BhuSetu_theme') || 'light';
     document.documentElement.setAttribute('data-theme', theme);
@@ -382,6 +384,8 @@ table.data-table th{background:var(--ivory-200)}
 <div id="toast-wrap"></div>
 
 <script>
+window.addEventListener('error', function(e) { toast('Error: ' + e.message); console.error(e.error); });
+window.addEventListener('unhandledrejection', function(e) { toast('Promise Error: ' + e.reason); console.error(e.reason); });
 /* =========================================================
    BhuSetu — National Land Governance Platform (demo build)
    Single-file SPA. All data below is illustrative/demo data.
@@ -1303,26 +1307,39 @@ function pageDashboard(role, section){
 const mockApi = {
   fetchData: (filters, typeFilters) => {
     return new Promise(resolve => {
-      setTimeout(() => {
-        let res = RESOURCES.filter(r => typeFilters.includes(r.type));
-        if (filters.q) {
-          const ql = filters.q.toLowerCase();
-          res = res.filter(r => (r.title + ' ' + (r.summary||'') + ' ' + (r.topic||'')).toLowerCase().includes(ql));
-        }
-        if (filters.state && filters.state !== 'All') {
-          res = res.filter(r => r.state === filters.state);
-        }
-        if (filters.year && filters.year !== 'All') {
-          res = res.filter(r => r.year == filters.year);
-        }
-        resolve(res); }, 200);
+      const params = new URLSearchParams();
+      if(filters.q) params.append('q', filters.q);
+      if(filters.state && filters.state !== 'All') params.append('state', filters.state);
+      if(filters.year && filters.year !== 'All') params.append('year', filters.year);
+      if(typeFilters && typeFilters.length) params.append('types', typeFilters.join(','));
+      
+      fetch('http://localhost:5000/api/resources?' + params.toString())
+        .then(res => res.json())
+        .then(data => resolve(data))
+        .catch(err => {
+           console.error("Backend error:", err);
+           toast("Failed to connect to backend");
+           resolve([]);
+        });
     });
   },
   getById: (id) => {
     return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(RESOURCES.find(r => r.id == id)); }, 100);
+      fetch('http://localhost:5000/api/resources/' + id)
+        .then(res => res.json())
+        .then(data => resolve(data))
+        .catch(err => {
+           console.error("Backend error:", err);
+           resolve(null);
+        });
     });
+  },
+  secureRecord: (id) => {
+    return fetch('http://localhost:5000/api/secure-record', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    }).then(res => res.json());
   }
 };
 
@@ -1822,6 +1839,38 @@ function resCard(r, opts){
     </div>
   </div>`;
 }
+
+
+window.secureOnBlockchain = function(id, btn) {
+  const originalHtml = btn.innerHTML;
+  btn.innerHTML = '<div class="loader" style="width:14px; height:14px; border-width:2px; border-top-color:#10b981; margin-right:6px;"></div> Securing...';
+  btn.disabled = true;
+  
+  mockApi.secureRecord(id).then(res => {
+     if(res.success) {
+        btn.innerHTML = '✔ Secured';
+        btn.style.background = '#10b981';
+        btn.style.color = '#fff';
+        
+        openModal(`
+          <div style="text-align:center;">
+             <div style="width:64px; height:64px; background:#d1fae5; color:#059669; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 16px;">✔</div>
+             <h2 style="margin-bottom:8px;">Blockchain Verified</h2>
+             <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">This record has been cryptographically secured and hashed on the simulated blockchain.</p>
+             <div style="background:#0f172a; color:#10b981; padding:16px; border-radius:8px; text-align:left; font-family:monospace; font-size:11px; overflow-wrap:break-word;">
+               <div style="margin-bottom:8px; color:#94a3b8;"><b>TX HASH:</b><br>${res.txHash}</div>
+               <div style="margin-bottom:8px; color:#94a3b8;"><b>RECORD SHA-256 HASH:</b><br>${res.documentHash}</div>
+               <div style="color:#94a3b8;"><b>SIGNED BY GOVT WALLET:</b><br>${res.walletAddress}</div>
+             </div>
+          </div>
+        `);
+     } else {
+        toast(res.error || 'Failed to secure');
+        btn.innerHTML = originalHtml;
+        btn.disabled = false;
+     }
+  });
+};
 
 function openResourceModal(id){
   const r = RESOURCES.find(x=>x.id===id);
@@ -2627,7 +2676,9 @@ function pageResearch(query){
     </div>
   </section>
   ${footerHtml()}
-  <script>window.__rhInit=${JSON.stringify({state:initState,topic:initTopic})}<\/script>
+  <script>
+window.addEventListener('error', function(e) { toast('Error: ' + e.message); console.error(e.error); });
+window.addEventListener('unhandledrejection', function(e) { toast('Promise Error: ' + e.reason); console.error(e.reason); });window.__rhInit=${JSON.stringify({state:initState,topic:initTopic})}<\/script>
   `;
 }
 function runResearchHub(){
@@ -3323,6 +3374,7 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
+
 
 
 
