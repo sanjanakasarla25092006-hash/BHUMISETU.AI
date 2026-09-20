@@ -1673,39 +1673,99 @@ function pageInnovation(){
 }
 function pageAbout(){
   return `${headerHtml('')}
-  <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container" style="max-width: 800px;">
-    <div class="page-head"><h1>About Us</h1></div>
-    <div class="panel">
-      <p style="font-size: 15px; line-height: 1.6; color: var(--ink-700);">BHUMISETU is a unified National Land Governance Platform designed to bridge the gap between researchers, policymakers, and the public. We aim to bring data-driven insights, verifiable land records, and geospatial intelligence to the forefront of governance and agricultural planning in India.</p>
+  <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container">
+    <div style="display: flex; gap: 40px; align-items: flex-start; margin-bottom: 48px; flex-wrap: wrap;">
+      <div style="flex-shrink: 0; width: 220px; height: 220px; background: var(--saffron-100); border: 2px solid var(--saffron-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.05);">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Emblem" style="height: 120px; opacity: 0.9;">
+        <svg viewBox="0 0 100 100" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; transform: rotate(-90deg);">
+          <path id="curve" d="M 10,50 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent"/>
+          <text width="500" style="font-size: 11px; font-weight: bold; letter-spacing: 2px; fill: var(--navy-900);">
+            <textPath href="#curve">★ BHUMISETU ★ NATIONAL LAND GOVERNANCE PLATFORM</textPath>
+          </text>
+        </svg>
+      </div>
+      <div style="flex: 1; min-width: 300px;">
+        <h1 style="font-family: var(--font-display); font-size: 32px; color: var(--navy-900); margin-bottom: 16px; margin-top: 10px;">BHUMISETU — National Land Governance Platform</h1>
+        <p style="font-size: 15px; line-height: 1.7; color: var(--ink-700); margin-bottom: 16px;">BHUMISETU plays a pivotal role in the governance and administration of land resources, overseeing land management, data collection, and a range of related geospatial services. Our mission is to ensure transparent, efficient, and citizen-friendly services, while upholding land laws and regulations for the welfare of the public. The platform aims to foster a secure, equitable, and sustainable land management system while promoting economic growth and social justice.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: var(--ink-700);">Through active engagement with the public and continuous improvements in its systems and services, BHUMISETU strives to fulfill its duty in contributing to the well-being and progress of the nation and its citizens.</p>
+      </div>
+    </div>
+    
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--navy-900); margin-bottom: 12px;">Commitment to Technology and Transparency</h3>
+      <p style="font-size: 14.5px; line-height: 1.6; color: var(--ink-700);">With an emphasis on digital transformation, BHUMISETU has incorporated technology to streamline processes such as online land records, property registration, and geospatial analysis. These initiatives are designed to eliminate inefficiencies, curb corruption, and ensure that the public has easy access to vital land and policy-related services.</p>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--navy-900); margin-bottom: 12px;">Our Organizational Structure</h3>
+      <p style="font-size: 14.5px; line-height: 1.6; color: var(--ink-700);">The platform bridges multiple departments, led by central land administration authorities, who oversee its operations across states. At the district level, local collectors coordinate the implementation of policies, supported by revenue officers who work at the grassroots level to deliver essential services directly to the citizens.</p>
+    </div>
+
+    <div>
+      <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--navy-900); margin-bottom: 12px;">Our Focus Areas</h3>
+      <p style="font-size: 14.5px; line-height: 1.6; color: var(--ink-700);">Geospatial intelligence, digital record verification, sustainable rural planning, and policy simulation.</p>
     </div>
   </div></section>${footerHtml()}`;
 }
 function pageManuals(){
+  const manuals = [
+    'Application for GPA', 'Application For Succession', 'Application for Court Case PPB', 'Citizen Registration',
+    'Registration Of DAGPA', 'Registration Of GPA', 'Registration of Sale & Gift', 'Grievance Relating to Inclusion in Prohibited Properties List',
+    'Application for Passbook Data Correction', 'Khata Merging', 'Registration of exchange', 'Court Cases & Intimation',
+    'Application for Pending Mutation', 'Application for NALA'
+  ];
   return `${headerHtml('')}
-  <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container" style="max-width: 800px;">
-    <div class="page-head"><h1>User Manuals</h1></div>
-    <div class="panel">
-      <div class="link-list">
-        <a href="#">📄 Researcher Guide</a>
-        <a href="#">📘 Policymaker Handbook</a>
-        <a href="#">📗 Department Data Upload Guide</a>
-        <a href="#">📚 Public Portal Basics</a>
-      </div>
+  <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container">
+    <div class="page-head"><h1>User Manuals</h1><p>Download procedural guidelines and user manuals for various platform modules.</p></div>
+    <div class="grid grid-4" style="gap: 16px;">
+      ${manuals.map(m => `
+        <div class="card" style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; cursor: pointer;">
+          <div style="font-weight: 500; font-size: 14px; color: var(--ink-900); padding-right: 12px; line-height: 1.4;">${m}</div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--saffron-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </div>
+      `).join('')}
     </div>
   </div></section>${footerHtml()}`;
 }
 function pageFaq(){
+  const faqs = [
+    { q: "Q1. Where to go for registration?", a: "Registration will be done at Tahsildar cum Joint Sub Registrar Office as indicated in the slot booking receipt." },
+    { q: "Q2. What are the documents to be carried for registration?", a: "Original passbooks, Aadhar cards of all parties, and the printed slot booking receipt." },
+    { q: "Q3. Who all should be available during registration?", a: "The buyer, seller, and two witnesses with valid identification." },
+    { q: "Q4. Who can sign as a witness to a document?", a: "Any adult citizen with a valid government-issued ID card who is not a direct beneficiary of the transaction." },
+    { q: "Q5. When do I get my registered document?", a: "Immediately after the registration process and biometric verification is complete at the office." },
+    { q: "Q6. Is it mandatory to use the system generated registration deed document or the citizen can bring his own document for registration?", a: "It is highly recommended to use the system generated deed to prevent errors, but legally valid self-drafted documents are also accepted subject to verification." }
+  ];
   return `${headerHtml('')}
-  <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container" style="max-width: 800px;">
-    <div class="page-head"><h1>Frequently Asked Questions</h1></div>
-    <div class="panel text-block">
-      <h3>Who can access the data on BHUMISETU?</h3>
-      <p>Public datasets are available to everyone. Advanced analytical tools require signing in with a designated role (e.g., Researcher, Policymaker).</p>
-      <h3>How often are the GIS layers updated?</h3>
-      <p>Most land use and forest cover layers are updated annually, while specific project monitoring data is updated quarterly.</p>
-      <h3>Can I request a new dataset?</h3>
-      <p>Yes, authenticated researchers and policymakers can use the Collaboration module to request data or propose new research projects.</p>
+  <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container" style="max-width: 900px;">
+    
+    <div style="background: var(--navy-900); color: #fff; padding: 16px 24px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
+      <h4 style="margin: 0; font-size: 15px; font-weight: 500;">Q1. How to check my application's status?</h4>
+      <span style="font-size: 20px;">\u2212</span>
     </div>
+    <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-top: none; padding: 20px 24px; font-size: 14px; color: var(--ink-700); border-radius: 0 0 6px 6px; margin-bottom: 32px;">
+      1. The status of applications can be checked through - e Challan / Application Status' module at https://bhumisetu.gov.in/ApplicationStatus
+    </div>
+
+    <h2 style="font-family: var(--font-display); font-size: 22px; color: var(--navy-900); margin-bottom: 16px;">Modules related</h2>
+    
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: var(--navy-900); color: #fff; padding: 16px 24px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
+        <h4 style="margin: 0; font-size: 15px; font-weight: 500;">${faqs[0].q}</h4>
+        <span style="font-size: 20px;">\u2212</span>
+      </div>
+      <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-top: none; padding: 20px 24px; font-size: 14px; color: var(--ink-700); border-radius: 0 0 6px 6px; margin-bottom: 8px;">
+        1. ${faqs[0].a}
+      </div>
+
+      ${faqs.slice(1).map(f => `
+        <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); padding: 16px 24px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; color: var(--ink-900);">
+          <h4 style="margin: 0; font-size: 14px; font-weight: 500;">${f.q}</h4>
+          <span style="font-size: 20px; color: var(--ink-500);">+</span>
+        </div>
+      `).join('')}
+    </div>
+
   </div></section>${footerHtml()}`;
 }
 
