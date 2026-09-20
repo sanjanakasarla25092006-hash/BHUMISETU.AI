@@ -658,48 +658,724 @@ window.addEventListener('DOMContentLoaded', render);
 /* ---------- shared header/footer ---------- */
 function headerHtml(activeTop){
   const roleArea = state.role
-    ? `<a href="#/dash/${state.role}/overview" class="role-pill"><span class="dot"></span>${escapeHtml(state.roleLabel)}</a>
-       <button class="btn-ghost" data-action="signout">Sign out</button>`
-    : `<a href="#/signin" class="btn btn-navy" style="border-radius:6px; padding:8px 16px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Sign In</a>`;
+    ? `<a href="#/dash/${state.role}/overview" style="background:#000; color:var(--saffron-500); padding:6px 14px; border-radius:4px; font-weight:600; font-size:13px; text-decoration:none; display:flex; align-items:center; gap:6px;"><span class="dot" style="background:var(--saffron-500);"></span>${escapeHtml(state.roleLabel)}</a>
+       <button data-action="signout" style="background:transparent; border:none; color:#000; font-weight:600; font-size:13px; cursor:pointer; padding:6px 12px; border-radius:4px; border:1px solid #000;">Sign out</button>`
+    : `<a href="#/signin" style="background:#000; color:var(--saffron-500); padding:8px 20px; border-radius:6px; font-weight:600; font-size:14px; text-decoration:none; display:flex; align-items:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Sign In</a>`;
+
   return `
-  <header class="site-header">
-    <div class="container header-row">
-      <a href="#/" class="brand" style="align-items:center;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 42px; width: auto;">
-        <div style="width:36px; height:36px; background:linear-gradient(135deg, #1b2a41, #2c4363); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:sans-serif; font-size:20px; font-weight:bold; margin-left: 12px; margin-right: 12px; line-height: 1; box-shadow: 0 2px 6px rgba(0,0,0,0.15); padding-bottom: 2px;">&#3117;&#3138;</div>
-        <div class="brand-text">
-          <div class="brand-name">BhuSetu</div>
-          <div class="brand-sub">National Land Governance Platform</div>
+  <header style="width:100%; position:sticky; top:0; z-index:50; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+    <!-- MASSIVE TOP LAYER (Brand Block) -->
+    <div style="background: linear-gradient(135deg, #101828, #1b2a41); color: #fff; padding: 24px 0; border-bottom: 2px solid var(--saffron-500);">
+      <div class="container" style="display: flex; justify-content: space-between; align-items: center; position: relative; min-height: 85px;">
+        
+        <!-- Left: Emblem -->
+        <div style="flex: 1; display: flex; align-items: center;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 80px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">
         </div>
-      </a>
-      <div class="header-actions">
-        <button class="theme-btn" data-action="toggle-theme" title="Toggle Dark/Light Mode" style="font-weight:500;">Theme</button>
-        <button class="lang-btn" data-action="lang" style="font-weight:500;">Language</button>
-        <button class="help-btn" data-action="help" style="font-weight:500;">Help</button>
-        ${roleArea}
+
+        <!-- Center: Massive Branding -->
+        <a href="#/" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #fff; flex: 2; text-align: center;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 6px;">
+            <div style="width: 52px; height: 52px; background: linear-gradient(135deg, var(--saffron-500), var(--saffron-600)); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: sans-serif; font-size: 32px; font-weight: bold; line-height: 1; padding-bottom: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">&#3117;&#3138;</div>
+            <div style="font-family: var(--font-display); font-weight: 800; font-size: 42px; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">BHUSETU</div>
+            
+          </div>
+          <div style="font-size: 15px; font-weight: 600; letter-spacing: 3px; color: var(--saffron-400); text-transform: uppercase;">National Land Governance Platform</div>
+        </a>
+
+        <!-- Right: Utility Actions -->
+        <div style="flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 16px;">
+          <button data-action="toggle-theme" title="Toggle Theme" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer;">Theme</button>
+          <button data-action="lang" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer;">A/? Language</button>
+        </div>
+
       </div>
     </div>
-    <div class="secondary-nav" style="background: var(--navy-900); color: #fff; padding: 0;">
-      <div class="container" style="display: flex; align-items: center; justify-content: space-between; overflow-x: auto; padding-top: 4px; padding-bottom: 4px;">
-        <nav style="display: flex; gap: 40px; align-items: center;">
-          <a href="#/" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.95;">Home</a>
-          <a href="#/about" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">About Us</a>
-          <a href="#/manuals" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">User Manuals</a>
-          <a href="#/faq" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">FAQ</a>
-          <a href="#/data-hub" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">Resources</a>
+
+    <!-- THIN SECONDARY NAV (Saffron/Gold) -->
+    <div style="background: var(--saffron-500); color: #000; padding: 0;">
+      <div class="container" style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; padding-bottom: 10px;">
+        <nav style="display: flex; gap: 32px; align-items: center;">
+          <a href="#/" style="font-size: 15px; font-weight: 700; color: #000; text-decoration: none; text-transform: uppercase;">Home</a>
+          <a href="#/about" style="font-size: 15px; font-weight: 700; color: #000; text-decoration: none; text-transform: uppercase;">About Us</a>
+          <a href="#/manuals" style="font-size: 15px; font-weight: 700; color: #000; text-decoration: none; text-transform: uppercase;">User Manuals</a>
+          <a href="#/faq" style="font-size: 15px; font-weight: 700; color: #000; text-decoration: none; text-transform: uppercase;">FAQ</a>
+          <a href="#/data-hub" style="font-size: 15px; font-weight: 700; color: #000; text-decoration: none; text-transform: uppercase;">Resources</a>
         </nav>
-        <div style="display: flex; align-items: center;">
-          <input type="text" placeholder="Search..." style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; color: #fff; font-size: 13px; width: 220px; outline: none;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <input type="text" placeholder="Search records..." style="background: #fff; border: 1px solid rgba(0,0,0,0.2); border-radius: 20px; padding: 8px 16px; color: #000; font-size: 14px; width: 240px; outline: none; font-weight:500;">
+          ${roleArea}
         </div>
       </div>
     </div>
-    <div class="disclaimer-bar" style="background: #fbf3e6; color: var(--ink-900); padding: 8px 0; border-bottom: 1px solid #ebdnc2;">
-      <div class="container" style="display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 500;">
-        <span style="color: var(--saffron-600); margin-right: 8px; font-weight: bold; font-size: 14px;">⚠️</span> <span style="font-weight: 600; margin-right: 4px;">Disclaimer:</span> Land records, maps and analytical information provided through this platform are subject to official verification.
+
+    <!-- DISCLAIMER BAR -->
+    <div style="background: #fbf3e6; color: var(--ink-900); padding: 8px 0; border-bottom: 1px solid #ebdnc2; font-size: 13px; font-weight: 500;">
+      <div class="container" style="display: flex; align-items: center; justify-content: center;">
+        <span style="color: var(--saffron-600); margin-right: 8px; font-weight: bold; font-size: 15px;">⚠</span> 
+        <span style="font-weight: 600; margin-right: 4px;">Disclaimer:</span> Land records, maps and analytical information provided through this platform are subject to official verification.
       </div>
     </div>
-  </header>`;
+  </header>
+  `;
 }
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BhuSetu — National Land Governance Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  try {
+    const theme = localStorage.getItem('BhuSetu_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) {}
+</script>
+<style>
+:root{
+  --navy-900:#1b2a41;
+  --navy-800:#233550;
+  --navy-700:#2b4060;
+  --ivory-100:#f7f4ed;
+  --ivory-200:#eee9dc;
+  --ivory-300:#e3dbcc;
+  --saffron-500:#c06c4b;
+  --saffron-600:#a9593a;
+  --saffron-100:#f8eadf;
+  --ink-900:#252d3a;
+  --ink-700:#4f5b6e;
+  --ink-500:#7b889e;
+  --line:#e3dbcc;
+  --line-dark:#2c4363;
+  --cream-text:#f2ede0;
+  --good:#3f6b4a;
+  --warn:#9c5a1e;
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'IBM Plex Sans', -apple-system, sans-serif;
+  --radius-s:3px;
+  --radius-m:5px;
+  --maxw:1180px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+[data-theme="dark"] {
+  --navy-900:#0a0e17;
+  --navy-800:#111827;
+  --navy-700:#1f2937;
+  --ivory-100:#111827;
+  --ivory-200:#1f2937;
+  --ivory-300:#374151;
+  --saffron-500:#f97316;
+  --saffron-600:#ea580c;
+  --saffron-100:#431407;
+  --ink-900:#f3f4f6;
+  --ink-700:#d1d5db;
+  --ink-500:#9ca3af;
+  --line:#374151;
+  --line-dark:#4b5563;
+  --cream-text:#f3f4f6;
+}
+[data-theme="dark"] .card { background: var(--navy-800); border-color: var(--line); }
+[data-theme="dark"] .site-header { background: var(--navy-900); border-color: var(--line); }
+[data-theme="dark"] .disclaimer-bar { background: var(--navy-800); border-color: var(--line); }
+[data-theme="dark"] .announcement-ticker-wrap, [data-theme="dark"] .ticker-label { background: var(--navy-800); color: var(--cream-text); border-color: var(--line); }
+[data-theme="dark"] .ticker-scroll { color: var(--ink-700); }
+[data-theme="dark"] .btn-navy { background: var(--saffron-500); color: #000; border-color: var(--saffron-500); }
+[data-theme="dark"] .btn-navy:hover { background: var(--saffron-600); }
+[data-theme="dark"] .btn-outline { border-color: var(--cream-text); color: var(--cream-text); }
+[data-theme="dark"] .cap-icon { background: var(--navy-700); color: var(--saffron-500); }
+[data-theme="dark"] .brand-name { color: var(--cream-text); }
+[data-theme="dark"] .lang-btn, [data-theme="dark"] .help-btn, [data-theme="dark"] .theme-btn { color: var(--ink-700); }
+[data-theme="dark"] .lang-btn:hover, [data-theme="dark"] .help-btn:hover, [data-theme="dark"] .theme-btn:hover { color: var(--ink-900); }
+[data-theme="dark"] .card h3 { color: var(--ink-900); }
+[data-theme="dark"] .section h2 { color: var(--ink-900); }
+[data-theme="dark"] .section-label { color: var(--saffron-500); }
+
+/* Google Translate Fix */
+body { top: 0px !important; }
+.goog-te-banner-frame, .skiptranslate > iframe { display: none !important; }
+.goog-te-gadget { color: transparent !important; }
+#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
+body{
+  margin:0;
+  height:100%;
+  font-family:var(--font-body);
+  color:var(--ink-900);
+  background:var(--ivory-100);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:14px}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+@media (max-width:720px){.container{padding:0 18px}}
+
+/* ---------- Header ---------- */
+.site-header{
+  background:var(--ivory-100);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:40;
+  padding-top:env(safe-area-inset-top,0px);
+}
+.header-row{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-mark{
+  width:34px;height:34px;border-radius:var(--radius-s);
+  background:var(--navy-900);color:var(--saffron-500);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;font-size:16px;
+}
+.brand-text{line-height:1.15}
+.brand-name{font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:0.2px}
+.brand-name sup{font-size:9px;color:var(--saffron-600);font-family:var(--font-body);font-weight:700;margin-left:3px;border:1px solid var(--saffron-600);padding:1px 3px;border-radius:2px;vertical-align:2px}
+.brand-sub{font-size:11px;color:var(--ink-500)}
+.main-nav{display:flex;gap:2px;flex:1;justify-content:center;flex-wrap:wrap}
+.main-nav a{
+  font-size:14px;padding:8px 12px;border-radius:var(--radius-s);color:var(--ink-700);
+  border-bottom:2px solid transparent;
+}
+.main-nav a:hover{color:var(--ink-900);background:var(--ivory-200)}
+.main-nav a.active{color:var(--navy-900);border-bottom-color:var(--saffron-500);font-weight:600}
+.header-actions{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.lang-btn,.help-btn{font-size:13px;color:var(--ink-700);background:none;border:none;display:flex;align-items:center;gap:5px;padding:6px}
+.lang-btn:hover,.help-btn:hover{color:var(--ink-900)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 18px;border-radius:var(--radius-s);border:1px solid transparent;
+  font-size:14px;font-weight:600;line-height:1;white-space:nowrap;
+}
+.btn-saffron{background:var(--saffron-500);color:#251505}
+.btn-saffron:hover{background:var(--saffron-600)}
+.btn-navy{background:var(--navy-900);color:var(--cream-text);border-color:var(--navy-900)}
+.btn-navy:hover{background:var(--navy-700)}
+.btn-outline{background:transparent;border-color:var(--ink-900);color:var(--ink-900)}
+.btn-outline:hover{background:var(--ink-900);color:var(--ivory-100)}
+.btn-outline-cream{background:transparent;border-color:rgba(242,237,224,0.5);color:var(--cream-text)}
+.btn-outline-cream:hover{background:rgba(242,237,224,0.12)}
+.btn-ghost{background:transparent;color:var(--ink-700);padding:9px 10px}
+.btn-ghost:hover{color:var(--ink-900)}
+.btn-sm{padding:6px 12px;font-size:12.5px}
+.btn:disabled{opacity:0.45;cursor:not-allowed}
+.role-pill{display:flex;align-items:center;gap:8px;background:var(--ivory-200);border:1px solid var(--line);border-radius:20px;padding:5px 6px 5px 12px;font-size:13px}
+.role-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--saffron-500)}
+
+/* ---------- Hero ---------- */
+.hero{background:linear-gradient(180deg,var(--navy-900) 0%, var(--navy-800) 65%, var(--navy-700) 100%);color:var(--cream-text);padding:76px 0 96px}
+.eyebrow{font-size:12.5px;letter-spacing:0.14em;color:var(--saffron-500);font-weight:600;margin-bottom:22px}
+.hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(32px,4.4vw,54px);line-height:1.12;margin:0 0 22px;max-width:800px;letter-spacing:-0.01em}
+.hero p{font-size:17px;color:#c9d2df;max-width:620px;margin:0 0 34px;line-height:1.6}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.hero-links{display:flex;gap:22px;font-size:13.5px}
+.hero-links a{color:#b9c3d3;border-bottom:1px solid rgba(185,195,211,0.4);padding-bottom:2px}
+.hero-links a:hover{color:var(--cream-text);border-color:var(--cream-text)}
+
+/* ---------- Hero Slider ---------- */
+.hero-slider-wrap { position: relative; overflow: hidden; width: 100%; min-height: 540px; background: var(--navy-900); }
+.hero-slider { display: flex; width: 400%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+.hero-slide { width: 25%; min-height: 540px; background-size: cover; background-position: center; display: flex; align-items: center; }
+.hero-slide-content { opacity: 0; transform: translateY(15px); transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s; }
+.hero-slide.active-slide .hero-slide-content { opacity: 1; transform: translateY(0); }
+.hero-slide .eyebrow { font-size:12.5px;font-weight:600;letter-spacing:0.1em;color:var(--saffron-500);margin-bottom:18px }
+.hero-slide h1 { font-family:var(--font-display);font-size:clamp(32px,4vw,46px);font-weight:600;margin:0 0 16px;line-height:1.15;max-width:760px;color:var(--cream-text); text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+.hero-slide p { font-size:17.5px;line-height:1.6;color:#e2e8f0;max-width:620px;margin:0 0 32px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+.slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 20px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; z-index: 10; transition: background 0.2s, transform 0.2s; backdrop-filter: blur(4px); }
+.slider-arrow:hover { background: rgba(0,0,0,0.7); transform: translateY(-50%) scale(1.05); }
+.slider-prev { left: 32px; }
+.slider-next { right: 32px; }
+.slider-dots { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+.slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.slider-dot.active { background: var(--saffron-500); width: 28px; border-radius: 4px; }
+@media (max-width:768px) { .slider-prev, .slider-next { display: none; } .hero-slide h1 { font-size: 28px; } }
+
+/* ---------- Ticker ---------- */
+.announcement-ticker-wrap { background: var(--ivory-100); color: var(--ink-900); padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ticker-container { display: flex; align-items: center; white-space: nowrap; width: 100%; overflow: hidden; position: relative; }
+.ticker-label { font-size: 14px; font-weight: 700; margin-right: 16px; flex-shrink: 0; z-index: 2; padding-right: 16px; display: flex; align-items: center; background: var(--ivory-100); border-right: 1px solid var(--line); }
+.ticker-scroll { font-size: 14px; font-weight: 500; padding-top: 2px; color: var(--ink-700); }/* ---------- Sections ---------- */
+.section{padding:72px 0}
+.section-ivory{background:var(--ivory-100)}
+.section-ivory-alt{background:var(--ivory-200)}
+.section-navy{background:var(--navy-900);color:var(--cream-text)}
+.section-head{max-width:640px;margin-bottom:44px}
+.section-label{font-size:12.5px;letter-spacing:0.1em;color:var(--saffron-600);font-weight:600;margin-bottom:12px}
+.section-navy .section-label{color:var(--saffron-500)}
+.section h2{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,2.6vw,34px);margin:0 0 14px;line-height:1.22}
+.section-desc{color:var(--ink-700);font-size:15.5px;line-height:1.65}
+.section-navy .section-desc{color:#c9d2df}
+
+.grid{display:grid;gap:20px}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:920px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+.card{background:#fff;border:1px solid #e8e3d6;border-radius:8px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.03);transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+.card-flat{background:var(--ivory-100);border:1px solid var(--line);border-radius:8px;padding:28px}
+.cap-icon{width:48px;height:48px;border-radius:50%;background:var(--ivory-200);color:var(--navy-900);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:22px}
+.card h3{font-family:var(--font-display);font-size:21px;font-weight:600;margin:0 0 10px;color:var(--navy-900)}
+.card p{font-size:14.5px;color:var(--ink-700);margin:0 0 20px;line-height:1.6}
+.card-link{font-size:14px;font-weight:600;color:var(--saffron-500);display:inline-flex;align-items:center;gap:6px}
+.card-link:hover{color:var(--saffron-600)}
+
+/* workflow */
+.flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:6px}
+.flow-step{flex:1;min-width:150px;padding:22px 20px;border-right:1px solid var(--line-dark)}
+.flow-step:last-child{border-right:none}
+.flow-num{font-family:var(--font-display);font-size:13px;color:var(--saffron-500);margin-bottom:10px;font-weight:600}
+.flow-step h4{margin:0 0 8px;font-size:15.5px;font-weight:600}
+.flow-step p{margin:0;font-size:13px;color:#aeb8c7;line-height:1.5}
+
+/* evidence chain */
+.chain{display:flex;flex-direction:column;max-width:420px;margin:0 auto}
+.chain-item{background:#fff;border:1px solid var(--line);border-radius:var(--radius-m);padding:14px 18px;font-size:14px;font-weight:600;text-align:center}
+.chain-arrow{text-align:center;color:var(--saffron-600);font-size:16px;padding:4px 0}
+.demo-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.06em;background:var(--saffron-100);color:var(--saffron-600);padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:2px}
+
+/* footer */
+.site-footer{background:var(--navy-900);color:#9aa6ba;padding:52px 0 30px;font-size:13.5px}
+.footer-grid{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:32px;margin-bottom:40px}
+@media (max-width:820px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
+.footer-grid h5{color:var(--cream-text);font-size:13px;margin:0 0 14px;font-weight:600}
+.footer-grid a{display:block;color:#9aa6ba;margin-bottom:9px}
+.footer-grid a:hover{color:var(--cream-text)}
+.footer-bottom{border-top:1px solid var(--line-dark);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* ---------- Sign-in ---------- */
+.signin-wrap{padding:64px 0 90px}
+.signin-head{text-align:left;max-width:560px;margin-bottom:40px}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:900px){.role-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.role-grid{grid-template-columns:1fr}}
+.role-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-m);padding:24px;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+.role-card:hover{border-color:var(--saffron-500);box-shadow:0 2px 0 var(--saffron-500)}
+.role-card h3{font-family:var(--font-display);font-size:18px;margin:14px 0 8px}
+.role-card p{font-size:13.5px;color:var(--ink-700);flex:1;margin:0 0 18px;line-height:1.5}
+
+/* ---------- Dashboard layout ---------- */
+.dash-shell{display:flex;min-height:calc(100vh - 68px);align-items:flex-start}
+.dash-sidebar{width:250px;flex-shrink:0;background:var(--ivory-200);border-right:1px solid var(--line);padding:24px 0;position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto}
+.dash-role-tag{padding:0 20px 18px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+.dash-role-tag .kicker{font-size:11px;letter-spacing:0.08em;color:var(--ink-500);font-weight:600}
+.dash-role-tag .name{font-family:var(--font-display);font-weight:600;font-size:16px;margin-top:3px}
+.dash-nav a{display:block;padding:9px 20px;font-size:13.5px;color:var(--ink-700);border-left:3px solid transparent}
+.dash-nav a:hover{background:var(--ivory-300);color:var(--ink-900)}
+.dash-nav a.active{background:#fff;border-left-color:var(--saffron-500);color:var(--navy-900);font-weight:600}
+.dash-main{flex:1;min-width:0;padding:36px 40px 80px}
+@media (max-width:900px){.dash-shell{flex-direction:column}.dash-sidebar{width:100%;position:static;height:auto;display:flex;overflow-x:auto;padding:12px 0}.dash-nav{display:flex}.dash-nav a{white-space:nowrap;border-left:none;border-bottom:3px solid transparent}.dash-nav a.active{border-left:none;border-bottom-color:var(--saffron-500)}.dash-role-tag{display:none}.dash-main{padding:24px 18px 60px}}
+
+.page-head{margin-bottom:28px}
+.page-head .kicker{font-size:12px;letter-spacing:0.08em;color:var(--saffron-600);font-weight:700;margin-bottom:8px}
+.page-head h1{font-family:var(--font-display);font-size:clamp(22px,2.4vw,30px);margin:0 0 10px}
+.page-head p{color:var(--ink-700);font-size:14.5px;max-width:640px;margin:0}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px}
+@media (max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-m);padding:18px 20px}
+.stat-card .num{font-family:var(--font-display);font-size:28px;font-weight:600;color:var(--navy-900)}
+.stat-card .lbl{font-size:12.5px;color:var(--ink-500);margin-top:4px}
+
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius-m);padding:26px;margin-bottom:22px}
+.panel h3{font-family:var(--font-display);font-size:17px;margin:0 0 4px}
+.panel-sub{font-size:13px;color:var(--ink-500);margin:0 0 18px}
+
+/* search / filters */
+.search-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.search-input{flex:1;min-width:220px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-s);background:#fff;font-size:14px}
+.search-input:focus{outline:2px solid var(--saffron-500);outline-offset:1px}
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.filter-row select{padding:9px 10px;border:1px solid var(--line);border-radius:var(--radius-s);background:#fff;color:var(--ink-700)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
+.tab{padding:10px 14px;font-size:13.5px;color:var(--ink-700);border-bottom:2px solid transparent;white-space:nowrap}
+.tab.active{color:var(--navy-900);border-bottom-color:var(--saffron-500);font-weight:600}
+.tab:hover{color:var(--ink-900)}
+
+.res-list{display:flex;flex-direction:column;gap:12px}
+.res-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-m);padding:18px 20px;display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
+.res-main{flex:1;min-width:240px}
+.res-type{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--navy-900);background:var(--ivory-200);border:1px solid var(--line);padding:2px 8px;border-radius:3px;margin-bottom:8px}
+.res-title{font-weight:600;font-size:15px;margin-bottom:5px}
+.res-title a:hover{color:var(--saffron-600)}
+.res-meta{font-size:12.5px;color:var(--ink-500)}
+.res-meta span{margin-right:12px}
+.res-actions{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.res-summary{font-size:13.5px;color:var(--ink-700);margin-top:8px;max-width:640px}
+
+.icon-btn{border:1px solid var(--line);background:#fff;border-radius:var(--radius-s);padding:6px 11px;font-size:12.5px;color:var(--ink-700);display:inline-flex;align-items:center;gap:5px}
+.icon-btn:hover{border-color:var(--ink-900);color:var(--ink-900)}
+.icon-btn.active{background:var(--saffron-100);border-color:var(--saffron-500);color:var(--saffron-600)}
+
+.empty-state{text-align:center;padding:60px 20px;color:var(--ink-500)}
+.empty-state h3{font-family:var(--font-display);color:var(--ink-900);margin-bottom:8px}
+
+/* forms */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink-900)}
+.field input[type=text],.field input[type=email],.field textarea,.field select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:var(--radius-s);background:#fff}
+.field textarea{resize:vertical;min-height:90px}
+.field-hint{font-size:12px;color:var(--ink-500);margin-top:5px}
+
+/* slider */
+.slider-row{margin-bottom:22px}
+.slider-row .top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:8px}
+.slider-row .top .val{font-weight:700;color:var(--saffron-600)}
+input[type=range]{width:100%;accent-color:var(--saffron-500)}
+
+/* bar chart (svg-free, css based) */
+.bars{display:flex;align-items:flex-end;gap:14px;height:170px;margin:14px 0 6px;border-bottom:1px solid var(--line);padding-bottom:0}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar{width:60%;border-radius:3px 3px 0 0;transition:height .3s}
+.bar-cur{background:#9aa6ba}
+.bar-a{background:var(--saffron-500)}
+.bar-b{background:var(--navy-700)}
+.bar-col .bv{font-size:11.5px;font-weight:700;margin-bottom:5px}
+.bar-col .bl{font-size:11px;color:var(--ink-500);margin-top:8px;text-align:center}
+.legend-row{display:flex;gap:18px;font-size:12.5px;color:var(--ink-700);margin-top:8px}
+.legend-row span{display:inline-flex;align-items:center;gap:6px}
+.legend-dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+/* GIS demo map */
+.gis-layout{display:grid;grid-template-columns:230px 1fr 240px;gap:0;border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden}
+@media (max-width:1000px){.gis-layout{grid-template-columns:1fr;}}
+.gis-panel{padding:18px;background:#fff}
+.gis-panel + .gis-panel{border-left:1px solid var(--line)}
+.gis-panel h4{font-size:12.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-500);margin:0 0 12px}
+.layer-item{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:6px 0}
+.map-canvas{background:var(--navy-900);min-height:440px;position:relative;display:flex;align-items:center;justify-content:center;padding:20px}
+.state-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:460px;width:100%}
+.state-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9.5px;color:#0c1626;font-weight:700;text-align:center;padding:2px;cursor:pointer;border:2px solid transparent}
+.state-cell:hover{border-color:#fff}
+.state-cell.selected{border-color:var(--saffron-500);box-shadow:0 0 0 2px rgba(221,138,52,0.4)}
+.map-legend{position:absolute;bottom:14px;left:14px;background:rgba(12,22,38,0.85);border:1px solid var(--line-dark);border-radius:4px;padding:10px 12px;color:#dfe4ec;font-size:11.5px}
+.map-legend .lg-row{display:flex;align-items:center;gap:7px;margin:3px 0}
+.map-legend .lg-swatch{width:10px;height:10px;border-radius:2px}
+
+/* modal & toast */
+.overlay{position:fixed;inset:0;background:rgba(12,18,28,0.5);display:flex;align-items:flex-start;justify-content:center;padding:60px 20px;z-index:200;overflow-y:auto}
+.modal{background:#fff;border-radius:var(--radius-m);max-width:640px;width:100%;padding:32px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:18px;color:var(--ink-500);width:30px;height:30px;border-radius:50%}
+.modal-close:hover{background:var(--ivory-200);color:var(--ink-900)}
+.modal h2{font-family:var(--font-display);font-size:21px;margin:0 0 16px}
+.modal-scroll{max-height:60vh;overflow-y:auto}
+table.data-table{width:100%;border-collapse:collapse;font-size:12.5px}
+table.data-table th,table.data-table td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+table.data-table th{background:var(--ivory-200)}
+
+#toast-wrap{position:fixed;bottom:22px;right:22px;z-index:300;display:flex;flex-direction:column;gap:10px}
+.toast{background:var(--navy-900);color:var(--cream-text);padding:13px 18px;border-radius:var(--radius-s);font-size:13.5px;box-shadow:0 6px 20px rgba(0,0,0,0.2);border-left:3px solid var(--saffron-500);max-width:320px;animation:toastin .18s ease-out}
+@keyframes toastin{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.divider{height:1px;background:var(--line);margin:28px 0}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;background:var(--ivory-200);color:var(--ink-700);border:1px solid var(--line)}
+.badge-good{background:#e6efe8;color:var(--good);border-color:#c7ddcc}
+.badge-warn{background:#f6e9d8;color:var(--warn);border-color:#ecd3ac}
+.kv-list{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;font-size:13.5px;margin:16px 0}
+.kv-list .k{color:var(--ink-500);font-size:12px}
+.kv-list .v{font-weight:600}
+.two-col{display:grid;grid-template-columns:2fr 1fr;gap:26px}
+@media (max-width:900px){.two-col{grid-template-columns:1fr}}
+.text-block h3{font-family:var(--font-display);font-size:16.5px;margin:22px 0 8px}
+.text-block h3:first-child{margin-top:0}
+.text-block p{font-size:14px;color:var(--ink-700);line-height:1.65;margin:0 0 6px}
+.link-list a{display:block;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--line)}
+.link-list a:last-child{border-bottom:none}
+.compare-bar{position:fixed;bottom:0;left:0;right:0;background:var(--navy-900);color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;z-index:150;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+.chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:14px;font-size:12.5px;margin-right:8px}
+.chip button{background:none;border:none;color:#fff;font-size:14px;line-height:1}
+.skeleton-note{font-size:12px;color:var(--ink-500);font-style:italic}
+::selection{background:var(--saffron-100)}
+:focus-visible{outline:2px solid var(--saffron-500);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast-wrap"></div>
+
+<script>
+/* =========================================================
+   BhuSetu — National Land Governance Platform (demo build)
+   Single-file SPA. All data below is illustrative/demo data.
+========================================================= */
+
+/* ---------- persistent state ---------- */
+const LS_KEY = 'BhuSetu_state_v1';
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {role:null, roleLabel:null, saved:[], submissions:[], collabRequests:[], researchRequests:[], lang:'en'};
+}
+function saveState(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
+}
+let state = loadState();
+
+/* ---------- toast ---------- */
+function toast(msg){
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.transition='opacity .3s'; el.style.opacity='0'; setTimeout(()=>el.remove(),300); }, 2600);
+}
+
+/* ---------- demo data ---------- */
+const STATES = ["Telangana","Andhra Pradesh","Maharashtra","Karnataka","Tamil Nadu","Uttar Pradesh","Madhya Pradesh","Rajasthan","Gujarat","West Bengal","Bihar","Odisha","Punjab","Haryana","Kerala"];
+const TOPICS = ["Agricultural Land Conversion","Urban Expansion","Forest Cover Change","Land Titling","Water Resource Management","Climate Vulnerability","Land Tenure Security","Infrastructure Development","Common Property Resources","Land Records Digitization"];
+const INSTITUTIONS = ["National Institute of Rural Development","Indian Statistical Institute","Centre for Policy Research","IIT Hyderabad — CSRE","NRSC Hyderabad","Council for Social Development","Gokhale Institute of Politics & Economics"];
+const AUTHORS = ["A. Krishnamurthy","S. Bhattacharya","M. Rao","P. Iyer","R. Sharma","N. Fernandes","D. Chatterjee","K. Reddy"];
+
+function pick(arr,i){ return arr[i % arr.length]; }
+function seedRand(seed){ let x = Math.sin(seed)*10000; return x - Math.floor(x); }
+
+const TYPE_LABELS = {
+  paper:"Research Paper", dataset:"Dataset", report:"Government Report", law:"Land Law",
+  judgment:"Judgment", 'case-study':"Case Study", 'gis-layer':"GIS Layer", policy:"Policy",
+  grant:"Research Grant", programme:"Programme", 'decision-brief':"Decision Brief",
+  collab:"Collaboration", project:"Project", challenge:"Innovation Challenge"
+};
+
+const RESOURCES = [];
+(function buildResources(){
+  let id=1;
+  const types = ['paper','dataset','report','law','judgment','gis-layer','grant','programme','decision-brief','collab','project'];
+  for(let i=0;i<66;i++){
+    const type = pick(types,i);
+    const state_ = pick(STATES,i*3+1);
+    const topic = pick(TOPICS,i*2+1);
+    const year = 2015 + Math.floor(seedRand(i+1)*11);
+    const inst = pick(INSTITUTIONS,i+2);
+    const author = pick(AUTHORS,i+4);
+    let title;
+    if(type==='paper') title = `${topic} in ${state_}: evidence from district-level panel data`;
+    else if(type==='dataset') title = `${state_} ${topic} dataset, ${year}`;
+    else if(type==='report') title = `Annual report on ${topic.toLowerCase()} — ${state_} (${year})`;
+    else if(type==='law') title = `${state_} Land Revenue & Tenancy (Amendment) Act, ${year}`;
+    else if(type==='judgment') title = `High Court of ${state_} — land classification dispute, ${year}`;
+    else if(type==='gis-layer') title = `${topic} spatial layer — ${state_}, ${year}`;
+    else if(type==='grant') title = `Research grant: ${topic} in ${state_}`;
+    else if(type==='programme') title = `${state_} ${topic} Monitoring Programme`;
+    else if(type==='decision-brief') title = `Decision brief: policy options for ${topic.toLowerCase()} in ${state_}`;
+    else if(type==='collab') title = `Collaboration opportunity — ${topic} research network`;
+    else title = `Pilot project: ${topic.toLowerCase()} intervention in ${state_}`;
+    RESOURCES.push({
+      id:'RES-'+(id++), type, title, state:state_, district:`${state_.split(' ')[0]} District ${1+(i%9)}`,
+      year, topic, institution:inst, author,
+      summary:`Illustrative demo record examining ${topic.toLowerCase()} patterns in ${state_}, compiled for platform demonstration purposes.`,
+      source: type==='law'||type==='judgment' ? `${state_} Gazette / Judiciary records` : inst,
+      method: type==='dataset'||type==='gis-layer' ? 'Remote sensing + field verification (demo)' : 'Mixed-methods analysis (demo)',
+      lastUpdated:`${year}-${String(1+(i%12)).padStart(2,'0')}-${String(1+(i%27)).padStart(2,'0')}`
+    });
+  }
+})();
+
+const CASE_STUDIES = [
+  {id:'CS-1', title:'Digitising land records to cut title disputes in Telangana', state:'Telangana', topic:'Land Titling',
+   problem:'Manual land records led to frequent boundary disputes and long resolution times in revenue courts.',
+   background:'Prior to reform, land ownership records were paper-based across mandal offices, with duplicate and conflicting entries common in older revenue divisions.',
+   intervention:'A state-wide digitisation drive linked survey records, registration data and mutation records into a single searchable ledger.',
+   data:'Registration data, resurvey GIS records, and revenue court case logs, 2016–2023 (demo).',
+   implementation:'Rolled out mandal-by-mandal over four years, with local revenue officers trained on the new system and a public grievance window for record correction.',
+   outcomes:'Illustrative demo figures show a reduction in new title-dispute filings and faster average resolution time for existing cases.',
+   challenges:'Resurveying contested plots and reconciling legacy paper records with GPS-verified boundaries required significant field verification effort.',
+   lessons:'Public grievance windows before final lock-in of records reduced downstream litigation.',
+   transferability:'Approach is most directly transferable to states with similar mandal/taluk revenue administration structures.',
+   relatedPolicies:['Land Records Modernisation Programme'], relatedResearch:['RES-4','RES-19'], relatedGis:['RES-31']},
+  {id:'CS-2', title:'Buffer-zone afforestation to manage urban-forest edge conflict, Maharashtra', state:'Maharashtra', topic:'Forest Cover Change',
+   problem:'Rapid urban expansion at the edge of protected forest land increased encroachment and human-wildlife conflict incidents.',
+   background:'Peri-urban growth around a major forest division outpaced zoning enforcement over roughly a decade.',
+   intervention:'A joint forest-and-urban-planning buffer zone combined community afforestation with revised zoning rules.',
+   data:'Land use/land cover satellite time series and forest department incident logs (demo).',
+   implementation:'Piloted in three forest ranges with local community forest committees managing buffer plantation.',
+   outcomes:'Demo indicators suggest a slower rate of encroachment growth in pilot ranges versus comparable non-pilot ranges.',
+   challenges:'Coordinating between urban development authorities and forest departments required a new joint clearance process.',
+   lessons:'Community-managed buffers had materially better survival rates than department-only plantations in the demo dataset.',
+   transferability:'Applicable to other rapidly urbanising forest-edge districts with active community forestry institutions.',
+   relatedPolicies:['Urban-Forest Interface Policy'], relatedResearch:['RES-7','RES-22'], relatedGis:['RES-15']},
+  {id:'CS-3', title:'Groundwater-linked land use zoning in drought-prone Rajasthan blocks', state:'Rajasthan', topic:'Water Resource Management',
+   problem:'Unregulated bore-well agriculture in over-exploited groundwater blocks accelerated water table decline.',
+   background:'Several blocks were classified as \u201cover-exploited\u201d under groundwater assessment criteria, threatening long-term irrigation viability.',
+   intervention:'Land use zoning tied cropping-pattern incentives to groundwater block classification, with GIS-based monitoring.',
+   data:'Central Ground Water Board block classifications and cropping pattern surveys (demo).',
+   implementation:'Introduced via block-level agricultural extension programmes with revised crop-insurance incentives.',
+   outcomes:'Illustrative results show a shift toward less water-intensive cropping in a subset of pilot blocks.',
+   challenges:'Farmer income continuity during the cropping-pattern transition was a central sensitivity.',
+   lessons:'Pairing zoning with insurance and price-support incentives improved adoption over zoning alone.',
+   transferability:'Relevant to other arid and semi-arid blocks with reliable groundwater block classification data.',
+   relatedPolicies:['Groundwater-Linked Cropping Policy'], relatedResearch:['RES-11'], relatedGis:['RES-40']},
+  {id:'CS-4', title:'Coastal land-use resilience mapping after cyclone exposure, Odisha', state:'Odisha', topic:'Climate Vulnerability',
+   problem:'Repeated cyclone exposure damaged settlements built on low-lying coastal land without updated hazard zoning.',
+   background:'Historic settlement patterns predated modern coastal hazard mapping, leaving many habitations in high-exposure zones.',
+   intervention:'Updated coastal vulnerability mapping informed a revised land-use and resettlement-incentive framework.',
+   data:'Storm surge modelling, elevation data and settlement census overlays (demo).',
+   implementation:'Phased rollout prioritising the highest-vulnerability gram panchayats first.',
+   outcomes:'Demo tracking shows increased uptake of resilient housing incentives in mapped high-risk zones.',
+   challenges:'Balancing resettlement incentives with communities\u2019 livelihood ties to the coastline required extended consultation.',
+   lessons:'Early, visible GIS evidence sharing with panchayats improved trust in the vulnerability classification.',
+   transferability:'Directly relevant to other cyclone-exposed coastal districts with available elevation and surge data.',
+   relatedPolicies:['Coastal Resilience Land Use Policy'], relatedResearch:['RES-27'], relatedGis:['RES-9']}
+];
+
+const POLICIES = [
+  {id:'POL-1', name:'Land Records Modernisation Programme', state:'Telangana', topic:'Land Titling', status:'Active',
+    summary:'Digitises land ownership, survey and mutation records into a unified, publicly queryable ledger.'},
+  {id:'POL-2', name:'Urban-Forest Interface Policy', state:'Maharashtra', topic:'Forest Cover Change', status:'Pilot',
+    summary:'Establishes managed buffer zones and joint clearance processes between urban and forest authorities.'},
+  {id:'POL-3', name:'Groundwater-Linked Cropping Policy', state:'Rajasthan', topic:'Water Resource Management', status:'Pilot',
+    summary:'Ties cropping incentives and insurance terms to groundwater block classification.'},
+  {id:'POL-4', name:'Coastal Resilience Land Use Policy', state:'Odisha', topic:'Climate Vulnerability', status:'Draft',
+    summary:'Revises coastal land-use and resettlement incentives based on updated vulnerability mapping.'}
+];
+
+const CHALLENGES = [
+  {id:'CH-1', title:'Low-cost satellite change-detection for encroachment monitoring', dept:'Ministry of Land Resources',
+   summary:'Build a lightweight change-detection pipeline that flags likely encroachment on forest and common land using open satellite imagery.',
+   stage:'Open for submissions', reward:'Pilot funding + deployment support'},
+  {id:'CH-2', title:'Farmer-facing app for groundwater-aware cropping advisories', dept:'Dept. of Agriculture, Rajasthan',
+   summary:'Design a simple advisory tool that nudges cropping choices based on local groundwater block status.',
+   stage:'Open for submissions', reward:'State pilot in 3 blocks'},
+  {id:'CH-3', title:'Plain-language land-record explainer for first-time applicants', dept:'Revenue Department',
+   summary:'Reduce errors in mutation applications with a guided, plain-language digital assistant.',
+   stage:'Under evaluation', reward:'Integration with state land portal'},
+  {id:'CH-4', title:'Coastal vulnerability dashboard for gram panchayats', dept:'Odisha Disaster Management Authority',
+   summary:'A lightweight dashboard that translates vulnerability mapping into panchayat-level action checklists.',
+   stage:'Open for submissions', reward:'Pilot funding + field deployment'},
+  {id:'CH-5', title:'API access layer for state land-use datasets', dept:'National Data & Analytics Platform',
+   summary:'Build a standard access layer so researchers can query multiple state land-use datasets through one API.',
+   stage:'Open for submissions', reward:'Grant + platform integration'}
+];
+
+const DISTRICT_STATS = STATES.map((s,i)=>({
+  state:s,
+  agLandPct: Math.round(30+seedRand(i+1)*45),
+  forestPct: Math.round(8+seedRand(i+7)*30),
+  urbanGrowth: (1+seedRand(i+13)*4).toFixed(1),
+  waterStress: ['Low','Moderate','High','Severe'][Math.floor(seedRand(i+19)*4)]
+}));
+
+/* ---------- role config ---------- */
+const ROLES = [
+  {id:'researcher', name:'Researcher / PhD Scholar', icon:'\u{1F52C}',
+    desc:'Search literature, datasets and legal records; find research gaps and manage your projects.'},
+  {id:'policymaker', name:'Policymaker / Government Official', icon:'\u{1F3DB}\uFE0F',
+    desc:'Review evidence, compare policies, and run scenario simulations to inform decisions.'},
+  {id:'academic', name:'Academic Institution', icon:'\u{1F393}',
+    desc:'Manage faculty and student research, publications, grants and institutional collaborations.'},
+  {id:'government', name:'Government Department', icon:'\u{1F3E2}',
+    desc:'Track programmes, monitor outcomes, and commission research from the platform network.'},
+  {id:'industry', name:'Industry / Technology Expert', icon:'\u{1F4A1}',
+    desc:'Explore innovation challenges, pilot projects and open APIs to build land-governance solutions.'},
+  {id:'public', name:'Public / Citizen', icon:'\u{1F465}',
+    desc:'Browse land statistics, explore maps and read public reports in plain language.'}
+];
+
+const ROLE_NAV = {
+  researcher:[
+    {id:'overview', label:'Overview', kind:'overview'},
+    {id:'research-explorer', label:'Research Explorer', kind:'explorer-research'},
+    {id:'dataset-search', label:'Dataset Search', kind:'explorer-dataset'},
+    {id:'research-papers', label:'Research Papers', kind:'list', filter:r=>r.type==='paper'},
+    {id:'government-reports', label:'Government Reports', kind:'explorer-report'},
+    {id:'land-laws', label:'Land Laws & Judgments', kind:'list', filter:r=>r.type==='law'||r.type==='judgment'},
+    {id:'gis-spatial', label:'GIS / Spatial Data', kind:'gis'},
+    {id:'satellite-data', label:'Satellite Data', kind:'gis'},
+    {id:'methodology', label:'Research Methodology', kind:'methodology'},
+    {id:'ai-lit-review', label:'AI Literature Review', kind:'ai'},
+    {id:'gap-finder', label:'Research Gap Finder', kind:'gapfinder'},
+    {id:'data-analysis', label:'Data Analysis', kind:'analysis'},
+    {id:'case-studies', label:'Case Studies', kind:'cases'},
+    {id:'research-ideas', label:'Research Ideas', kind:'ideas'},
+    {id:'saved-research', label:'Saved Research', kind:'saved'},
+    {id:'collaboration', label:'Collaboration', kind:'collab'},
+    {id:'my-projects', label:'My Projects', kind:'list', filter:r=>r.type==='project'}
+  ],
+  policymaker:[
+    {id:'overview', label:'Overview', kind:'overview'},
+    {id:'evidence-dashboard', label:'Evidence Dashboard', kind:'evidence'},
+    {id:'policy-explorer', label:'Policy Explorer', kind:'policies'},
+    {id:'policy-comparison', label:'Policy Comparison', kind:'policycompare'},
+    {id:'policy-simulator', label:'Policy Simulator', kind:'simulator'},
+    {id:'policy-sandbox', label:'Policy Sandbox', kind:'simulator'},
+    {id:'gis-intelligence', label:'GIS Intelligence', kind:'gis'},
+    {id:'district-comparison', label:'District Comparison', kind:'districts'},
+    {id:'land-use-trends', label:'Land Use Trends', kind:'list', filter:r=>r.type==='gis-layer'},
+    {id:'climate-indicators', label:'Climate Indicators', kind:'list', filter:r=>r.topic==='Climate Vulnerability'},
+    {id:'research-findings', label:'Research Findings', kind:'list', filter:r=>r.type==='paper'},
+    {id:'case-studies', label:'Case Studies', kind:'cases'},
+    {id:'decision-briefs', label:'Decision Briefs', kind:'list', filter:r=>r.type==='decision-brief'}
+  ],
+  academic:[
+    {id:'overview', label:'Overview', kind:'overview'},
+    {id:'research-projects', label:'Research Projects', kind:'list', filter:r=>r.type==='project'},
+    {id:'faculty-research', label:'Faculty Research', kind:'list', filter:r=>r.type==='paper'},
+    {id:'student-projects', label:'Student Projects', kind:'list', filter:r=>r.type==='project'},
+    {id:'datasets', label:'Datasets', kind:'list', filter:r=>r.type==='dataset'},
+    {id:'publications', label:'Publications', kind:'list', filter:r=>r.type==='paper'},
+    {id:'research-grants', label:'Research Grants', kind:'list', filter:r=>r.type==='grant'},
+    {id:'challenges', label:'Challenges', kind:'challenges'},
+    {id:'collaborations', label:'Collaborations', kind:'collab'},
+    {id:'case-studies', label:'Case Studies', kind:'cases'}
+  ],
+  government:[
+    {id:'overview', label:'Overview', kind:'overview'},
+    {id:'programmes', label:'Programmes', kind:'list', filter:r=>r.type==='programme'},
+    {id:'programme-monitoring', label:'Programme Monitoring', kind:'list', filter:r=>r.type==='programme'},
+    {id:'policy-evaluation', label:'Policy Evaluation', kind:'policies'},
+    {id:'department-datasets', label:'Department Datasets', kind:'list', filter:r=>r.type==='dataset'},
+    {id:'gis-layers', label:'GIS Layers', kind:'gis'},
+    {id:'research-requests', label:'Research Requests', kind:'requests'},
+    {id:'project-outcomes', label:'Project Outcomes', kind:'list', filter:r=>r.type==='programme'},
+    {id:'reports', label:'Reports', kind:'list', filter:r=>r.type==='report'},
+    {id:'collaboration', label:'Collaboration', kind:'collab'}
+  ],
+  industry:[
+    {id:'overview', label:'Overview', kind:'overview'},
+    {id:'innovation-challenges', label:'Innovation Challenges', kind:'challenges'},
+    {id:'government-problems', label:'Government Problems', kind:'challenges'},
+    {id:'pilot-projects', label:'Pilot Projects', kind:'list', filter:r=>r.type==='project'},
+    {id:'open-apis', label:'Open APIs', kind:'apis'},
+    {id:'datasets', label:'Datasets', kind:'list', filter:r=>r.type==='dataset'},
+    {id:'tech-opportunities', label:'Technology Opportunities', kind:'challenges'},
+    {id:'collaboration', label:'Collaboration', kind:'collab'},
+    {id:'solution-showcase', label:'Solution Showcase', kind:'list', filter:r=>r.type==='project'},
+    {id:'submissions', label:'Submissions', kind:'submissions'}
+  ],
+  public:[
+    {id:'overview', label:'Overview', kind:'overview'},
+    {id:'land-statistics', label:'Land Statistics', kind:'districts'},
+    {id:'explore-map', label:'Explore Map', kind:'gis'},
+    {id:'district-insights', label:'District Insights', kind:'districts'},
+    {id:'climate-environment', label:'Climate & Environment', kind:'list', filter:r=>r.topic==='Climate Vulnerability'},
+    {id:'public-reports', label:'Public Reports', kind:'list', filter:r=>r.type==='report'},
+    {id:'case-studies', label:'Case Studies', kind:'cases'},
+    {id:'knowledge-centre', label:'Knowledge Centre', kind:'list', filter:r=>r.type==='paper'||r.type==='report'}
+  ]
+};
+
+/* ---------- router ---------- */
+function parseHash(){
+  const h = location.hash.replace(/^#\/?/,'');
+  const parts = h.split('/').filter(Boolean).map(decodeURIComponent);
+  return parts;
+}
+function go(path){ location.hash = path; }
+
+window.addEventListener('hashchange', render);
+window.addEventListener('DOMContentLoaded', render);
+
+
 
 function footerHtml(){
   return `
@@ -3266,6 +3942,9 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
+
+
+
 
 
 
