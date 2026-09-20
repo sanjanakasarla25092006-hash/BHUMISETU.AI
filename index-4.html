@@ -7,6 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  try {
+    const theme = localStorage.getItem('bhumisetu_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) {}
+</script>
 <style>
 :root{
   --navy-900:#1b2a41;
@@ -35,6 +41,35 @@
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
+[data-theme="dark"] {
+  --navy-900:#0a0e17;
+  --navy-800:#111827;
+  --navy-700:#1f2937;
+  --ivory-100:#111827;
+  --ivory-200:#1f2937;
+  --ivory-300:#374151;
+  --saffron-500:#f97316;
+  --saffron-600:#ea580c;
+  --saffron-100:#431407;
+  --ink-900:#f3f4f6;
+  --ink-700:#d1d5db;
+  --ink-500:#9ca3af;
+  --line:#374151;
+  --line-dark:#4b5563;
+  --cream-text:#f3f4f6;
+}
+[data-theme="dark"] .card { background: var(--navy-800); border-color: var(--line); }
+[data-theme="dark"] .site-header { background: var(--navy-900); border-color: var(--line); }
+[data-theme="dark"] .disclaimer-bar { background: var(--navy-800); border-color: var(--line); }
+[data-theme="dark"] .announcement-ticker-wrap, [data-theme="dark"] .ticker-label { background: var(--navy-800); color: var(--cream-text); border-color: var(--line); }
+[data-theme="dark"] .ticker-scroll { color: var(--ink-700); }
+[data-theme="dark"] .btn-navy { background: var(--saffron-500); color: #000; border-color: var(--saffron-500); }
+[data-theme="dark"] .btn-navy:hover { background: var(--saffron-600); }
+[data-theme="dark"] .btn-outline { border-color: var(--cream-text); color: var(--cream-text); }
+[data-theme="dark"] .cap-icon { background: var(--navy-700); color: var(--saffron-500); }
+[data-theme="dark"] .brand-name { color: var(--cream-text); }
+[data-theme="dark"] .lang-btn, [data-theme="dark"] .help-btn, [data-theme="dark"] .theme-btn { color: var(--ink-700); }
+[data-theme="dark"] .lang-btn:hover, [data-theme="dark"] .help-btn:hover, [data-theme="dark"] .theme-btn:hover { color: var(--ink-900); }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
 body{
@@ -626,6 +661,7 @@ function headerHtml(activeTop){
         </div>
       </a>
       <div class="header-actions">
+        <button class="theme-btn" data-action="toggle-theme" title="Toggle Dark/Light Mode">🌓 Theme</button>
         <button class="lang-btn" data-action="lang">🌐 ${
           {'en':'English', 'hi':'हिंदी', 'bn':'বাংলা', 'te':'తెలుగు', 'mr':'मराठी', 'ta':'தமிழ்', 'ur':'اردو', 'gu':'ગુજરાતી', 'kn':'ಕನ್ನಡ', 'or':'ଓଡ଼ିଆ', 'ml':'മലയാളം', 'pa':'ਪੰਜਾਬੀ', 'as':'অসমীয়া'}[state.lang] || 'English'
         }</button>
@@ -636,12 +672,12 @@ function headerHtml(activeTop){
     <div class="secondary-nav" style="background: var(--navy-900); color: #fff; padding: 0;">
       <div class="container" style="display: flex; align-items: center; justify-content: space-between; overflow-x: auto; padding-top: 6px; padding-bottom: 6px;">
         <nav style="display: flex; gap: 28px; align-items: center;">
-          <a href="#/" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.95; display: flex; align-items: center; gap: 6px;"><span style="color:var(--saffron-500)">🏠</span> Home</a>
-          <a href="#/about" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">👤 About Us</a>
-          <a href="#/manuals" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">📄 User Manuals</a>
-          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">❓ FAQ</a>
-          <a href="#/data-hub" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">📁 Resources</a>
-          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 6px;">✉️ Contact</a>
+          <a href="#/" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.95;">Home</a>
+          <a href="#/about" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">About Us</a>
+          <a href="#/manuals" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">User Manuals</a>
+          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">FAQ</a>
+          <a href="#/data-hub" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">Resources</a>
+          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">Contact</a>
         </nav>
         <div style="display: flex; align-items: center;">
           <input type="text" placeholder="🔍 Search..." style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; color: #fff; font-size: 13px; width: 220px; outline: none;">
@@ -706,7 +742,7 @@ function closeModal(){ const m=document.getElementById('modal-overlay'); if(m) m
 /* ================= PAGE: HOME ================= */
 function pageHome(){
   const slides = [
-    { img: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1920&auto=format&fit=crop', title: 'Turning land data into evidence, insight and better policy.', desc: 'An integrated national platform for land research, geospatial intelligence, policy analysis and collaborative decision-making.' },
+    { img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop', title: 'Turning land data into evidence, insight and better policy.', desc: 'An integrated national platform for land research, geospatial intelligence, policy analysis and collaborative decision-making.' },
     { img: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1920&auto=format&fit=crop', title: 'Geospatial Land Visualization', desc: 'Mapping state borders, forest covers, and urban infrastructure with high-resolution satellite imagery.' },
     { img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop', title: 'Digital Record Verification', desc: 'Ensuring absolute transparency with traceable land documents, deeds, and historical survey data.' },
     { img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop', title: 'Sustainable Rural Planning', desc: 'Developing actionable strategies to balance rapid modernization with ecological preservation.' }
@@ -1893,6 +1929,15 @@ document.addEventListener('click', function(e){
     case 'hero-next': e.preventDefault(); if(window.heroNext) window.heroNext(); break;
     case 'hero-prev': e.preventDefault(); if(window.heroPrev) window.heroPrev(); break;
     case 'hero-dot': e.preventDefault(); if(window.heroDot) window.heroDot(parseInt(t.dataset.index)); break;
+    case 'toggle-theme': {
+      e.preventDefault();
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      try { localStorage.setItem('bhumisetu_theme', newTheme); } catch(e){}
+      toast('Theme switched to ' + newTheme + ' mode');
+      break;
+    }
     case 'lang': {
       e.preventDefault();
       openModal(`
