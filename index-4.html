@@ -985,12 +985,13 @@ window.requestOtp = function() {
   const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
   toast('Sending real SMS to ' + mobile + '...');
   
-  const fast2smsKey = localStorage.getItem('fast2sms_key');
+  const fast2smsKey = localStorage.getItem('fast2sms_key') || '750Vy4SrCNKb8XWmYDTsLOpniQdoR12aEveFUPjfu6ctM3klxHDw7P3ghIqfCmTin9oLByElKMrpGW5S';
 
   if (fast2smsKey) {
     // Use Fast2SMS if key is provided
     const cleanNumber = mobile.replace('+91', '');
-    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=q&message=Your BhuSetu login OTP is: ${generatedOtp}&language=english&flash=0&numbers=${cleanNumber}`)
+    const msg = encodeURIComponent('Your BhuSetu login OTP is: ' + generatedOtp);
+    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`)
       .then(res => res.json()).then(data => {
         console.log("Fast2SMS Response:", data);
         showOtpModal(role, mobile, generatedOtp);
@@ -1062,11 +1063,12 @@ window.submitSignUp = function() {
   const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
   toast('Sending real SMS to ' + mobile + '...');
   
-  const fast2smsKey = localStorage.getItem('fast2sms_key');
+    const fast2smsKey = localStorage.getItem('fast2sms_key') || '750Vy4SrCNKb8XWmYDTsLOpniQdoR12aEveFUPjfu6ctM3klxHDw7P3ghIqfCmTin9oLByElKMrpGW5S';
 
   if (fast2smsKey) {
     const cleanNumber = mobile.replace('+91', '');
-    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=q&message=Your BhuSetu login OTP is: ${generatedOtp}&language=english&flash=0&numbers=${cleanNumber}`)
+    const msg = encodeURIComponent('Your BhuSetu login OTP is: ' + generatedOtp);
+    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`)
       .then(res => res.json()).then(data => {
         showOtpModal(role, mobile, generatedOtp);
       }).catch(err => {
@@ -1090,7 +1092,7 @@ window.submitSignUp = function() {
 };
 
 window.showOtpModal = function(role, mobile, generatedOtp) {
-  const isKeySetup = !!localStorage.getItem('fast2sms_key');
+  const isKeySetup = true; // Hardcoded Fast2SMS key is active
   const helperText = isKeySetup 
     ? `<span style="color:green; font-weight:bold;">REAL SMS SENT VIA FAST2SMS! Check your mobile phone.</span>`
     : `<span style="color:var(--saffron-600); font-weight:bold;">SMS API Quota Exceeded. Enter this Simulated OTP to login: <span style="background:var(--ivory-200); padding:2px 6px; border:1px solid var(--line);">${generatedOtp}</span></span>`;
@@ -2810,6 +2812,7 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
+
 
 
 
