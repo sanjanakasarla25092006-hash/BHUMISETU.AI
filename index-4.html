@@ -2039,19 +2039,24 @@ document.addEventListener('click', function(e){
       state.lang = t.dataset.lang;
       saveState();
       
+      if (state.lang === 'en') {
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.' + location.hostname + '; path=/;';
+        location.reload();
+        break;
+      }
+
       const select = document.querySelector('.goog-te-combo');
       if (select) {
         select.value = state.lang;
         select.dispatchEvent(new Event('change'));
+        toast('Translating to ' + langs[state.lang] + '...');
+        closeModal();
       } else {
-        // Fallback if widget hasn't loaded yet, try setting cookie manually and reloading
         document.cookie = `googtrans=/en/${state.lang}; path=/`;
         document.cookie = `googtrans=/en/${state.lang}; domain=.${location.hostname}; path=/`;
         location.reload();
       }
-      
-      toast('Translating to ' + langs[state.lang] + '...');
-      render();
       break;
     }
     case 'signout': {
