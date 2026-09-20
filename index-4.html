@@ -73,6 +73,14 @@
 [data-theme="dark"] .card h3 { color: var(--ink-900); }
 [data-theme="dark"] .section h2 { color: var(--ink-900); }
 [data-theme="dark"] .section-label { color: var(--saffron-500); }
+
+/* Google Translate Fix */
+body { top: 0px !important; }
+.goog-te-banner-frame, .skiptranslate > iframe { display: none !important; }
+.goog-te-gadget { color: transparent !important; }
+#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
 body{
