@@ -47,7 +47,7 @@ class PDF(FPDF):
         self.set_font("helvetica", "", 10)
         self.set_text_color(100, 100, 100)
         self.set_xy(25, self.get_y() + 3)
-        self.cell(0, 5, "BhuSetu - National Land Governance Platform", border=0, align="L", new_x="LMARGIN", new_y="NEXT")
+        self.cell(0, 5, "BHUMISETU - National Land Governance Platform", border=0, align="L", new_x="LMARGIN", new_y="NEXT")
         
         if os.path.exists("logo.png"):
             self.image("logo.png", 180, self.get_y()-8, 12)
@@ -82,7 +82,7 @@ def make_pdf(title):
     
     pdf.set_xy(30, 170)
     pdf.set_font("helvetica", "", 12)
-    pdf.cell(0, 6, "BhuSetu - National Land Governance Platform", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "BHUMISETU - National Land Governance Platform", new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(30)
     pdf.set_font("helvetica", "", 10)
     pdf.cell(0, 6, "Official platform overview and usage guidelines", new_x="LMARGIN", new_y="NEXT")
@@ -94,7 +94,7 @@ def make_pdf(title):
     
     pdf.set_text_color(50, 50, 50)
     pdf.set_font("helvetica", "", 12)
-    content = f"Welcome to the {title}. This document provides comprehensive guidelines and procedural steps for utilizing this specific module within the BhuSetu National Land Governance Platform."
+    content = f"Welcome to the {title}. This document provides comprehensive guidelines and procedural steps for utilizing this specific module within the BHUMISETU National Land Governance Platform."
     pdf.multi_cell(0, 7, content)
     pdf.ln(15)
     
@@ -137,7 +137,7 @@ def make_pdf(title):
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("helvetica", "B", 10)
     pdf.set_xy(17, pdf.get_y() + 2)
-    pdf.cell(0, 6, "BHUSETU - LAND GOVERNANCE DASHBOARD", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, "BHUMISETU - LAND GOVERNANCE DASHBOARD", new_x="LMARGIN", new_y="NEXT")
     
     pdf.set_y(pdf.get_y() + 80)
     
@@ -173,7 +173,7 @@ def make_pdf(title):
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("helvetica", "B", 9)
     pdf.set_xy(17, pdf.get_y() + 1.5)
-    pdf.cell(0, 5, "BHUSETU - LAND GOVERNANCE DASHBOARD", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 5, "BHUMISETU - LAND GOVERNANCE DASHBOARD", new_x="LMARGIN", new_y="NEXT")
     
     pdf.set_y(pdf.get_y() + 65)
     pdf.set_text_color(41, 128, 185)
