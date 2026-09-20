@@ -658,7 +658,7 @@ function headerHtml(activeTop){
     <div class="container header-row">
       <a href="#/" class="brand" style="align-items:center;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 42px; width: auto;">
-        <div style="width:34px; height:34px; background:linear-gradient(135deg, #0d9488, #0f766e); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:sans-serif; font-size:18px; font-weight:bold; margin-left: 12px; margin-right: 12px; padding-bottom: 2px; box-shadow: 0 2px 6px rgba(13,148,136,0.4);">భూ</div>
+        <div style="width:36px; height:36px; background:linear-gradient(135deg, #1b2a41, #2c4363); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:sans-serif; font-size:20px; font-weight:bold; margin-left: 12px; margin-right: 12px; line-height: 1; box-shadow: 0 2px 6px rgba(0,0,0,0.15); padding-bottom: 2px;">భూ</div>
         <div class="brand-text">
           <div class="brand-name">BHUMISETU</div>
           <div class="brand-sub">National Land Governance Platform</div>
@@ -1712,19 +1712,20 @@ function pageManuals(){
     'AI Research Assistant Guide', 'Evidence Hub Walkthrough', 'Uploading Department Datasets', 'Collaboration Module Basics',
     'Land Records API Integration', 'Case Study Submission Guide'
   ];
-  const pdfData = 'data:application/pdf;base64,JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwogIC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAvTWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0KPj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAgL1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSCgkgID4+CgkgID4+CiAgL0NvbnRlbnRzIDUgMCBSCj4+CmVuZG9iagoKNCAwIG9iago8PAogIC9UeXBlIC9Gb250CiAgL1N1YnR5cGUgL1R5cGUxCiAgL0Jhc2VGb250IC9UaW1lcy1Sb21hbgo+PgplbmRvYmoKCjUgMCBvYmoKPDwgL0xlbmd0aCAyMSA+PgpzdHJlYW0KQlQKOTAgOTAgVEQKL0YxIDE4IFRmCihEZW1vIFBERikgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4gCjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAwMDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9vdCAxIDAgUgo+PgpzdGFydHhyZWYKNTAxCiUlRU9GCg==';
   return `${headerHtml('')}
   <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container">
     <div class="page-head"><h1>User Manuals</h1><p>Download procedural guidelines and user manuals for various platform modules.</p></div>
     <div class="grid grid-4" style="gap: 16px;">
-      ${manuals.map(m => `
-        <a href="${pdfData}" download="${m.replace(/ /g, '_')}.pdf" style="text-decoration:none;">
+      ${manuals.map(m => {
+        const filename = m.replace(/ /g, '_') + '.pdf';
+        return `
+        <a href="manuals/${filename}" download="${filename}" style="text-decoration:none;" target="_blank">
           <div class="card" style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; cursor: pointer; height: 100%;">
             <div style="font-weight: 500; font-size: 14px; color: var(--ink-900); padding-right: 12px; line-height: 1.4;">${m}</div>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--saffron-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           </div>
         </a>
-      `).join('')}
+      `}).join('')}
     </div>
   </div></section>${footerHtml()}`;
 }
@@ -1735,36 +1736,37 @@ function pageFaq(){
     { q: "How frequently is the GIS and satellite data updated?", a: "Base land use and forest cover layers are updated annually, while specific project monitoring data and climate vulnerability indices are updated quarterly." },
     { q: "How do I use the Policy Simulator?", a: "Policymakers can access the Policy Lab to design a policy (defining the problem, geography, and intervention) and simulate its expected outcomes against historical land data." },
     { q: "Can I request a new dataset or propose a research project?", a: "Yes, authenticated researchers and government departments can use the Collaboration module to request data, propose projects, or participate in Innovation Challenges." },
-    { q: "Are the digital records legally binding?", a: "Land records, maps, and analytical information provided through this platform are for evidence-based planning and are subject to official verification by the respective state Revenue Departments." }
+    { q: "Are the digital records legally binding?", a: "Land records, maps, and analytical information provided through this platform are for evidence-based planning and are subject to official verification by the respective state Revenue Departments." },
+    { q: "What formats are the datasets available in?", a: "The datasets in the Data Hub can be downloaded in standard machine-readable formats including CSV, GeoJSON, Shapefiles, and directly accessed via REST APIs." },
+    { q: "How does BHUMISETU ensure data privacy?", a: "All personal identifiable information (PII) is anonymized before datasets are published. Access to sensitive land owner data is strictly restricted to authorized government departments." },
+    { q: "Is there a mobile application available?", a: "Currently, BHUMISETU is a fully responsive web platform that works seamlessly on mobile browsers. A dedicated native mobile app is under development." },
+    { q: "Who do I contact for technical support?", a: "You can reach out to our dedicated support team via the HelpDesk portal or email us directly at support@bhumisetu.gov.in." }
   ];
   return `${headerHtml('')}
+  <style>
+    .faq-details { background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; overflow: hidden; transition: 0.2s; }
+    .faq-details[open] { background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .faq-summary { padding: 18px 24px; font-weight: 500; font-size: 15.5px; cursor: pointer; color: var(--ink-900); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .faq-summary::-webkit-details-marker { display: none; }
+    .faq-summary::after { content: '+'; font-size: 22px; color: var(--ink-500); font-weight: 400; line-height: 1; }
+    .faq-details[open] .faq-summary::after { content: '\\2212'; color: var(--saffron-500); }
+    .faq-details[open] .faq-summary { color: var(--navy-900); font-weight: 600; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+    .faq-answer { padding: 0 24px 20px; font-size: 15px; color: var(--ink-700); line-height: 1.6; }
+    [data-theme="dark"] .faq-details { background: var(--navy-800); }
+    [data-theme="dark"] .faq-details[open] { background: var(--navy-700); }
+    [data-theme="dark"] .faq-summary { color: var(--cream-text); }
+    [data-theme="dark"] .faq-details[open] .faq-summary { color: var(--saffron-500); }
+  </style>
   <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container" style="max-width: 900px;">
     
-    <div class="page-head"><h1>Frequently Asked Questions</h1><p>General information and platform guidelines.</p></div>
-    <div style="background: var(--navy-900); color: #fff; padding: 16px 24px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
-      <h4 style="margin: 0; font-size: 15px; font-weight: 500;">${faqs[0].q}</h4>
-      <span style="font-size: 20px;">\u2212</span>
-    </div>
-    <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-top: none; padding: 20px 24px; font-size: 14px; color: var(--ink-700); border-radius: 0 0 6px 6px; margin-bottom: 32px;">
-      ${faqs[0].a}
-    </div>
+    <div class="page-head"><h1>Frequently Asked Questions</h1><p>General information, policies, and platform guidelines.</p></div>
 
-    <h2 style="font-family: var(--font-display); font-size: 22px; color: var(--navy-900); margin-bottom: 16px;">Platform Usage & Access</h2>
-    
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: var(--navy-900); color: #fff; padding: 16px 24px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
-        <h4 style="margin: 0; font-size: 15px; font-weight: 500;">${faqs[1].q}</h4>
-        <span style="font-size: 20px;">\u2212</span>
-      </div>
-      <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-top: none; padding: 20px 24px; font-size: 14px; color: var(--ink-700); border-radius: 0 0 6px 6px; margin-bottom: 8px;">
-        ${faqs[1].a}
-      </div>
-
-      ${faqs.slice(2).map(f => `
-        <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); padding: 16px 24px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; color: var(--ink-900);">
-          <h4 style="margin: 0; font-size: 14px; font-weight: 500;">${f.q}</h4>
-          <span style="font-size: 20px; color: var(--ink-500);">+</span>
-        </div>
+    <div style="display: flex; flex-direction: column;">
+      ${faqs.map((f, i) => `
+        <details class="faq-details" ${i === 0 ? 'open' : ''}>
+          <summary class="faq-summary">${f.q}</summary>
+          <div class="faq-answer">${f.a}</div>
+        </details>
       `).join('')}
     </div>
 
