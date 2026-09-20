@@ -649,38 +649,43 @@ function headerHtml(activeTop){
   const roleArea = state.role
     ? `<a href="#/dash/${state.role}/overview" class="role-pill"><span class="dot"></span>${escapeHtml(state.roleLabel)}</a>
        <button class="btn-ghost" data-action="signout">Sign out</button>`
-    : `<a href="#/signin" class="btn btn-navy" style="border-radius:6px; padding:8px 16px;">👤 Sign In</a>`;
+    : `<a href="#/signin" class="btn btn-navy" style="border-radius:6px; padding:8px 16px;">Sign In</a>`;
   return `
   <header class="site-header">
     <div class="container header-row">
-      <a href="#/" class="brand">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 42px; width: auto; margin-right: 4px;">
+      <a href="#/" class="brand" style="align-items:center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 42px; width: auto;">
+        <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 12px; margin-right: 12px; padding-left: 12px; border-left: 1px solid var(--line);">
+          <path d="M16 4L4 10L16 16L28 10L16 4Z" fill="var(--saffron-500)"/>
+          <path d="M4 14L16 20L28 14" stroke="var(--ink-900)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 20L16 26L28 20" stroke="var(--saffron-600)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <div class="brand-text">
           <div class="brand-name">BHUMISETU</div>
           <div class="brand-sub">National Land Governance Platform</div>
         </div>
       </a>
       <div class="header-actions">
-        <button class="theme-btn" data-action="toggle-theme" title="Toggle Dark/Light Mode">🌓 Theme</button>
-        <button class="lang-btn" data-action="lang">🌐 ${
+        <button class="theme-btn" data-action="toggle-theme" title="Toggle Dark/Light Mode" style="font-weight:500;">Theme</button>
+        <button class="lang-btn" data-action="lang" style="font-weight:500;">Language: ${
           {'en':'English', 'hi':'हिंदी', 'bn':'বাংলা', 'te':'తెలుగు', 'mr':'मराठी', 'ta':'தமிழ்', 'ur':'اردو', 'gu':'ગુજરાતી', 'kn':'ಕನ್ನಡ', 'or':'ଓଡ଼ିଆ', 'ml':'മലയാളം', 'pa':'ਪੰਜਾਬੀ', 'as':'অসমীয়া'}[state.lang] || 'English'
         }</button>
-        <button class="help-btn" data-action="help">? Help</button>
+        <button class="help-btn" data-action="help" style="font-weight:500;">Help</button>
         ${roleArea}
       </div>
     </div>
     <div class="secondary-nav" style="background: var(--navy-900); color: #fff; padding: 0;">
-      <div class="container" style="display: flex; align-items: center; justify-content: space-between; overflow-x: auto; padding-top: 6px; padding-bottom: 6px;">
-        <nav style="display: flex; gap: 28px; align-items: center;">
-          <a href="#/" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.95;">Home</a>
-          <a href="#/about" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">About Us</a>
-          <a href="#/manuals" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">User Manuals</a>
-          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">FAQ</a>
-          <a href="#/data-hub" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">Resources</a>
-          <a href="#/faq" style="padding: 6px 0; font-size: 13.5px; font-weight: 500; opacity: 0.9;">Contact</a>
+      <div class="container" style="display: flex; align-items: center; justify-content: space-between; overflow-x: auto; padding-top: 4px; padding-bottom: 4px;">
+        <nav style="display: flex; gap: 40px; align-items: center;">
+          <a href="#/" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.95;">Home</a>
+          <a href="#/about" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">About Us</a>
+          <a href="#/manuals" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">User Manuals</a>
+          <a href="#/faq" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">FAQ</a>
+          <a href="#/data-hub" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">Resources</a>
+          <a href="#/faq" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">Contact</a>
         </nav>
         <div style="display: flex; align-items: center;">
-          <input type="text" placeholder="🔍 Search..." style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; color: #fff; font-size: 13px; width: 220px; outline: none;">
+          <input type="text" placeholder="Search..." style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; color: #fff; font-size: 13px; width: 220px; outline: none;">
         </div>
       </div>
     </div>
