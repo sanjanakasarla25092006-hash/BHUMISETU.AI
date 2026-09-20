@@ -378,6 +378,9 @@ table.data-table th{background:var(--ivory-200)}
 ::selection{background:var(--saffron-100)}
 :focus-visible{outline:2px solid var(--saffron-500);outline-offset:2px}
 </style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
 <div id="app"></div>
@@ -2557,36 +2560,24 @@ const GIS_LAYERS = [
   {id:'climate', label:'Climate Vulnerability', color:'#c9a227'}
 ];
 function gisSection(){
-  const activeLayer = 'landuse';
   return `
-  <div class="page-head"><div class="kicker">GIS EXPLORER</div><h1>GIS Explorer</h1><p>Interactive demo layers by state. Click a state to inspect its indicator values.</p></div>
-  <div class="search-row">
-    <input class="search-input" type="text" id="gis-search" placeholder="Search state...">
-    <select id="gis-year"><option>2024</option><option>2020</option><option>2015</option><option>2010</option></select>
-    <button class="btn btn-outline btn-sm" data-action="gis-reset">Reset</button>
-    <button class="btn btn-outline btn-sm" data-action="gis-download">Download layer (demo)</button>
+  <div class="page-head">
+    <div class="kicker">GIS EXPLORER</div>
+    <h1>Geospatial Intelligence Map</h1>
+    <p>High-resolution interactive map powered by Leaflet.js. Explore geospatial intelligence layers.</p>
   </div>
-  <div class="gis-layout">
-    <div class="gis-panel">
-      <h4>Layers</h4>
-      ${GIS_LAYERS.map((l,i)=>`<label class="layer-item"><input type="radio" name="gis-layer" value="${l.id}" data-action="gis-layer" ${i===0?'checked':''}> ${l.label}</label>`).join('')}
-      <h4 style="margin-top:20px">Time</h4>
-      <input type="range" min="2000" max="2024" value="2024" id="gis-time" data-action="gis-time">
-      <div style="font-size:12.5px;color:var(--ink-500)" id="gis-time-label">2024</div>
-    </div>
-    <div class="gis-panel" style="padding:0">
-      <div class="map-canvas">
-        <div class="state-grid" id="state-grid">${gisStateGrid(activeLayer)}</div>
-        <div class="map-legend"><div style="font-weight:600;margin-bottom:4px">Land Use</div>
-          <div class="lg-row"><span class="lg-swatch" style="background:#e7bb87"></span>Low</div>
-          <div class="lg-row"><span class="lg-swatch" style="background:#dd8a34"></span>Medium</div>
-          <div class="lg-row"><span class="lg-swatch" style="background:#8a4f14"></span>High</div>
-        </div>
-      </div>
-    </div>
-    <div class="gis-panel" id="gis-detail">
-      <h4>Details</h4>
-      <p style="font-size:13px;color:var(--ink-500)">Select a state on the map to view indicator values.</p>
+  <div class="search-row" style="background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:24px; display:flex; gap:12px;">
+    <input class="search-input" type="text" id="gis-search" placeholder="Search state or region..." style="flex:1;">
+    <select id="gis-layer-select" style="padding:10px 14px; border:1px solid var(--line); border-radius:6px; outline:none; font-size:14px; background:#fff;">
+       <option value="osm">Standard Map</option>
+       <option value="topo">Topographic</option>
+       <option value="satellite">Satellite Imagery</option>
+    </select>
+    <button class="btn btn-navy" onclick="toast('Searching region...')">Locate</button>
+  </div>
+  <div class="gis-layout" style="display:block;">
+    <div style="width:100%; height:500px; border-radius:12px; overflow:hidden; border:1px solid var(--line); box-shadow:0 4px 12px rgba(0,0,0,0.05); position:relative;">
+       <div id="gis-map" style="width:100%; height:100%; z-index:1;"></div>
     </div>
   </div>`;
 }
@@ -3095,17 +3086,46 @@ function bindSimulator(){
   [p,u,f].forEach(el=>el.addEventListener('input', update));
 }
 function bindGis(){
-  const grid = document.getElementById('state-grid');
-  if(!grid) return;
-  const timeSlider = document.getElementById('gis-time');
-  if(timeSlider) timeSlider.addEventListener('input', ()=>{ document.getElementById('gis-time-label').textContent = timeSlider.value; });
-  const search = document.getElementById('gis-search');
-  if(search) search.addEventListener('input', ()=>{
-    const q = search.value.toLowerCase();
-    document.querySelectorAll('#state-grid .state-cell').forEach(c=>{
-      c.style.opacity = c.dataset.state.toLowerCase().includes(q) ? '1':'0.25';
-    });
+  const mapEl = document.getElementById('gis-map');
+  if(!mapEl) return;
+  if(window.currentMap) { window.currentMap.remove(); window.currentMap = null; }
+  
+  // Initialize Leaflet map centered on India
+  const map = L.map('gis-map').setView([20.5937, 78.9629], 5);
+  window.currentMap = map;
+  
+  // Layer groups
+  const layers = {
+    osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }),
+    topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap' }),
+    satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' })
+  };
+  
+  layers.osm.addTo(map); // Default layer
+  
+  // Add some mock markers for demonstration
+  const markers = [
+    { loc: [28.6139, 77.2090], title: 'Delhi - Urban Expansion Zone' },
+    { loc: [19.0760, 72.8777], title: 'Mumbai - Coastal Zone Regulation' },
+    { loc: [17.3850, 78.4867], title: 'Hyderabad - Dharani Digitization Hub' },
+    { loc: [13.0827, 80.2707], title: 'Chennai - Flood Risk Assessment' },
+    { loc: [25.5941, 85.1376], title: 'Patna - Agricultural Land Survey' }
+  ];
+  
+  markers.forEach(m => {
+    L.marker(m.loc).addTo(map).bindPopup('<b>' + m.title + '</b><br>Geospatial analysis available.');
   });
+  
+  // Handle layer switching
+  const select = document.getElementById('gis-layer-select');
+  if(select) {
+    select.addEventListener('change', (e) => {
+      // Remove all layers
+      Object.values(layers).forEach(l => map.removeLayer(l));
+      // Add selected layer
+      if(layers[e.target.value]) layers[e.target.value].addTo(map);
+    });
+  }
 }
 function bindCaseSearch(){
   const s = document.getElementById('case-search');
