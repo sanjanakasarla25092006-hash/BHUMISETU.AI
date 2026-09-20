@@ -658,7 +658,7 @@ function headerHtml(activeTop){
     <div class="container header-row">
       <a href="#/" class="brand" style="align-items:center;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government of India Emblem" style="height: 42px; width: auto;">
-        <div style="width:34px; height:34px; background:var(--saffron-500); color:var(--navy-900); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:sans-serif; font-size:18px; font-weight:bold; margin-left: 12px; margin-right: 12px; padding-bottom: 2px;">భూ</div>
+        <div style="width:34px; height:34px; background:linear-gradient(135deg, #0d9488, #0f766e); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:sans-serif; font-size:18px; font-weight:bold; margin-left: 12px; margin-right: 12px; padding-bottom: 2px; box-shadow: 0 2px 6px rgba(13,148,136,0.4);">భూ</div>
         <div class="brand-text">
           <div class="brand-name">BHUMISETU</div>
           <div class="brand-sub">National Land Governance Platform</div>
@@ -679,7 +679,6 @@ function headerHtml(activeTop){
           <a href="#/manuals" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">User Manuals</a>
           <a href="#/faq" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">FAQ</a>
           <a href="#/data-hub" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">Resources</a>
-          <a href="#/faq" style="padding: 12px 0; font-size: 15px; font-weight: 500; opacity: 0.9;">Contact</a>
         </nav>
         <div style="display: flex; align-items: center;">
           <input type="text" placeholder="Search..." style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; color: #fff; font-size: 13px; width: 220px; outline: none;">
@@ -1709,56 +1708,59 @@ function pageAbout(){
 }
 function pageManuals(){
   const manuals = [
-    'Application for GPA', 'Application For Succession', 'Application for Court Case PPB', 'Citizen Registration',
-    'Registration Of DAGPA', 'Registration Of GPA', 'Registration of Sale & Gift', 'Grievance Relating to Inclusion in Prohibited Properties List',
-    'Application for Passbook Data Correction', 'Khata Merging', 'Registration of exchange', 'Court Cases & Intimation',
-    'Application for Pending Mutation', 'Application for NALA'
+    'Platform Overview Guide', 'Researcher Data Access Manual', 'GIS Layer Navigation', 'Policy Simulation Handbook',
+    'AI Research Assistant Guide', 'Evidence Hub Walkthrough', 'Uploading Department Datasets', 'Collaboration Module Basics',
+    'Land Records API Integration', 'Case Study Submission Guide'
   ];
+  const pdfData = 'data:application/pdf;base64,JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwogIC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAvTWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0KPj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAgL1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSCgkgID4+CgkgID4+CiAgL0NvbnRlbnRzIDUgMCBSCj4+CmVuZG9iagoKNCAwIG9iago8PAogIC9UeXBlIC9Gb250CiAgL1N1YnR5cGUgL1R5cGUxCiAgL0Jhc2VGb250IC9UaW1lcy1Sb21hbgo+PgplbmRvYmoKCjUgMCBvYmoKPDwgL0xlbmd0aCAyMSA+PgpzdHJlYW0KQlQKOTAgOTAgVEQKL0YxIDE4IFRmCihEZW1vIFBERikgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4gCjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAwMDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9vdCAxIDAgUgo+PgpzdGFydHhyZWYKNTAxCiUlRU9GCg==';
   return `${headerHtml('')}
   <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container">
     <div class="page-head"><h1>User Manuals</h1><p>Download procedural guidelines and user manuals for various platform modules.</p></div>
     <div class="grid grid-4" style="gap: 16px;">
       ${manuals.map(m => `
-        <div class="card" style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; cursor: pointer;">
-          <div style="font-weight: 500; font-size: 14px; color: var(--ink-900); padding-right: 12px; line-height: 1.4;">${m}</div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--saffron-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        </div>
+        <a href="${pdfData}" download="${m.replace(/ /g, '_')}.pdf" style="text-decoration:none;">
+          <div class="card" style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; cursor: pointer; height: 100%;">
+            <div style="font-weight: 500; font-size: 14px; color: var(--ink-900); padding-right: 12px; line-height: 1.4;">${m}</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--saffron-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          </div>
+        </a>
       `).join('')}
     </div>
   </div></section>${footerHtml()}`;
 }
 function pageFaq(){
   const faqs = [
-    { q: "Q1. Where to go for registration?", a: "Registration will be done at Tahsildar cum Joint Sub Registrar Office as indicated in the slot booking receipt." },
-    { q: "Q2. What are the documents to be carried for registration?", a: "Original passbooks, Aadhar cards of all parties, and the printed slot booking receipt." },
-    { q: "Q3. Who all should be available during registration?", a: "The buyer, seller, and two witnesses with valid identification." },
-    { q: "Q4. Who can sign as a witness to a document?", a: "Any adult citizen with a valid government-issued ID card who is not a direct beneficiary of the transaction." },
-    { q: "Q5. When do I get my registered document?", a: "Immediately after the registration process and biometric verification is complete at the office." },
-    { q: "Q6. Is it mandatory to use the system generated registration deed document or the citizen can bring his own document for registration?", a: "It is highly recommended to use the system generated deed to prevent errors, but legally valid self-drafted documents are also accepted subject to verification." }
+    { q: "What is BHUMISETU?", a: "BHUMISETU is a unified National Land Governance Platform designed to bridge the gap between researchers, policymakers, and the public by providing data-driven insights and geospatial intelligence." },
+    { q: "Who can access the data on BHUMISETU?", a: "Public datasets are available to everyone. Advanced analytical tools and specific state-level data require signing in with a designated role (e.g., Researcher, Policymaker)." },
+    { q: "How frequently is the GIS and satellite data updated?", a: "Base land use and forest cover layers are updated annually, while specific project monitoring data and climate vulnerability indices are updated quarterly." },
+    { q: "How do I use the Policy Simulator?", a: "Policymakers can access the Policy Lab to design a policy (defining the problem, geography, and intervention) and simulate its expected outcomes against historical land data." },
+    { q: "Can I request a new dataset or propose a research project?", a: "Yes, authenticated researchers and government departments can use the Collaboration module to request data, propose projects, or participate in Innovation Challenges." },
+    { q: "Are the digital records legally binding?", a: "Land records, maps, and analytical information provided through this platform are for evidence-based planning and are subject to official verification by the respective state Revenue Departments." }
   ];
   return `${headerHtml('')}
   <section class="section section-ivory" style="min-height: calc(100vh - 200px);"><div class="container" style="max-width: 900px;">
     
+    <div class="page-head"><h1>Frequently Asked Questions</h1><p>General information and platform guidelines.</p></div>
     <div style="background: var(--navy-900); color: #fff; padding: 16px 24px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
-      <h4 style="margin: 0; font-size: 15px; font-weight: 500;">Q1. How to check my application's status?</h4>
+      <h4 style="margin: 0; font-size: 15px; font-weight: 500;">${faqs[0].q}</h4>
       <span style="font-size: 20px;">\u2212</span>
     </div>
     <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-top: none; padding: 20px 24px; font-size: 14px; color: var(--ink-700); border-radius: 0 0 6px 6px; margin-bottom: 32px;">
-      1. The status of applications can be checked through - e Challan / Application Status' module at https://bhumisetu.gov.in/ApplicationStatus
+      ${faqs[0].a}
     </div>
 
-    <h2 style="font-family: var(--font-display); font-size: 22px; color: var(--navy-900); margin-bottom: 16px;">Modules related</h2>
+    <h2 style="font-family: var(--font-display); font-size: 22px; color: var(--navy-900); margin-bottom: 16px;">Platform Usage & Access</h2>
     
     <div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="background: var(--navy-900); color: #fff; padding: 16px 24px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center;">
-        <h4 style="margin: 0; font-size: 15px; font-weight: 500;">${faqs[0].q}</h4>
+        <h4 style="margin: 0; font-size: 15px; font-weight: 500;">${faqs[1].q}</h4>
         <span style="font-size: 20px;">\u2212</span>
       </div>
       <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-top: none; padding: 20px 24px; font-size: 14px; color: var(--ink-700); border-radius: 0 0 6px 6px; margin-bottom: 8px;">
-        1. ${faqs[0].a}
+        ${faqs[1].a}
       </div>
 
-      ${faqs.slice(1).map(f => `
+      ${faqs.slice(2).map(f => `
         <div style="background: rgba(255,255,255,0.6); border: 1px solid var(--line); padding: 16px 24px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; color: var(--ink-900);">
           <h4 style="margin: 0; font-size: 14px; font-weight: 500;">${f.q}</h4>
           <span style="font-size: 20px; color: var(--ink-500);">+</span>
