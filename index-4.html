@@ -1036,7 +1036,10 @@ function pageSignin(){
           
           <input type="text" id="loginCaptcha" placeholder="Enter captcha" style="flex:1; min-width:140px; padding:10px 14px; background:#fff; border:1px solid var(--line); border-radius:6px; color:var(--ink-900); font-size:14px; outline:none; box-shadow:inset 0 1px 2px rgba(0,0,0,0.05);">
           
-          <button class="btn" onclick="requestOtp()" style="background:#1e3a8a; color:#fff; border:1px solid rgba(255,255,255,0.4); border-radius:6px; padding:12px 24px; font-weight:600; cursor:pointer;">Get OTP</button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" onclick="submitPasswordLogin()" style="background:#1e3a8a; color:#fff; border:1px solid transparent; border-radius:6px; padding:12px 24px; font-weight:600; cursor:pointer;">Sign In</button>
+            <button class="btn" onclick="requestOtp()" style="background:transparent; color:#1e3a8a; border:1px solid #1e3a8a; border-radius:6px; padding:12px 16px; font-weight:600; cursor:pointer;" title="Forgot Password? Login with SMS OTP">Get OTP</button>
+          </div>
         </div>
       </div>
 
@@ -1053,6 +1056,37 @@ window.refreshCaptcha = function() {
   window.currentCaptcha = str;
   const box = document.getElementById('captchaBox');
   if(box) box.innerText = str;
+};
+
+
+window.submitPasswordLogin = function() {
+  let mobile = document.getElementById('loginMobile').value.trim();
+  const pwd = document.getElementById('loginPassword').value;
+  const captcha = document.getElementById('loginCaptcha').value.trim();
+  const role = document.querySelector('input[name="loginRole"]:checked').value;
+
+  if(!mobile) { toast('Please enter a mobile number'); return; }
+  if(!pwd) { toast('Please enter your password. If you forgot it, use Get OTP.'); return; }
+  if(captcha.toUpperCase() !== window.currentCaptcha) { toast('Invalid Captcha. Please try again.'); refreshCaptcha(); return; }
+
+  if (['academic', 'industry', 'policymaker', 'government'].includes(role)) {
+    const email = document.getElementById('loginEmail')?.value.trim();
+    const inst = document.getElementById('loginInst')?.value.trim();
+    const desig = document.getElementById('loginDesig')?.value.trim();
+    
+    if(!email || !inst || !desig) {
+      toast('Please fill all required official details to login.');
+      return;
+    }
+    
+    if (role === 'policymaker' && !document.getElementById('loginEmpId')?.value.trim()) {
+      toast('Please enter your Official Employee ID.');
+      return;
+    }
+  }
+
+  // Bypass OTP check since password is provided (Mock validation)
+  verifyOtp(role, 'BYPASS_PASSWORD');
 };
 
 window.requestOtp = function() {
@@ -1204,7 +1238,7 @@ window.showOtpModal = function(role, mobile, generatedOtp, isRealSmsSent) {
 };
 
 window.verifyOtp = function(role, expectedOtp) {
-  const code = document.getElementById('otpInput').value;
+  const code = expectedOtp === 'BYPASS_PASSWORD' ? 'BYPASS_PASSWORD' : document.getElementById('otpInput').value;
   if(code === expectedOtp) {
     closeModal();
     
