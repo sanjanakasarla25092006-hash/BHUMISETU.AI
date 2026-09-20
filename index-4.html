@@ -750,13 +750,6 @@ function closeModal(){ const m=document.getElementById('modal-overlay'); if(m) m
 
 /* ================= PAGE: HOME ================= */
 function pageHome(){
-  let vCount = parseInt(localStorage.getItem('bhusetu_visitors') || '78074647');
-  if (!sessionStorage.getItem('bhusetu_session')) {
-      vCount += 1; // Strict 1-to-1 increment per real visit session
-      localStorage.setItem('bhusetu_visitors', vCount);
-      sessionStorage.setItem('bhusetu_session', '1');
-  }
-
   const slides = [
     { img: '', title: 'Turning land data into evidence, insight and better policy.', desc: 'An integrated national platform for land research, geospatial intelligence, policy analysis and collaborative decision-making.' },
     { img: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1920&auto=format&fit=crop', title: 'Geospatial Land Visualization', desc: 'Mapping state borders, forest covers, and urban infrastructure with high-resolution satellite imagery.' },
@@ -836,8 +829,6 @@ function pageHome(){
     </div>
   </section>
 
-
-
   <section class="section section-ivory">
     <div class="container">
       <div class="section-head" style="margin-bottom:32px">
@@ -851,7 +842,7 @@ function pageHome(){
   
   <section class="section" style="background: #fff; padding-bottom: 20px;">
     <div class="container">
-      <h2 style="font-family: var(--font-display); font-size: 34px; color: #0d9488; margin-bottom: 8px; border-bottom: 3px solid var(--saffron-500); display: inline-block; padding-bottom: 6px;">Testimonials/Gallery</h2>
+      <h2 style="font-family: var(--font-display); font-size: 34px; color: var(--navy-900); margin-bottom: 8px; border-bottom: 3px solid var(--saffron-500); display: inline-block; padding-bottom: 6px;">Testimonials/Gallery</h2>
       
       <div style="margin-top: 40px; max-width: 600px; margin-left: auto; margin-right: auto; background: #fff; padding: 24px; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); text-align: center;">
         <div style="font-size: 40px; color: var(--saffron-500); line-height: 1; margin-bottom: 16px;">"</div>
@@ -864,8 +855,8 @@ function pageHome(){
       </div>
       
       <div style="text-align: center; margin-top: 60px; margin-bottom: 30px;">
-        <h3 style="font-family: var(--font-body); font-size: 28px; color: #0d9488; font-weight: 500; margin: 0;">
-          Visitors Count: <span style="font-weight: 700; color: #0f766e;">${vCount}</span>
+        <h3 style="font-family: var(--font-body); font-size: 28px; color: var(--navy-900); font-weight: 500; margin: 0;">
+          Visitors Count: <span style="font-weight: 700; color: var(--navy-900);" id="visitorCountDisplay">Loading...</span>
         </h3>
       </div>
     </div>
@@ -1905,9 +1896,41 @@ function render(){
   afterRender(parts);
 }
 
+
+function fetchVisitorCount() {
+  const el = document.getElementById('visitorCountDisplay');
+  if (!el) return;
+  
+  let isNewSession = !sessionStorage.getItem('bhusetu_session');
+  let url = 'https://countapi.mileshilliard.com/api/v1/hit/bhusetu_visitor_count_prod_2026';
+  
+  if (!isNewSession) {
+    url = 'https://countapi.mileshilliard.com/api/v1/get/bhusetu_visitor_count_prod_2026';
+  } else {
+    sessionStorage.setItem('bhusetu_session', '1');
+  }
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.value) {
+        el.innerText = data.value.toLocaleString();
+      } else {
+        el.innerText = 'Unavailable';
+      }
+    })
+    .catch(err => {
+      console.error('Visitor counter error:', err);
+      el.innerText = 'Unavailable';
+    });
+}
 function afterRender(parts){
-  if(parts.length===0 || !parts[0]){ initHeroSlider(); }
+  if(parts.length===0 || !parts[0]){ 
+    initHeroSlider(); 
+    fetchVisitorCount();
+  }
   if(parts[0]==='research'){ runResearchHub(); }
+  if(parts[0]==='data-hub'){ runDataHub(); }
   if(parts[2]==='policy-simulator' || (parts[0]==='policy-lab' && (parts[1]==='simulator'||parts[1]==='sandbox'))){ bindSimulator(); }
   if(parts[2]==='gis' || parts[0]==='gis' || parts[2]==='explore-map'){ bindGis(); }
   if(parts[0]==='case-studies'){ bindCaseSearch(); }
