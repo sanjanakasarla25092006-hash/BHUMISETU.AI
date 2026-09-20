@@ -1831,7 +1831,19 @@ document.addEventListener('click', function(e){
       const langs = {'en':'English', 'hi':'हिंदी', 'bn':'বাংলা', 'te':'తెలుగు', 'mr':'मराठी', 'ta':'தமிழ்', 'ur':'اردو', 'gu':'ગુજરાતી', 'kn':'ಕನ್ನಡ', 'or':'ଓଡ଼ିଆ', 'ml':'മലയാളം', 'pa':'ਪੰਜਾਬੀ', 'as':'অসমীয়া'};
       state.lang = t.dataset.lang;
       saveState();
-      toast('Language switched to ' + langs[state.lang] + ' (demo)');
+      
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = state.lang;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        // Fallback if widget hasn't loaded yet, try setting cookie manually and reloading
+        document.cookie = `googtrans=/en/${state.lang}; path=/`;
+        document.cookie = `googtrans=/en/${state.lang}; domain=.${location.hostname}; path=/`;
+        location.reload();
+      }
+      
+      toast('Translating to ' + langs[state.lang] + '...');
       render();
       break;
     }
@@ -1998,6 +2010,21 @@ document.addEventListener('submit', function(e){
   }
 });
 </script>
+<style>
+  /* Hide Google Translate toolbar and tooltips */
+  .goog-te-banner-frame.skiptranslate { display: none !important; }
+  body { top: 0px !important; }
+  #goog-gt-tt { display: none !important; }
+  .goog-tooltip { display: none !important; }
+  .goog-tooltip:hover { display: none !important; }
+</style>
+<div id="google_translate_element" style="display:none;"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false, includedLanguages: 'hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as'}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
 
