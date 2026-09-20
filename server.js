@@ -102,6 +102,8 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => res.send('BhuSetu API Backend is running! Please open your frontend on localhost:3000 to use the app.'));
+
 app.listen(PORT, () => {
   console.log(`?? BhuSetu Backend Server running on http://localhost:${PORT}`);
 });
