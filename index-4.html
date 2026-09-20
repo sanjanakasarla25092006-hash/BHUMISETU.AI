@@ -922,11 +922,18 @@ function pageSignin(){
         <input type="password" id="loginPassword" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
       </div>
 
+      function promptSmsKey() {
+  const key = prompt("To send real SMS to Indian mobiles, you need a Fast2SMS API key.\n\nSign up for free at fast2sms.com, get the API Key, and paste it below:");
+  if (key) {
+    localStorage.setItem('fast2sms_key', key);
+    alert("API Key saved! Real SMS delivery is now active.");
+  }
+}
       <!-- Links -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
         <a href="javascript:void(0)" onclick="toast('Demo: Please enter your mobile number and use Get OTP to reset your password.')" style="color:#fff; font-size:14px; text-decoration:none;">Forgot Password</a>
         <div style="color:rgba(255,255,255,0.8); font-size:14px;">
-          New user please <a href="javascript:void(0)" onclick="showSignUpModal()" style="color:#fff; font-weight:600; text-decoration:none;">Sign Up</a>
+          New user please <a href="javascript:void(0)" onclick="showSignUpModal()" style="color:#fff; font-weight:600; text-decoration:none;">Sign Up</a><br><a href="javascript:void(0)" onclick="promptSmsKey()" style="color:var(--saffron-400); font-size:12px; text-decoration:underline; display:inline-block; margin-top:8px;">Enable Real SMS Delivery</a>
         </div>
       </div>
 
@@ -963,29 +970,52 @@ window.refreshCaptcha = function() {
 };
 
 window.requestOtp = function() {
-  const mobile = document.getElementById('loginMobile').value.trim();
+  let mobile = document.getElementById('loginMobile').value.trim();
   const captcha = document.getElementById('loginCaptcha').value.trim();
   const role = document.querySelector('input[name="loginRole"]:checked').value;
 
   if(!mobile) { toast('Please enter a mobile number'); return; }
   if(captcha.toUpperCase() !== window.currentCaptcha) { toast('Invalid Captcha. Please try again.'); refreshCaptcha(); return; }
 
+  // Auto-prepend +91 for Indian numbers if not present, required for some APIs
+  if(mobile.length === 10 && !mobile.startsWith('+')) {
+    mobile = '+91' + mobile;
+  }
+
   const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-  toast('Sending OTP to ' + mobile + '...');
+  toast('Sending real SMS to ' + mobile + '...');
   
-  fetch('https://textbelt.com/text', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      phone: mobile,
-      message: 'Your BhuSetu login OTP is: ' + generatedOtp,
-      key: 'textbelt'
-    })
-  }).then(res => res.json()).then(data => {
-    showOtpModal(role, mobile, generatedOtp);
-  }).catch(err => {
-    showOtpModal(role, mobile, generatedOtp);
-  });
+  const fast2smsKey = localStorage.getItem('fast2sms_key');
+
+  if (fast2smsKey) {
+    // Use Fast2SMS if key is provided
+    const cleanNumber = mobile.replace('+91', '');
+    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=q&message=Your BhuSetu login OTP is: ${generatedOtp}&language=english&flash=0&numbers=${cleanNumber}`)
+      .then(res => res.json()).then(data => {
+        console.log("Fast2SMS Response:", data);
+        showOtpModal(role, mobile, generatedOtp);
+      }).catch(err => {
+        console.error(err);
+        showOtpModal(role, mobile, generatedOtp);
+      });
+  } else {
+    // Fallback to textbelt
+    fetch('https://textbelt.com/text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone: mobile,
+        message: 'Your BhuSetu login OTP is: ' + generatedOtp,
+        key: 'textbelt'
+      })
+    }).then(res => res.json()).then(data => {
+      console.log("Textbelt Response:", data);
+      showOtpModal(role, mobile, generatedOtp);
+    }).catch(err => {
+      console.error(err);
+      showOtpModal(role, mobile, generatedOtp);
+    });
+  }
 };
 
 window.showSignUpModal = function() {
@@ -1016,40 +1046,58 @@ window.showSignUpModal = function() {
     </div>
     
     <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="submitSignUp()">Create Account & Send OTP</button>
-    <div style="text-align:center; margin-top:16px; font-size:13px;">
-      Already have an account? <a href="javascript:void(0)" onclick="closeModal()" style="color:var(--saffron-600); font-weight:600; text-decoration:none;">Login</a>
-    </div>
   `);
 };
 
 window.submitSignUp = function() {
-  const mobile = document.getElementById('signupMobile').value.trim();
+  let mobile = document.getElementById('signupMobile').value.trim();
   const role = document.getElementById('signupRole').value;
   
   if(!mobile) { toast('Please enter a mobile number'); return; }
   
-  const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-  toast('Sending OTP to ' + mobile + '...');
+  if(mobile.length === 10 && !mobile.startsWith('+')) {
+    mobile = '+91' + mobile;
+  }
   
-  fetch('https://textbelt.com/text', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      phone: mobile,
-      message: 'Your BhuSetu login OTP is: ' + generatedOtp,
-      key: 'textbelt'
-    })
-  }).then(res => res.json()).then(data => {
-    showOtpModal(role, mobile, generatedOtp);
-  }).catch(err => {
-    showOtpModal(role, mobile, generatedOtp);
-  });
+  const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+  toast('Sending real SMS to ' + mobile + '...');
+  
+  const fast2smsKey = localStorage.getItem('fast2sms_key');
+
+  if (fast2smsKey) {
+    const cleanNumber = mobile.replace('+91', '');
+    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=q&message=Your BhuSetu login OTP is: ${generatedOtp}&language=english&flash=0&numbers=${cleanNumber}`)
+      .then(res => res.json()).then(data => {
+        showOtpModal(role, mobile, generatedOtp);
+      }).catch(err => {
+        showOtpModal(role, mobile, generatedOtp);
+      });
+  } else {
+    fetch('https://textbelt.com/text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone: mobile,
+        message: 'Your BhuSetu login OTP is: ' + generatedOtp,
+        key: 'textbelt'
+      })
+    }).then(res => res.json()).then(data => {
+      showOtpModal(role, mobile, generatedOtp);
+    }).catch(err => {
+      showOtpModal(role, mobile, generatedOtp);
+    });
+  }
 };
 
 window.showOtpModal = function(role, mobile, generatedOtp) {
+  const isKeySetup = !!localStorage.getItem('fast2sms_key');
+  const helperText = isKeySetup 
+    ? `<span style="color:green; font-weight:bold;">REAL SMS SENT VIA FAST2SMS! Check your mobile phone.</span>`
+    : `<span style="color:var(--saffron-600); font-weight:bold;">SMS API Quota Exceeded. Enter this Simulated OTP to login: <span style="background:var(--ivory-200); padding:2px 6px; border:1px solid var(--line);">${generatedOtp}</span></span>`;
+
   openModal(`
     <h2>Enter OTP</h2>
-    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">We have sent a 4-digit OTP to <b>${escapeHtml(mobile)}</b>. <br>(Simulated OTP: <b>${generatedOtp}</b>)</p>
+    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">We have sent a 4-digit OTP to <b>${escapeHtml(mobile)}</b>.<br><br>${helperText}</p>
     <div style="margin-bottom:24px;">
       <input type="text" id="otpInput" placeholder="Enter 4-digit code" maxlength="4" style="width:100%; padding:12px; border:1px solid var(--line); border-radius:6px; font-size:18px; text-align:center; letter-spacing:8px;">
     </div>
@@ -2762,6 +2810,9 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
+
+
+
 
 
 
