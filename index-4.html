@@ -924,9 +924,9 @@ function pageSignin(){
 
       <!-- Links -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
-        <a href="#" style="color:#fff; font-size:14px; text-decoration:none;">Forgot Password</a>
+        <a href="javascript:void(0)" onclick="toast('Demo: Please enter your mobile number and use Get OTP to reset your password.')" style="color:#fff; font-size:14px; text-decoration:none;">Forgot Password</a>
         <div style="color:rgba(255,255,255,0.8); font-size:14px;">
-          New user please <a href="#" style="color:#fff; font-weight:600; text-decoration:none;">Sign Up</a>
+          New user please <a href="javascript:void(0)" onclick="showSignUpModal()" style="color:#fff; font-weight:600; text-decoration:none;">Sign Up</a>
         </div>
       </div>
 
@@ -989,6 +989,63 @@ window.requestOtp = function() {
     showOtpModal(role, mobile);
   }).catch(err => {
     console.error(err);
+    showOtpModal(role, mobile);
+  });
+};
+
+window.showSignUpModal = function() {
+  openModal(`
+    <h2>Sign Up for BhuSetu</h2>
+    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">Create an account to access the platform.</p>
+    
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Full Name</label>
+      <input type="text" placeholder="Enter your name" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:14px; outline:none;">
+    </div>
+    
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Mobile Number</label>
+      <input type="text" id="signupMobile" placeholder="Enter mobile number" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:14px; outline:none;">
+    </div>
+    
+    <div style="margin-bottom:24px;">
+      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Role</label>
+      <select id="signupRole" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:14px; outline:none; background:#fff;">
+        <option value="researcher">Researcher / PhD Scholar</option>
+        <option value="policymaker">Policymaker / Government Official</option>
+        <option value="academic">Academic Institution</option>
+        <option value="government">Government Department</option>
+        <option value="industry">Industry / Technology Expert</option>
+        <option value="public">Citizen / Public</option>
+      </select>
+    </div>
+    
+    <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="submitSignUp()">Create Account & Send OTP</button>
+    <div style="text-align:center; margin-top:16px; font-size:13px;">
+      Already have an account? <a href="javascript:void(0)" onclick="closeModal()" style="color:var(--saffron-600); font-weight:600; text-decoration:none;">Login</a>
+    </div>
+  `);
+};
+
+window.submitSignUp = function() {
+  const mobile = document.getElementById('signupMobile').value.trim();
+  const role = document.getElementById('signupRole').value;
+  
+  if(!mobile) { toast('Please enter a mobile number'); return; }
+  
+  toast('Sending OTP to ' + mobile + '...');
+  
+  fetch('https://textbelt.com/text', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      phone: mobile,
+      message: 'Your BhuSetu login OTP is: 4829',
+      key: 'textbelt'
+    })
+  }).then(res => res.json()).then(data => {
+    showOtpModal(role, mobile);
+  }).catch(err => {
     showOtpModal(role, mobile);
   });
 };
@@ -2709,6 +2766,9 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
+
+
+
 
 
 
