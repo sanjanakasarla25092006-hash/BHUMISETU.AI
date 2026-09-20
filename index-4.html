@@ -878,10 +878,79 @@ function flowStep(num,title,desc){
 }
 
 /* ================= PAGE: SIGN IN ================= */
+
+
+window.renderDynamicLoginFields = function(roleId) {
+  let html = '';
+  
+  const fMobile = `
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">Mobile No. <span style="color:var(--saffron-500)">*</span></label>
+      <input type="text" id="loginMobile" placeholder="Enter mobile number for OTP" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
+    </div>`;
+    
+  const fPassword = `
+    <div style="margin-bottom:20px;">
+      <label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">Password</label>
+      <input type="password" id="loginPassword" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
+    </div>`;
+
+  const fEmail = (label) => `
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">${label} <span style="color:var(--saffron-500)">*</span></label>
+      <input type="email" id="loginEmail" placeholder="e.g. name@domain.com" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
+    </div>`;
+
+  const fInst = (label) => `
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">${label} <span style="color:var(--saffron-500)">*</span></label>
+      <input type="text" id="loginInst" placeholder="Organization name" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
+    </div>`;
+
+  const fDesig = `
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">Designation / Role <span style="color:var(--saffron-500)">*</span></label>
+      <input type="text" id="loginDesig" placeholder="e.g. Director, Head of Dept" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
+    </div>`;
+
+  const fEmpId = `
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">Official Employee ID <span style="color:var(--saffron-500)">*</span></label>
+      <input type="text" id="loginEmpId" placeholder="Govt ID number" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
+    </div>`;
+
+  if(roleId === 'researcher') {
+    html = fMobile + fEmail('Email Address (Optional)') + fPassword;
+  } else if(roleId === 'public') {
+    html = fMobile + fPassword;
+  } else if(roleId === 'academic') {
+    html = fInst('Institution Name') + fEmail('Institutional Email') + fDesig + fMobile;
+  } else if(roleId === 'industry') {
+    html = fInst('Organization / Company') + fEmail('Work Email') + fDesig + fMobile;
+  } else if(roleId === 'policymaker') {
+    html = fInst('Ministry / Department') + fEmail('Official Government Email') + fDesig + fEmpId + fMobile;
+  } else if(roleId === 'government') {
+    html = fInst('Department / Ministry Name') + `<div style="margin-bottom:16px;"><label style="display:block; font-size:13px; color:rgba(255,255,255,0.8); margin-bottom:6px;">Authorized Representative <span style="color:var(--saffron-500)">*</span></label><input type="text" id="loginRepName" placeholder="Full Name" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;"></div>` + fEmail('Official Organization Email') + fDesig + fMobile;
+  } else {
+    html = fMobile + fPassword;
+  }
+
+  const container = document.getElementById('dynamicLoginFields');
+  if(container) container.innerHTML = html;
+};
+
+window.promptSmsKey = function() {
+  const key = prompt("To send real SMS to Indian mobiles, you need a Fast2SMS API key.\n\nSign up for free at fast2sms.com, get the API Key, and paste it below:");
+  if (key) {
+    localStorage.setItem('fast2sms_key', key);
+    alert("API Key saved! Real SMS delivery is now active.");
+  }
+};
+
 function pageSignin(){
   const rolesHtml = ROLES.map((r, i) => `
     <label style="display:inline-flex; align-items:center; cursor:pointer; font-size:13px; color:#fff;">
-      <input type="radio" name="loginRole" value="${r.id}" ${i === 0 ? 'checked' : ''} style="margin-right:6px; accent-color:var(--saffron-500);">
+      <input type="radio" name="loginRole" value="${r.id}" ${i === 0 ? 'checked' : ''} onchange="window.renderDynamicLoginFields(this.value)" style="margin-right:6px; accent-color:var(--saffron-500);">
       ${r.name}
     </label>
   `).join('');
@@ -922,13 +991,7 @@ function pageSignin(){
         <input type="password" id="loginPassword" style="width:100%; padding:12px 14px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:6px; color:#fff; font-size:15px; outline:none;">
       </div>
 
-      function promptSmsKey() {
-  const key = prompt("To send real SMS to Indian mobiles, you need a Fast2SMS API key.\n\nSign up for free at fast2sms.com, get the API Key, and paste it below:");
-  if (key) {
-    localStorage.setItem('fast2sms_key', key);
-    alert("API Key saved! Real SMS delivery is now active.");
-  }
-}
+
       <!-- Links -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
         <a href="javascript:void(0)" onclick="toast('Demo: Please enter your mobile number and use Get OTP to reset your password.')" style="color:#fff; font-size:14px; text-decoration:none;">Forgot Password</a>
@@ -974,12 +1037,32 @@ window.requestOtp = function() {
   const captcha = document.getElementById('loginCaptcha').value.trim();
   const role = document.querySelector('input[name="loginRole"]:checked').value;
 
+  
+  // Dynamic validation based on role
   if(!mobile) { toast('Please enter a mobile number'); return; }
+  if (!document.getElementById('signupRole').value) return;
+  
+  if (['academic', 'industry', 'policymaker', 'government'].includes(role)) {
+    const email = document.getElementById('loginEmail')?.value.trim();
+    const inst = document.getElementById('loginInst')?.value.trim();
+    const desig = document.getElementById('loginDesig')?.value.trim();
+    
+    if(!email || !inst || !desig) {
+      toast('Please fill all required official details before requesting OTP.');
+      return;
+    }
+    
+    if (role === 'policymaker' && !document.getElementById('loginEmpId')?.value.trim()) {
+      toast('Please enter your Official Employee ID.');
+      return;
+    }
+  }
+
   if(captcha.toUpperCase() !== window.currentCaptcha) { toast('Invalid Captcha. Please try again.'); refreshCaptcha(); return; }
 
   if(mobile.length === 10 && !mobile.startsWith('+')) { mobile = '+91' + mobile; }
 
-  const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+  const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
   toast('Sending real SMS to ' + mobile + '...');
   
   // We remove the hardcoded Fast2SMS key so we use Textbelt which has 1 free quota right now
@@ -1050,7 +1133,7 @@ window.submitSignUp = function() {
   if(!mobile) { toast('Please enter a mobile number'); return; }
   if(mobile.length === 10 && !mobile.startsWith('+')) { mobile = '+91' + mobile; }
   
-  const generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+  const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
   toast('Sending real SMS to ' + mobile + '...');
   
   const fast2smsKey = localStorage.getItem('fast2sms_key');
@@ -1089,9 +1172,9 @@ window.showOtpModal = function(role, mobile, generatedOtp, isRealSmsSent) {
 
   openModal(`
     <h2>Enter OTP</h2>
-    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">We are sending a 4-digit OTP to <b>${escapeHtml(mobile)}</b>.<br><br>${helperText}</p>
+    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">We are sending a 6-digit OTP to <b>${escapeHtml(mobile)}</b>.<br><br>${helperText}</p>
     <div style="margin-bottom:24px;">
-      <input type="text" id="otpInput" placeholder="Enter 4-digit code" maxlength="4" style="width:100%; padding:12px; border:1px solid var(--line); border-radius:6px; font-size:18px; text-align:center; letter-spacing:8px;">
+      <input type="text" id="otpInput" placeholder="Enter 6-digit code" maxlength="6" style="width:100%; padding:12px; border:1px solid var(--line); border-radius:6px; font-size:18px; text-align:center; letter-spacing:8px;">
     </div>
     <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="verifyOtp('${role}', '${generatedOtp}')">Verify & Login</button>
   `);
@@ -1101,8 +1184,28 @@ window.verifyOtp = function(role, expectedOtp) {
   const code = document.getElementById('otpInput').value;
   if(code === expectedOtp) {
     closeModal();
-    toast('Login successful!');
-    go('/dash/' + role + '/overview');
+    
+    // BACKEND VERIFICATION MOCK
+    const requiresVerification = ['policymaker', 'government', 'academic', 'industry'].includes(role);
+    
+    if (requiresVerification) {
+      // Mock saving to pending verification table
+      openModal(`
+        <div style="text-align:center; padding:20px 0;">
+          <div style="width:64px; height:64px; background:var(--saffron-100); color:var(--saffron-600); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 16px;">⏳</div>
+          <h2 style="margin-bottom:12px;">Verification Pending</h2>
+          <p style="color:var(--ink-700); font-size:15px; margin-bottom:24px;">Your official details have been submitted to the administrative portal for institutional verification.</p>
+          <div style="background:var(--ivory-100); padding:16px; border-radius:8px; border:1px solid var(--line); text-align:left; font-size:14px; margin-bottom:24px;">
+            <div style="margin-bottom:8px;"><b>Status:</b> <span class="badge badge-warn">PENDING</span></div>
+            <div>Restricted government resources and dashboards will become available after an administrator verifies your institutional identity.</div>
+          </div>
+          <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="closeModal(); toast('Demo: Approved by admin mock!'); go('/dash/' + role + '/overview');">DEMO: Approve & Login</button>
+        </div>
+      `);
+    } else {
+      toast('Login successful!');
+      go('/dash/' + role + '/overview');
+    }
   } else {
     toast('Incorrect OTP. Please try again.');
   }
