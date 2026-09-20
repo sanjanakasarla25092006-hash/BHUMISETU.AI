@@ -1258,15 +1258,13 @@ const mockApi = {
         if (filters.year && filters.year !== 'All') {
           res = res.filter(r => r.year == filters.year);
         }
-        resolve(res);
-      }, 800);
+        resolve(res); }, 200);
     });
   },
   getById: (id) => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(RESOURCES.find(r => r.id == id));
-      }, 500);
+        resolve(RESOURCES.find(r => r.id == id)); }, 100);
     });
   }
 };
@@ -3268,6 +3266,7 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
+
 
 
 
