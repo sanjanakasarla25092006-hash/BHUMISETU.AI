@@ -977,322 +977,154 @@ window.promptSmsKey = function() {
   }
 };
 
+
 function pageSignin(){
-  const rolesHtml = ROLES.map((r, i) => `
-    <label style="display:inline-flex; align-items:center; cursor:pointer; font-size:13px; color:var(--ink-800); font-weight:500;">
-      <input type="radio" name="loginRole" value="${r.id}" ${i === 0 ? 'checked' : ''} onchange="window.renderDynamicLoginFields(this.value)" style="margin-right:6px; accent-color:var(--saffron-500);">
-      ${r.name}
-    </label>
-  `).join('');
-
   return `
-  ${headerHtml('')}
-  <section class="section signin-wrap" style="background: url('bg-land.jpg') no-repeat center center; background-size: cover; position: relative; min-height: calc(100vh - 68px); display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
-    
-    <div style="position:relative; width:100%; max-width:650px; background:#fff; border-radius:12px; padding:48px 40px 40px; box-shadow:0 24px 60px rgba(0,0,0,0.15); margin-top:40px; border:1px solid var(--line);">
-      
-      <!-- Floating Logo -->
-      <div style="position:absolute; top:-45px; left:50%; transform:translateX(-50%); width:90px; height:90px; background:linear-gradient(135deg, #1b2a41, #2c4363); border-radius:50%; border:3px solid #fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
-        <span style="font-family:sans-serif; font-size:42px; font-weight:bold; color:var(--cream-text); line-height:1;">&#3117;&#3138;</span>
-      </div>
-
-      <!-- Top Row -->
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:24px;">
-        <h2 style="color:var(--ink-900); font-size:24px; font-weight:700; margin:0;">Login</h2>
-        <a href="#/" style="color:var(--navy-600); font-size:14px; font-weight:600; text-decoration:none;">Home</a>
-      </div>
-
-      <!-- Roles -->
-      <div style="margin-bottom:20px;">
-        <div style="font-size:13px; font-weight:600; color:var(--ink-700); margin-bottom:12px;">Select your Role</div>
-        <div style="display:flex; flex-wrap:wrap; gap:16px;">
-          ${rolesHtml}
+    ${headerHtml('')}
+    <section class="section signin-wrap" style="background: url('bg-land.jpg') no-repeat center center; background-size: cover; position: relative; min-height: calc(100vh - 68px); display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+      <div style="position:relative; width:100%; max-width:550px; background:#fff; border-radius:12px; padding:48px 40px 40px; box-shadow:0 24px 60px rgba(0,0,0,0.15); margin-top:40px; border:1px solid var(--line);">
+        <div style="position:absolute; top:-45px; left:50%; transform:translateX(-50%); width:90px; height:90px; background:linear-gradient(135deg, #1b2a41, #2c4363); border-radius:50%; border:3px solid #fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+          <span style="font-family:sans-serif; font-size:42px; font-weight:bold; color:var(--cream-text); line-height:1;">&#3117;&#3138;</span>
         </div>
-      </div>
-
-      <!-- Inputs -->
-      <div style="margin-bottom:16px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:var(--ink-800); margin-bottom:6px;">Mobile No.</label>
-        <input type="text" id="loginMobile" placeholder="Enter mobile number" style="width:100%; padding:10px 14px; background:#fff; border:1px solid var(--line); border-radius:6px; color:var(--ink-900); font-size:14px; outline:none; box-shadow:inset 0 1px 2px rgba(0,0,0,0.05);">
-      </div>
-
-      <div style="margin-bottom:20px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:var(--ink-800); margin-bottom:6px;">Password</label>
-        <input type="password" id="loginPassword" style="width:100%; padding:10px 14px; background:#fff; border:1px solid var(--line); border-radius:6px; color:var(--ink-900); font-size:14px; outline:none; box-shadow:inset 0 1px 2px rgba(0,0,0,0.05);">
-      </div>
-
-
-      <!-- Links -->
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
-        <a href="javascript:void(0)" onclick="toast('Demo: Please enter your mobile number and use Get OTP to reset your password.')" style="color:var(--navy-600); font-size:13px; text-decoration:none; font-weight:500;">Forgot Password</a>
-        <div style="color:rgba(255,255,255,0.8); font-size:14px;">
-          New user please <a href="javascript:void(0)" onclick="showSignUpModal()" style="color:var(--navy-700); font-weight:700; text-decoration:none;">Sign Up</a><br><a href="javascript:void(0)" onclick="promptSmsKey()" style="color:var(--saffron-600); font-size:12px; font-weight:600; text-decoration:underline; display:inline-block; margin-top:8px;">Enable Real SMS Delivery</a>
-        </div>
-      </div>
-
-      <!-- Captcha & OTP Row -->
-      <div style="margin-bottom:8px;">
-        <div style="font-size:13px; font-weight:600; color:var(--ink-700); margin-bottom:12px;">Please enter the code to sign in</div>
-        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-          
-          <div style="background:#fcebc6; display:inline-block; padding:8px 16px; letter-spacing:4px; font-weight:bold; font-size:18px; color:#8c4c23; border:1px dashed #d1a179; font-family:monospace; position:relative; overflow:hidden;" id="captchaBox">
-            <!-- Simulated noisy captcha text will go here -->
-          </div>
-          
-          <button class="icon-btn" style="background:transparent; border:none; color:var(--ink-500); font-size:22px; cursor:pointer; padding:4px;" onclick="refreshCaptcha()" title="Refresh Captcha">&#x21bb;</button>
-          
-          <input type="text" id="loginCaptcha" placeholder="Enter captcha" style="flex:1; min-width:140px; padding:10px 14px; background:#fff; border:1px solid var(--line); border-radius:6px; color:var(--ink-900); font-size:14px; outline:none; box-shadow:inset 0 1px 2px rgba(0,0,0,0.05);">
-          
-          <div style="display:flex; gap:8px;">
-            <button class="btn" onclick="submitPasswordLogin()" style="background:#1e3a8a; color:#fff; border:1px solid transparent; border-radius:6px; padding:12px 24px; font-weight:600; cursor:pointer;">Sign In</button>
-            <button class="btn" onclick="requestOtp()" style="background:transparent; color:#1e3a8a; border:1px solid #1e3a8a; border-radius:6px; padding:12px 16px; font-weight:600; cursor:pointer;" title="Forgot Password? Login with SMS OTP">Get OTP</button>
+        
+        <div id="step-role">
+          <h2 style="font-size:24px; color:var(--navy-800); text-align:center; margin-bottom:8px;">Welcome to BhuSetu</h2>
+          <p style="color:var(--ink-500); text-align:center; margin-bottom:32px;">Please select your access level to continue.</p>
+          <div style="display:grid; gap:12px;">
+            ${ROLES.map(r => `
+              <div class="card" style="cursor:pointer; transition:all 0.2s; border:1px solid var(--line); padding:16px;" onclick="selectLoginRole('${r.id}')" onmouseover="this.style.borderColor='var(--saffron-500)'" onmouseout="this.style.borderColor='var(--line)'">
+                <h3 style="font-size:15px; margin:0; color:var(--navy-800);">${r.name}</h3>
+                <p style="font-size:13px; color:var(--ink-500); margin:top:4px;">Secure access for ${r.name.toLowerCase()} functionality.</p>
+              </div>
+            `).join('')}
           </div>
         </div>
-      </div>
 
-    </div>
-  </section>
-  ${footerHtml()}`;
+        <div id="step-phone" style="display:none;">
+          <h2 id="login-role-title" style="font-size:24px; color:var(--navy-800); text-align:center; margin-bottom:8px;">Sign In</h2>
+          <p style="color:var(--ink-500); text-align:center; margin-bottom:32px;">Enter your registered mobile number.</p>
+          <div id="login-error" style="display:none; color:#dc2626; background:#fef2f2; padding:12px; border-radius:6px; margin-bottom:16px; font-size:13px; border:1px solid #f87171;"></div>
+          <input type="hidden" id="login-role" value="">
+          <div style="margin-bottom:16px;" id="name-field-container">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--ink-800); margin-bottom:6px;">Full Name (First time only)</label>
+            <input type="text" id="login-name" class="search-input" style="width:100%;" placeholder="Enter full name">
+          </div>
+          <div style="margin-bottom:24px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--ink-800); margin-bottom:6px;">Mobile Number</label>
+            <div style="display:flex; border:1px solid var(--line); border-radius:6px; overflow:hidden;">
+              <span style="background:var(--bg-card); padding:10px 14px; font-size:14px; color:var(--ink-500); border-right:1px solid var(--line);">+91</span>
+              <input type="text" id="login-mobile" style="flex:1; border:none; padding:10px 14px; font-size:14px; outline:none;" placeholder="9876543210">
+            </div>
+          </div>
+          <button class="btn btn-navy" style="width:100%; justify-content:center; padding:12px; font-size:14px;" onclick="requestOtp()" id="req-otp-btn">Send Secure OTP</button>
+          <button class="btn" style="width:100%; justify-content:center; margin-top:12px; padding:12px; font-size:14px; background:transparent; color:var(--ink-500); border:1px solid var(--line);" onclick="document.getElementById('step-phone').style.display='none'; document.getElementById('step-role').style.display='block';">Back to Roles</button>
+        </div>
+
+        <div id="step-otp" style="display:none;">
+          <h2 style="font-size:24px; color:var(--navy-800); text-align:center; margin-bottom:8px;">Verify OTP</h2>
+          <p style="color:var(--ink-500); text-align:center; margin-bottom:32px;" id="otp-subtitle">Enter the 6-digit code sent to your phone.</p>
+          <div id="otp-error" style="display:none; color:#dc2626; background:#fef2f2; padding:12px; border-radius:6px; margin-bottom:16px; font-size:13px; border:1px solid #f87171;"></div>
+          <div style="margin-bottom:24px;">
+            <input type="text" id="login-otp" class="search-input" style="width:100%; text-align:center; letter-spacing:8px; font-size:24px; padding:12px;" placeholder="123456" maxlength="6">
+          </div>
+          <button class="btn btn-saffron" style="width:100%; justify-content:center; padding:12px; font-size:14px;" onclick="verifyOtp()" id="verify-otp-btn">Verify & Access Dashboard</button>
+        </div>
+      </div>
+    </section>
+    ${footerHtml()}
+  `;
 }
 
-window.currentCaptcha = '';
-window.refreshCaptcha = function() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let str = '';
-  for(let i=0; i<5; i++) str += chars.charAt(Math.floor(Math.random() * chars.length));
-  window.currentCaptcha = str;
-  const box = document.getElementById('captchaBox');
-  if(box) box.innerText = str;
-};
-
-
-window.submitPasswordLogin = function() {
-  let mobile = document.getElementById('loginMobile').value.trim();
-  const pwd = document.getElementById('loginPassword').value;
-  const captcha = document.getElementById('loginCaptcha').value.trim();
-  const role = document.querySelector('input[name="loginRole"]:checked').value;
-
-  if(!mobile) { toast('Please enter a mobile number'); return; }
-  if(!pwd) { toast('Please enter your password. If you forgot it, use Get OTP.'); return; }
-  if(captcha.toUpperCase() !== window.currentCaptcha) { toast('Invalid Captcha. Please try again.'); refreshCaptcha(); return; }
-
-  if (['academic', 'industry', 'policymaker', 'government'].includes(role)) {
-    const email = document.getElementById('loginEmail')?.value.trim();
-    const inst = document.getElementById('loginInst')?.value.trim();
-    const desig = document.getElementById('loginDesig')?.value.trim();
-    
-    if(!email || !inst || !desig) {
-      toast('Please fill all required official details to login.');
-      return;
-    }
-    
-    if (role === 'policymaker' && !document.getElementById('loginEmpId')?.value.trim()) {
-      toast('Please enter your Official Employee ID.');
-      return;
-    }
+window.selectLoginRole = function(roleId) {
+  const r = ROLES.find(x => x.id === roleId);
+  document.getElementById('step-role').style.display = 'none';
+  document.getElementById('step-phone').style.display = 'block';
+  document.getElementById('login-role').value = roleId;
+  document.getElementById('login-role-title').innerText = r.name + ' Login';
+  
+  if (roleId === 'researcher' || roleId === 'citizen') {
+    document.getElementById('name-field-container').style.display = 'block';
+  } else {
+    document.getElementById('name-field-container').style.display = 'none';
   }
-
-  // Bypass OTP check since password is provided (Mock validation)
-  verifyOtp(role, 'BYPASS_PASSWORD');
 };
 
 window.requestOtp = function() {
-  let mobile = document.getElementById('loginMobile').value.trim();
-  const captcha = document.getElementById('loginCaptcha').value.trim();
-  const role = document.querySelector('input[name="loginRole"]:checked').value;
-
+  const mobile = document.getElementById('login-mobile').value.trim();
+  const role = document.getElementById('login-role').value;
+  const name = document.getElementById('login-name').value.trim();
+  const errNode = document.getElementById('login-error');
   
-  // Dynamic validation based on role
-  if(!mobile) { toast('Please enter a mobile number'); return; }
-  if (!document.getElementById('signupRole').value) return;
-  
-  if (['academic', 'industry', 'policymaker', 'government'].includes(role)) {
-    const email = document.getElementById('loginEmail')?.value.trim();
-    const inst = document.getElementById('loginInst')?.value.trim();
-    const desig = document.getElementById('loginDesig')?.value.trim();
-    
-    if(!email || !inst || !desig) {
-      toast('Please fill all required official details before requesting OTP.');
-      return;
-    }
-    
-    if (role === 'policymaker' && !document.getElementById('loginEmpId')?.value.trim()) {
-      toast('Please enter your Official Employee ID.');
-      return;
-    }
+  if (!mobile || mobile.length < 10) {
+    errNode.style.display = 'block';
+    errNode.innerText = 'Please enter a valid 10-digit mobile number.';
+    return;
   }
+  errNode.style.display = 'none';
+  const btn = document.getElementById('req-otp-btn');
+  btn.innerText = 'Requesting...';
+  btn.disabled = true;
 
-  if(captcha.toUpperCase() !== window.currentCaptcha) { toast('Invalid Captcha. Please try again.'); refreshCaptcha(); return; }
-
-  if(mobile.length === 10 && !mobile.startsWith('+')) { mobile = '+91' + mobile; }
-
-  const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-  toast('Sending real SMS to ' + mobile + '...');
-  
-  // We remove the hardcoded Fast2SMS key so we use Textbelt which has 1 free quota right now
-  const fast2smsKey = window.CONFIG.FAST2SMS_KEY;
-
-  if (fast2smsKey && fast2smsKey.length > 5) {
-    const cleanNumber = mobile.replace('+91', '');
-    fetch('https://www.fast2sms.com/dev/bulkV2', {
-      method: 'POST',
-      headers: {
-        'authorization': fast2smsKey,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`
-    })
-      .then(res => res.json()).then(data => {
-        if(data.return === false || data.status_code) {
-          const reason = data.message || "Unknown error";
-          alert("Fast2SMS API blocked the SMS.\nReason: " + reason + "\n\nPlease use the simulated OTP to login.");
-          showOtpModal(role, mobile, generatedOtp, false);
-          
-        } else {
-          showOtpModal(role, mobile, generatedOtp, true);
-        }
-      }).catch(err => showOtpModal(role, mobile, generatedOtp, false));
-  } else {
-    fetch('https://textbelt.com/text', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: mobile, message: 'Your BhuSetu login OTP is: ' + generatedOtp, key: 'textbelt' })
-    }).then(res => res.json()).then(data => {
-      if(!data.success) {
-        alert("Free SMS API Quota Exceeded (1 per day limit).\n\nPlease use the simulated OTP to login.");
-        showOtpModal(role, mobile, generatedOtp, false);
-      } else {
-        showOtpModal(role, mobile, generatedOtp, true);
-      }
-    }).catch(err => showOtpModal(role, mobile, generatedOtp, false));
-  }
-};
-
-window.showSignUpModal = function() {
-  openModal(`
-    <h2>Sign Up for BhuSetu</h2>
-    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">Create an account to access the platform.</p>
-    
-    <div style="margin-bottom:16px;">
-      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Full Name</label>
-      <input type="text" placeholder="Enter your name" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:14px; outline:none;">
-    </div>
-    
-    <div style="margin-bottom:16px;">
-      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Mobile Number</label>
-      <input type="text" id="signupMobile" placeholder="Enter mobile number" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:14px; outline:none;">
-    </div>
-    
-    <div style="margin-bottom:24px;">
-      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Role</label>
-      <select id="signupRole" style="width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:6px; font-size:14px; outline:none; background:#fff;">
-        <option value="researcher">Researcher / PhD Scholar</option>
-        <option value="policymaker">Policymaker / Government Official</option>
-        <option value="academic">Academic Institution</option>
-        <option value="government">Government Department</option>
-        <option value="industry">Industry / Technology Expert</option>
-        <option value="public">Citizen / Public</option>
-      </select>
-    </div>
-    
-    <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="submitSignUp()">Create Account & Send OTP</button>
-  `);
-};
-
-window.submitSignUp = function() {
-  let mobile = document.getElementById('signupMobile').value.trim();
-  const role = document.getElementById('signupRole').value;
-  
-  if(!mobile) { toast('Please enter a mobile number'); return; }
-  if(mobile.length === 10 && !mobile.startsWith('+')) { mobile = '+91' + mobile; }
-  
-  const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-  toast('Sending real SMS to ' + mobile + '...');
-  
-  const fast2smsKey = window.CONFIG.FAST2SMS_KEY;
-
-  if (fast2smsKey && fast2smsKey.length > 5) {
-    const cleanNumber = mobile.replace('+91', '');
-    fetch('https://www.fast2sms.com/dev/bulkV2', {
-      method: 'POST',
-      headers: {
-        'authorization': fast2smsKey,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`
-    })
-      .then(res => res.json()).then(data => {
-        if(data.return === false || data.status_code) {
-          const reason = data.message || "Unknown error";
-          alert("Fast2SMS API blocked the SMS.\nReason: " + reason + "\n\nPlease use the simulated OTP to login.");
-          showOtpModal(role, mobile, generatedOtp, false);
-          
-        } else {
-          showOtpModal(role, mobile, generatedOtp, true);
-        }
-      }).catch(err => showOtpModal(role, mobile, generatedOtp, false));
-  } else {
-    fetch('https://textbelt.com/text', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: mobile, message: 'Your BhuSetu login OTP is: ' + generatedOtp, key: 'textbelt' })
-    }).then(res => res.json()).then(data => {
-      if(!data.success) {
-        alert("Free SMS API Quota Exceeded (1 per day limit).\n\nPlease use the simulated OTP to login.");
-        showOtpModal(role, mobile, generatedOtp, false);
-      } else {
-        showOtpModal(role, mobile, generatedOtp, true);
-      }
-    }).catch(err => showOtpModal(role, mobile, generatedOtp, false));
-  }
-};
-
-window.showOtpModal = function(role, mobile, generatedOtp, isRealSmsSent) {
-  const helperText = isRealSmsSent 
-    ? `<span style="color:green; font-weight:bold;">REAL SMS SENT! Check your mobile phone inbox.</span>`
-    : `<span style="color:var(--saffron-600); font-weight:bold;">SMS Gateway Blocked. Enter this Simulated OTP to login: <span style="background:var(--ivory-200); padding:2px 6px; border:1px solid var(--line);">${generatedOtp}</span></span>`;
-
-  openModal(`
-    <h2>Enter OTP</h2>
-    <p style="color:var(--ink-700); font-size:14px; margin-bottom:20px;">We are sending a 6-digit OTP to <b>${escapeHtml(mobile)}</b>.<br><br>${helperText}</p>
-    <div style="margin-bottom:24px;">
-      <input type="text" id="otpInput" placeholder="Enter 6-digit code" maxlength="6" style="width:100%; padding:12px; border:1px solid var(--line); border-radius:6px; font-size:16px; text-align:center; letter-spacing:6px;">
-    </div>
-    <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="verifyOtp('${role}', '${generatedOtp}')">Verify & Login</button>
-  `);
-};
-
-window.verifyOtp = function(role, expectedOtp) {
-  const code = expectedOtp === 'BYPASS_PASSWORD' ? 'BYPASS_PASSWORD' : document.getElementById('otpInput').value;
-  if(code === expectedOtp) {
-    closeModal();
-    
-    // BACKEND VERIFICATION MOCK
-    const requiresVerification = ['policymaker', 'government', 'academic', 'industry'].includes(role);
-    
-    if (requiresVerification) {
-      // Mock saving to pending verification table
-      openModal(`
-        <div style="text-align:center; padding:20px 0;">
-          <div style="width:64px; height:64px; background:var(--saffron-100); color:var(--saffron-600); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 16px;">⏳</div>
-          <h2 style="margin-bottom:12px;">Verification Pending</h2>
-          <p style="color:var(--ink-700); font-size:15px; margin-bottom:24px;">Your official details have been submitted to the administrative portal for institutional verification.</p>
-          <div style="background:var(--ivory-100); padding:16px; border-radius:8px; border:1px solid var(--line); text-align:left; font-size:14px; margin-bottom:24px;">
-            <div style="margin-bottom:8px;"><b>Status:</b> <span class="badge badge-warn">PENDING</span></div>
-            <div>Restricted government resources and dashboards will become available after an administrator verifies your institutional identity.</div>
-          </div>
-          <button class="btn btn-navy" style="width:100%; padding:14px;" onclick="closeModal(); toast('Demo: Approved by admin mock!'); go('/dash/' + role + '/overview');">DEMO: Approve & Login</button>
-        </div>
-      `);
+  fetch(window.CONFIG.API_BASE_URL + '/api/auth/request-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mobile, role, name })
+  }).then(r => r.json()).then(data => {
+    btn.disabled = false;
+    btn.innerText = 'Send Secure OTP';
+    if (data.error) {
+      errNode.style.display = 'block';
+      errNode.innerText = data.error;
     } else {
-      toast('Login successful!');
-      go('/dash/' + role + '/overview');
+      document.getElementById('step-phone').style.display = 'none';
+      document.getElementById('step-otp').style.display = 'block';
+      let msg = 'Enter the 6-digit code sent to ' + mobile;
+      if (data.simulated_otp) msg += '<br><br><span style="color:#10b981; font-weight:bold;">DEMO MODE OTP: ' + data.simulated_otp + '</span>';
+      document.getElementById('otp-subtitle').innerHTML = msg;
     }
-  } else {
-    toast('Incorrect OTP. Please try again.');
-  }
+  }).catch(err => {
+    btn.disabled = false;
+    btn.innerText = 'Send Secure OTP';
+    errNode.style.display = 'block';
+    errNode.innerText = 'Failed to connect to backend.';
+  });
 };
-/* ================= DASHBOARD SHELL ================= */
+
+window.verifyOtp = function() {
+  const mobile = document.getElementById('login-mobile').value.trim();
+  const otp = document.getElementById('login-otp').value.trim();
+  const errNode = document.getElementById('otp-error');
+  
+  if (!otp) return;
+  
+  const btn = document.getElementById('verify-otp-btn');
+  btn.innerText = 'Verifying...';
+  btn.disabled = true;
+
+  fetch(window.CONFIG.API_BASE_URL + '/api/auth/verify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mobile, otp })
+  }).then(r => r.json()).then(data => {
+    btn.disabled = false;
+    btn.innerText = 'Verify & Access Dashboard';
+    if (data.error) {
+      errNode.style.display = 'block';
+      errNode.innerText = data.error;
+    } else {
+      window.state.role = data.user.role;
+      localStorage.setItem('BhuSetu_state', JSON.stringify(window.state));
+      window.location.hash = '#/dash/' + data.user.role;
+      toast('Login Successful');
+    }
+  }).catch(err => {
+    btn.disabled = false;
+    btn.innerText = 'Verify & Access Dashboard';
+    errNode.style.display = 'block';
+    errNode.innerText = 'Failed to connect to backend.';
+  });
+};
+
 function pageDashboard(role, section){
   if(!ROLE_NAV[role]){ go('/signin'); return ''; }
   if(!state.role || state.role!==role){
