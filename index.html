@@ -1219,7 +1219,7 @@ window.bindResearchSearch = function() {
       return;
     }
     const html = data.map(r => {
-      const isSaved = window.state.saved.includes(r.id);
+      const isSaved = state.saved.includes(r.id);
       return `
       <div class="res-card" style="margin-bottom:16px;">
         <div class="res-main">
@@ -1234,7 +1234,7 @@ window.bindResearchSearch = function() {
           <div class="res-summary">${r.summary}</div>
         </div>
         <div class="res-actions">
-          <a class="btn btn-navy btn-sm" href="#/dash/${window.state.role}/research-explorer?detail=${r.id}">View Research</a>
+          <a class="btn btn-navy btn-sm" href="#/dash/${state.role}/research-explorer?detail=${r.id}">View Research</a>
           <button class="btn btn-sm" style="background:#0f172a; color:#10b981; border:1px solid #10b981; margin-left:8px;" onclick="window.secureOnBlockchain(${r.id}, this)">Secure on Blockchain</button>
         </div>
       </div>`;
@@ -1297,7 +1297,7 @@ function pageResearchDetail(id) {
       }
       document.getElementById('rd-content').innerHTML = `
         <div class="page-head" style="margin-bottom:24px;">
-          <a href="#/dash/${window.state.role}/research-explorer" style="text-decoration:none; color:var(--ink-500); font-size:14px;">&larr; Back to Search</a>
+          <a href="#/dash/${state.role}/research-explorer" style="text-decoration:none; color:var(--ink-500); font-size:14px;">&larr; Back to Search</a>
           <div class="kicker" style="margin-top:16px;">${r.type==='paper'?'RESEARCH PAPER':'CASE STUDY'}</div>
           <h1>${escapeHtml(r.title)}</h1>
           <div class="res-meta" style="margin-top:12px; font-size:14px;">
@@ -1334,8 +1334,8 @@ function pageResearchDetail(id) {
               
               <h3 style="margin-top:32px; font-size:16px;">Related Resources</h3>
               <div style="display:flex; flex-direction:column; gap:8px;">
-                <a href="#/dash/${window.state.role}/dataset-search" style="font-size:14px; text-decoration:none; color:var(--navy-600);">💾 View Related Datasets (2)</a>
-                <a href="#/dash/${window.state.role}/government-reports" style="font-size:14px; text-decoration:none; color:var(--navy-600);">📄 View Policy Documents (1)</a>
+                <a href="#/dash/${state.role}/dataset-search" style="font-size:14px; text-decoration:none; color:var(--navy-600);">💾 View Related Datasets (2)</a>
+                <a href="#/dash/${state.role}/government-reports" style="font-size:14px; text-decoration:none; color:var(--navy-600);">📄 View Policy Documents (1)</a>
               </div>
             </div>
           </div>
@@ -1359,7 +1359,7 @@ window.bindDatasetSearch = function() {
       return;
     }
     const html = data.map(r => {
-      const isSaved = window.state.saved.includes(r.id);
+      const isSaved = state.saved.includes(r.id);
       return `
       <div class="res-card" style="margin-bottom:16px;">
         <div class="res-main">
@@ -1374,7 +1374,7 @@ window.bindDatasetSearch = function() {
           <div class="res-summary">${r.summary}</div>
         </div>
         <div class="res-actions">
-          <a class="btn btn-saffron btn-sm" href="#/dash/${window.state.role}/dataset-search?detail=${r.id}">Preview & Metadata</a>
+          <a class="btn btn-saffron btn-sm" href="#/dash/${state.role}/dataset-search?detail=${r.id}">Preview & Metadata</a>
           <button class="icon-btn ${isSaved?'active':''}" onclick="toast('Saved to workspace')">☆ Save</button>
         </div>
       </div>`;
@@ -1437,7 +1437,7 @@ function pageDatasetDetail(id) {
       }
       document.getElementById('dd-content').innerHTML = `
         <div class="page-head" style="margin-bottom:24px;">
-          <a href="#/dash/${window.state.role}/dataset-search" style="text-decoration:none; color:var(--ink-500); font-size:14px;">&larr; Back to Dataset Search</a>
+          <a href="#/dash/${state.role}/dataset-search" style="text-decoration:none; color:var(--ink-500); font-size:14px;">&larr; Back to Dataset Search</a>
           <div class="kicker" style="margin-top:16px;">DATASET METADATA</div>
           <h1>${escapeHtml(r.title)}</h1>
           <p style="font-size:15px; color:var(--ink-700); max-width:800px; margin-top:8px;">${r.summary}</p>
@@ -1500,7 +1500,7 @@ window.bindReportSearch = function() {
       return;
     }
     const html = data.map(r => {
-      const isSaved = window.state.saved.includes(r.id);
+      const isSaved = state.saved.includes(r.id);
       return `
       <div class="res-card" style="margin-bottom:16px;">
         <div class="res-main">
@@ -1514,7 +1514,7 @@ window.bindReportSearch = function() {
           <div class="res-summary">${r.summary}</div>
         </div>
         <div class="res-actions">
-          <a class="btn btn-navy btn-sm" href="#/dash/${window.state.role}/government-reports?detail=${r.id}">View Report</a>
+          <a class="btn btn-navy btn-sm" href="#/dash/${state.role}/government-reports?detail=${r.id}">View Report</a>
           <button class="icon-btn ${isSaved?'active':''}" onclick="toast('Saved to workspace')">☆ Save</button>
         </div>
       </div>`;
@@ -1546,7 +1546,7 @@ function pageReportDetail(id) {
       }
       document.getElementById('rdpt-content').innerHTML = `
         <div class="page-head" style="margin-bottom:24px;">
-          <a href="#/dash/${window.state.role}/government-reports" style="text-decoration:none; color:var(--ink-500); font-size:14px;">&larr; Back to Reports</a>
+          <a href="#/dash/${state.role}/government-reports" style="text-decoration:none; color:var(--ink-500); font-size:14px;">&larr; Back to Reports</a>
           <div class="kicker" style="margin-top:16px;">${r.type==='report'?'GOVERNMENT REPORT':r.type.toUpperCase()}</div>
           <h1>${escapeHtml(r.title)}</h1>
           <div class="res-meta" style="margin-top:12px; font-size:14px;">
