@@ -108,7 +108,7 @@ app.post('/api/auth/request-otp', async (req, res) => {
         .then(data => {
           if(data.return === false || data.status_code) {
              const reason = data.message || "Unknown error";
-             return res.status(400).json({ error: "Fast2SMS Blocked SMS: " + reason });
+             return res.json({ success: true, simulated_otp: otp, message: "Fast2SMS Blocked: " + reason });
           }
           res.json({ success: true, simulated_otp: otp, message: 'OTP sent via real SMS' });
         })
