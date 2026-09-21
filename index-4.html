@@ -1495,7 +1495,7 @@ window.bindDatasetSearch = function() {
   document.getElementById('ds-results').innerHTML = '<div style="padding:40px;text-align:center;color:var(--ink-500);"><div class="loader" style="margin:0 auto 16px;"></div>Querying metadata catalog...</div>';
   mockApi.fetchData({q, state}, ['dataset']).then(data => {
     if(!data.length) {
-      document.getElementById('ds-results').innerHTML = emptyState('No datasets found', 'Try adjusting your filters or search term.');
+      const dsNode2 = document.getElementById('ds-results'); if(dsNode2) dsNode2.innerHTML = emptyState('No datasets found', 'Try adjusting your filters or search term.');
       return;
     }
     const html = data.map(r => {
@@ -1519,7 +1519,7 @@ window.bindDatasetSearch = function() {
         </div>
       </div>`;
     }).join('');
-    document.getElementById('ds-results').innerHTML = html;
+    const dsNode = document.getElementById('ds-results'); if(dsNode) dsNode.innerHTML = html;
   });
 };
 
@@ -1636,7 +1636,7 @@ window.bindReportSearch = function() {
   document.getElementById('rp-results').innerHTML = '<div style="padding:40px;text-align:center;color:var(--ink-500);"><div class="loader" style="margin:0 auto 16px;"></div>Retrieving reports...</div>';
   mockApi.fetchData({q}, ['report', 'law', 'policy']).then(data => {
     if(!data.length) {
-      document.getElementById('rp-results').innerHTML = emptyState('No reports found', 'Try adjusting your filters.');
+      const rpNode2 = document.getElementById('rp-results'); if(rpNode2) rpNode2.innerHTML = emptyState('No reports found', 'Try adjusting your filters.');
       return;
     }
     const html = data.map(r => {
@@ -2486,7 +2486,7 @@ function methodologySection(){
     <div style="font-size:13px; color:var(--ink-700); margin-bottom:8px;"><b>When to use:</b> ${m.when}</div>
     <div style="font-size:13px; color:var(--ink-700); margin-bottom:8px;"><b>Typical inputs:</b> ${m.inputs}</div>
     <div style="font-size:13px; color:var(--ink-700); margin-bottom:16px;"><b>Expected outputs:</b> ${m.outputs}</div>
-    <button class="btn btn-outline btn-sm" onclick="openResourceModal('Research Methodology Document', 'This document details the mathematical models and statistical approaches for this method. <br><br><div style=\'background:#f1f5f9; padding:16px; border-radius:8px; font-family:monospace; margin-top:12px;\'>[PDF DATA SIMULATED]</div>')">Explore Method</button>
+    <button class="btn btn-outline btn-sm" onclick="openResourceModal('Research Methodology Document', 'This document details the mathematical models and statistical approaches for this method. <br><br><div style=&quot;background:#f1f5f9; padding:16px; border-radius:8px; font-family:monospace; margin-top:12px;&quot;>[PDF DATA SIMULATED]</div>')">Explore Method</button>
   </div>`).join('')}</div>`;
 }
 
@@ -3142,7 +3142,16 @@ function bindGis(){
   if(window.currentMap) { window.currentMap.remove(); window.currentMap = null; }
   
   // Initialize Leaflet map centered on India
-  const map = L.map('gis-map').setView([20.5937, 78.9629], 5);
+  
+  const indiaBounds = [[6.7535, 68.1623], [35.6745, 97.3955]]; // Southwest, Northeast
+  const map = L.map('gis-map', {
+      center: [22.5, 82.5],
+      zoom: 5,
+      minZoom: 4,
+      maxBounds: indiaBounds,
+      maxBoundsViscosity: 1.0
+  });
+
   window.currentMap = map;
   
   // Layer groups
