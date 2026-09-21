@@ -1140,8 +1140,7 @@ window.requestOtp = function() {
           const reason = data.message || "Unknown error";
           alert("Fast2SMS API blocked the SMS.\nReason: " + reason + "\n\nPlease use the simulated OTP to login.");
           showOtpModal(role, mobile, generatedOtp, false);
-          alert("Fast2SMS API blocked the SMS.\nReason: " + data.message + "\n\nPlease use the simulated OTP to login.");
-          showOtpModal(role, mobile, generatedOtp, false);
+          
         } else {
           showOtpModal(role, mobile, generatedOtp, true);
         }
@@ -1213,8 +1212,7 @@ window.submitSignUp = function() {
           const reason = data.message || "Unknown error";
           alert("Fast2SMS API blocked the SMS.\nReason: " + reason + "\n\nPlease use the simulated OTP to login.");
           showOtpModal(role, mobile, generatedOtp, false);
-          alert("Fast2SMS API blocked the SMS.\nReason: " + data.message + "\n\nPlease use the simulated OTP to login.");
-          showOtpModal(role, mobile, generatedOtp, false);
+          
         } else {
           showOtpModal(role, mobile, generatedOtp, true);
         }
