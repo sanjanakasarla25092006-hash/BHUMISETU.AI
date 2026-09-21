@@ -1130,13 +1130,16 @@ window.requestOtp = function() {
   toast('Sending real SMS to ' + mobile + '...');
   
   // We remove the hardcoded Fast2SMS key so we use Textbelt which has 1 free quota right now
-  const fast2smsKey = localStorage.getItem('fast2sms_key');
+  const fast2smsKey = "750Vy4SrCNKb8XWmYDTsLOpniQdoR12aEveFUPjfu6ctM3klxHDw7P3ghIqfCmTin9oLByElKMrpGW5S";
 
   if (fast2smsKey && fast2smsKey.length > 5) {
     const cleanNumber = mobile.replace('+91', '');
     fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`)
       .then(res => res.json()).then(data => {
-        if(data.return === false) {
+        if(data.return === false || data.status_code) {
+          const reason = data.message || "Unknown error";
+          alert("Fast2SMS API blocked the SMS.\nReason: " + reason + "\n\nPlease use the simulated OTP to login.");
+          showOtpModal(role, mobile, generatedOtp, false);
           alert("Fast2SMS API blocked the SMS.\nReason: " + data.message + "\n\nPlease use the simulated OTP to login.");
           showOtpModal(role, mobile, generatedOtp, false);
         } else {
@@ -1200,13 +1203,16 @@ window.submitSignUp = function() {
   const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
   toast('Sending real SMS to ' + mobile + '...');
   
-  const fast2smsKey = localStorage.getItem('fast2sms_key');
+  const fast2smsKey = "750Vy4SrCNKb8XWmYDTsLOpniQdoR12aEveFUPjfu6ctM3klxHDw7P3ghIqfCmTin9oLByElKMrpGW5S";
 
   if (fast2smsKey && fast2smsKey.length > 5) {
     const cleanNumber = mobile.replace('+91', '');
     fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`)
       .then(res => res.json()).then(data => {
-        if(data.return === false) {
+        if(data.return === false || data.status_code) {
+          const reason = data.message || "Unknown error";
+          alert("Fast2SMS API blocked the SMS.\nReason: " + reason + "\n\nPlease use the simulated OTP to login.");
+          showOtpModal(role, mobile, generatedOtp, false);
           alert("Fast2SMS API blocked the SMS.\nReason: " + data.message + "\n\nPlease use the simulated OTP to login.");
           showOtpModal(role, mobile, generatedOtp, false);
         } else {
