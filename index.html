@@ -15,6 +15,16 @@ window.addEventListener('unhandledrejection', function(e) { toast('Promise Error
     document.documentElement.setAttribute('data-theme', theme);
   } catch(e) {}
 </script>
+
+<script>
+  // Configuration for Production
+  window.CONFIG = {
+    API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? 'http://localhost:5000' 
+      : 'https://bhusetu-api.onrender.com'
+  };
+</script>
+
 <style>
 :root{
   --navy-900:#1b2a41;
