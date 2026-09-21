@@ -1391,10 +1391,35 @@ function researchExplorerSection() {
     <div class="search-row">
       <input type="text" id="rx-q" class="search-input" placeholder="Search by topic, keyword, or question..." onkeyup="if(event.key==='Enter') bindResearchSearch()">
       <select id="rx-state" class="search-input" style="max-width:200px;" onchange="bindResearchSearch()">
-        <option value="All">All States</option>
-        <option value="Telangana">Telangana</option>
+<option value="All">All States</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
         <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
         <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
       </select>
       <button class="btn btn-navy" onclick="bindResearchSearch()">Search</button>
     </div>
@@ -1506,9 +1531,35 @@ function datasetSearchSection() {
     <div class="search-row">
       <input type="text" id="ds-q" class="search-input" placeholder="Search dataset name, variables, or geography..." onkeyup="if(event.key==='Enter') bindDatasetSearch()">
       <select id="ds-state" class="search-input" style="max-width:200px;" onchange="bindDatasetSearch()">
-        <option value="All">All States</option>
-        <option value="Telangana">Telangana</option>
+<option value="All">All States</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
         <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
       </select>
       <button class="btn btn-navy" onclick="bindDatasetSearch()">Search</button>
     </div>
@@ -1608,7 +1659,7 @@ window.bindReportSearch = function() {
         </div>
       </div>`;
     }).join('');
-    document.getElementById('rp-results').innerHTML = html;
+    const rpNode = document.getElementById('rp-results'); if(rpNode) rpNode.innerHTML = html;
   });
 };
 
@@ -2435,7 +2486,7 @@ function methodologySection(){
     <div style="font-size:13px; color:var(--ink-700); margin-bottom:8px;"><b>When to use:</b> ${m.when}</div>
     <div style="font-size:13px; color:var(--ink-700); margin-bottom:8px;"><b>Typical inputs:</b> ${m.inputs}</div>
     <div style="font-size:13px; color:var(--ink-700); margin-bottom:16px;"><b>Expected outputs:</b> ${m.outputs}</div>
-    <button class="btn btn-outline btn-sm" onclick="toast('Demo: Opening method documentation...')">Explore Method</button>
+    <button class="btn btn-outline btn-sm" onclick="openResourceModal('Research Methodology Document', 'This document details the mathematical models and statistical approaches for this method. <br><br><div style=\'background:#f1f5f9; padding:16px; border-radius:8px; font-family:monospace; margin-top:12px;\'>[PDF DATA SIMULATED]</div>')">Explore Method</button>
   </div>`).join('')}</div>`;
 }
 
@@ -3031,7 +3082,7 @@ function afterRender(parts){
   if(parts[0]==='research'){ runResearchHub(); }
   if(parts[0]==='data-hub'){ runDataHub(); }
   if(parts[2]==='policy-simulator' || (parts[0]==='policy-lab' && (parts[1]==='simulator'||parts[1]==='sandbox'))){ bindSimulator(); }
-  if(parts[2]==='gis' || parts[0]==='gis' || parts[2]==='explore-map'){ bindGis(); }
+  if(parts[2] && parts[2].includes('gis') || parts[0] === 'gis' || parts[2] === 'explore-map' || parts[2] === 'satellite-data'){ bindGis(); }
   if(parts[0]==='case-studies'){ bindCaseSearch(); }
   if(parts[0]==='data-hub'){ bindDataHubSearch(); }
   if(parts[2]==='evidence-dashboard'){ /* static */ }
