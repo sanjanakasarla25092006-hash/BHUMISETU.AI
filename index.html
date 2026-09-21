@@ -1122,8 +1122,8 @@ window.verifyOtp = function() {
       errNode.style.display = 'block';
       errNode.innerText = data.error;
     } else {
-      window.state.role = data.user.role;
-      localStorage.setItem('BhuSetu_state', JSON.stringify(window.state));
+      state.role = data.user.role;
+      localStorage.setItem('BhuSetu_state', JSON.stringify(state));
       window.location.hash = '#/dash/' + data.user.role;
       toast('Login Successful');
     }
