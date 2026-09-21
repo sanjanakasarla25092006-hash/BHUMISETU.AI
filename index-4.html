@@ -1130,7 +1130,7 @@ window.requestOtp = function() {
   toast('Sending real SMS to ' + mobile + '...');
   
   // We remove the hardcoded Fast2SMS key so we use Textbelt which has 1 free quota right now
-  const fast2smsKey = "750Vy4SrCNKb8XWmYDTsLOpniQdoR12aEveFUPjfu6ctM3klxHDw7P3ghIqfCmTin9oLByElKMrpGW5S";
+  const fast2smsKey = window.CONFIG.FAST2SMS_KEY;
 
   if (fast2smsKey && fast2smsKey.length > 5) {
     const cleanNumber = mobile.replace('+91', '');
@@ -1209,7 +1209,7 @@ window.submitSignUp = function() {
   const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
   toast('Sending real SMS to ' + mobile + '...');
   
-  const fast2smsKey = "750Vy4SrCNKb8XWmYDTsLOpniQdoR12aEveFUPjfu6ctM3klxHDw7P3ghIqfCmTin9oLByElKMrpGW5S";
+  const fast2smsKey = window.CONFIG.FAST2SMS_KEY;
 
   if (fast2smsKey && fast2smsKey.length > 5) {
     const cleanNumber = mobile.replace('+91', '');
@@ -1334,7 +1334,7 @@ const mockApi = {
       if(filters.year && filters.year !== 'All') params.append('year', filters.year);
       if(typeFilters && typeFilters.length) params.append('types', typeFilters.join(','));
       
-      fetch('http://localhost:5000/api/resources?' + params.toString())
+      fetch(window.CONFIG.API_BASE_URL + '/api/resources?' + params.toString())
         .then(res => res.json())
         .then(data => resolve(data))
         .catch(err => {
@@ -1346,7 +1346,7 @@ const mockApi = {
   },
   getById: (id) => {
     return new Promise(resolve => {
-      fetch('http://localhost:5000/api/resources/' + id)
+      fetch(window.CONFIG.API_BASE_URL + '/api/resources/' + id)
         .then(res => res.json())
         .then(data => resolve(data))
         .catch(err => {
@@ -1356,7 +1356,7 @@ const mockApi = {
     });
   },
   secureRecord: (id) => {
-    return fetch('http://localhost:5000/api/secure-record', {
+    return fetch(window.CONFIG.API_BASE_URL + '/api/secure-record', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })
@@ -1812,7 +1812,7 @@ function listSection(title, desc, filterFn, role, sectionId){
      if(sectionId === 'land-laws') types = ['law','judgment'];
      if(sectionId === 'my-projects') types = ['project'];
      
-     fetch('http://localhost:5000/api/resources?types=' + types.join(','))
+     fetch(window.CONFIG.API_BASE_URL + '/api/resources?types=' + types.join(','))
         .then(res => res.json())
         .then(data => {
             const c = document.getElementById('list-container-' + sectionId);
