@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const ethers = require('ethers');
 const db = require('./database');
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -98,12 +99,12 @@ app.post('/api/auth/request-otp', async (req, res) => {
     const fast2smsKey = process.env.FAST2SMS_API_KEY;
     if (fast2smsKey) {
       const cleanNumber = mobile.replace('+91', '');
-      import('node-fetch').then(({default: fetch}) => {
+      
         fetch('https://www.fast2sms.com/dev/bulkV2', {
           method: 'POST',
           headers: { 'authorization': fast2smsKey, 'Content-Type': 'application/x-www-form-urlencoded' },
           body: `route=otp&variables_values=${otp}&flash=0&numbers=${cleanNumber}`
-        }).catch(() => {});
+        }).catch(() => {
       });
     }
     
@@ -151,7 +152,7 @@ app.post('/api/chat', async (req, res) => {
 
   // Real LLM Integration (Example using Gemini REST API)
   try {
-     const fetch = (await import('node-fetch')).default;
+     
      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
