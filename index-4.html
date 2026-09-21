@@ -1134,7 +1134,14 @@ window.requestOtp = function() {
 
   if (fast2smsKey && fast2smsKey.length > 5) {
     const cleanNumber = mobile.replace('+91', '');
-    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`)
+    fetch('https://www.fast2sms.com/dev/bulkV2', {
+      method: 'POST',
+      headers: {
+        'authorization': fast2smsKey,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`
+    })
       .then(res => res.json()).then(data => {
         if(data.return === false || data.status_code) {
           const reason = data.message || "Unknown error";
@@ -1206,7 +1213,14 @@ window.submitSignUp = function() {
 
   if (fast2smsKey && fast2smsKey.length > 5) {
     const cleanNumber = mobile.replace('+91', '');
-    fetch(`https://www.fast2sms.com/dev/bulkV2?authorization=${fast2smsKey}&route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`)
+    fetch('https://www.fast2sms.com/dev/bulkV2', {
+      method: 'POST',
+      headers: {
+        'authorization': fast2smsKey,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `route=otp&variables_values=${generatedOtp}&flash=0&numbers=${cleanNumber}`
+    })
       .then(res => res.json()).then(data => {
         if(data.return === false || data.status_code) {
           const reason = data.message || "Unknown error";
