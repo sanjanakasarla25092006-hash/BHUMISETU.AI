@@ -97,18 +97,25 @@ app.post('/api/auth/request-otp', async (req, res) => {
     
     // Try sending SMS via Fast2SMS
     const fast2smsKey = process.env.FAST2SMS_API_KEY;
-    if (fast2smsKey) {
-      const cleanNumber = mobile.replace('+91', '');
-      
+      if (fast2smsKey) {
+        const cleanNumber = mobile.replace('+91', '');
         fetch('https://www.fast2sms.com/dev/bulkV2', {
           method: 'POST',
           headers: { 'authorization': fast2smsKey, 'Content-Type': 'application/x-www-form-urlencoded' },
           body: `route=otp&variables_values=${otp}&flash=0&numbers=${cleanNumber}`
-        }).catch(() => {
-      });
-    }
-    
-    res.json({ success: true, simulated_otp: otp, message: fast2smsKey ? 'OTP sent via SMS' : 'No API key, using simulated OTP.' });
+        })
+        .then(res => res.json())
+        .then(data => {
+          if(data.return === false || data.status_code) {
+             const reason = data.message || "Unknown error";
+             return res.status(400).json({ error: "Fast2SMS Blocked SMS: " + reason });
+          }
+          res.json({ success: true, simulated_otp: otp, message: 'OTP sent via real SMS' });
+        })
+        .catch(err => res.status(500).json({ error: "Failed to contact Fast2SMS: " + err.message }));
+      } else {
+        res.json({ success: true, simulated_otp: otp, message: 'No API key, using simulated OTP.' });
+      }
   });
 });
 
