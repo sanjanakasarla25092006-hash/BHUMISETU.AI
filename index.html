@@ -2938,7 +2938,7 @@ function afterRender(parts){
     initHeroSlider(); 
     fetchVisitorCount();
   }
-  if(parts[0]==='signin'){ refreshCaptcha(); }
+  if(parts[0]==='signin'){ /* captcha removed for otp flow */ }
   if(parts[0]==='research'){ runResearchHub(); }
   if(parts[0]==='data-hub'){ runDataHub(); }
   if(parts[2]==='policy-simulator' || (parts[0]==='policy-lab' && (parts[1]==='simulator'||parts[1]==='sandbox'))){ bindSimulator(); }
